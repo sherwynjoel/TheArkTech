@@ -1,0 +1,18 @@
+---
+const nav = [
+  { href: "/", label: "Home" },
+  { href: "/services", label: "Services" },
+  { href: "/contact", label: "Contact" },
+];
+---
+<header class="border-b bg-white/80 backdrop-blur">
+  <div class="mx-auto max-w-7xl px-4 py-4 flex items-center justify-between">
+    <a href="/" class="flex items-center gap-2">
+      <img src="/logo.svg" alt="The Ark Tech" class="h-8 w-8" />
+      <span class="font-semibold">The Ark Tech</span>
+    </a>
+    <nav class="flex gap-6">
+      {nav.map(n => <a class="hover:text-blue-600" href={n.href}>{n.label}</a>)}
+    </nav>
+  </div>
+</header>
