@@ -1,22 +1,24 @@
 ---
-const { title = "The Ark Tech", description = "We build software that ships on time.", url = "https://thearktech.in" } = Astro.props;
+import "../styles/global.css";
 ---
-<html lang="en" class="scroll-smooth">
+
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title}</title>
-    <meta name="description" content={description} />
-    <link rel="icon" href="/logo.svg" />
+    <title>TheArkTech</title>
   </head>
-  <body class="min-h-screen bg-gray-50 text-gray-900 flex flex-col">
-    <Header />
-    <main class="flex-1">{Astro.slots.default && <slot />}</main>
-    <Footer />
+  <body>
+    
+   <main id="smooth-wrapper">
+  <div id="smooth-content">
+    <div class="img-group">
+      <div data-speed="clamp(1.25)"></div>
+      <div data-speed="0.8"></div>
+      <div data-speed="1"></div>
+      <div data-speed="1.2"></div>
+      <div data-speed="clamp(0.9)"></div>
+    </div>
+  </div>
+</main> 
   </body>
 </html>
-
-<script>
-  import Header from "../components/Header.astro";
-  import Footer from "../components/Footer.astro";
-</script>
