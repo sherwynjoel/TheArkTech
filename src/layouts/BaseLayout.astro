@@ -1,24 +1,9 @@
 ---
-import "../styles/global.css";
+// nothing needed in frontmatter for this
 ---
-
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>TheArkTech</title>
-  </head>
   <body>
-    
-   <main id="smooth-wrapper">
-  <div id="smooth-content">
-    <div class="img-group">
-      <div data-speed="clamp(1.25)"></div>
-      <div data-speed="0.8"></div>
-      <div data-speed="1"></div>
-      <div data-speed="1.2"></div>
-      <div data-speed="clamp(0.9)"></div>
-    </div>
-  </div>
-</main> 
+    <slot />
+    <script type="module" src="/src/scripts/animate-on-scroll.ts"></script>
   </body>
 </html>
