@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import ParticlesBackground from "../components/ParticlesBackground.astro";
 
 ---
 
@@ -64,8 +65,10 @@ import "../styles/global.css";
     
 
     <!-- Tell Your Ideas Section -->
-<section id="ideas" class="bg-black via-gray-900 to-black text-white py-24 px-6">
-  <div class="max-w-6xl mx-auto text-center">
+<section id="ideas" class="text-white py-24 px-6 relative">
+  <div class="absolute inset-0 bg-black via-gray-900 to-black z-[-1]"></div>
+  <ParticlesBackground particleCount={60} speed={7} />
+  <div class="max-w-6xl mx-auto text-center relative z-10">
     
     <h2 class="text-4xl md:text-5xl font-bold mb-6">
       Tell Us Your Ideas, We’ll Build It
@@ -113,7 +116,9 @@ import "../styles/global.css";
 
 
     <!-- ✅ Services Introduction -->
-    <section id="services-intro" class="container mx-auto py-24 px-6 text-center">
+    <section id="services-intro" class="container mx-auto py-24 px-6 text-center relative">
+      <ParticlesBackground particleCount={50} speed={7} />
+      <div class="relative z-10">
       <h3 class="text-4xl font-bold mb-6">Why Choose Us</h3>
       <p class="text-gray-300 max-w-4xl mx-auto leading-relaxed text-lg">
         At <span class="font-semibold text-blue-400">The Ark Tech</span>, we solve all your 
@@ -124,14 +129,17 @@ import "../styles/global.css";
         From <span class="font-semibold">custom software, websites, mobile apps, AI & automation</span> — 
         we do all kinds of projects tailored for your success.
       </p>
+      </div>
     </section>
 
     
 
-  <section id="services" class="relative min-h-screen flex flex-col justify-center items-center bg-black text-white px-6">
-  <h2 class="text-5xl font-bold mb-16">Our Services</h2>
+  <section id="services" class="relative min-h-screen flex flex-col justify-center items-center text-white px-6">
+  <div class="absolute inset-0 bg-black z-[-1]"></div>
+  <ParticlesBackground particleCount={90} speed={6} />
+  <h2 class="text-5xl font-bold mb-16 relative z-10">Our Services</h2>
   
-  <div class="space-y-20 text-center max-w-3xl">
+  <div class="space-y-20 text-center max-w-3xl relative z-10">
     <div class="service opacity-0">
       <h3 class="text-4xl font-semibold mb-4">🌐 Web Development</h3>
       <p class="text-lg opacity-70">Modern, responsive websites tailored for your brand.</p>
@@ -182,8 +190,10 @@ import "../styles/global.css";
 
 
 <!-- Technology Stack Showreel -->
-<section id="tech-stack" class="bg-black text-white py-24 px-6">
-  <div class="max-w-7xl mx-auto text-center">
+<section id="tech-stack" class="text-white py-24 px-6 relative">
+  <div class="absolute inset-0 bg-black z-[-1]"></div>
+  <ParticlesBackground particleCount={80} speed={7} />
+  <div class="max-w-7xl mx-auto text-center relative z-10">
     <h2 class="text-4xl font-bold mb-12">Our Technology Stack</h2>
 
     <div class="showreel-wrapper">
@@ -250,9 +260,10 @@ import "../styles/global.css";
 }
 
 .showreel-track {
-  display: inline-block;
-  padding-left: 100%;
+  display: inline-flex;
+  width: max-content;
   animation: marquee 30s linear infinite;
+  will-change: transform;
 }
 
 .showreel-track span {
@@ -278,8 +289,10 @@ import "../styles/global.css";
  
      <!-- Industries Served -->
       
-     <section id="industries" class="bg-black text-white">
-  <div class="mx-auto max-w-7xl px-6 py-16">
+     <section id="industries" class="text-white relative">
+  <div class="absolute inset-0 bg-black z-[-1]"></div>
+  <ParticlesBackground particleCount={70} speed={6} />
+  <div class="mx-auto max-w-7xl px-6 py-16 relative z-10">
     <div class="flex items-end justify-between gap-6">
       <div>
         <p class="text-sm uppercase tracking-widest text-gray-400">Industries</p>
@@ -435,18 +448,20 @@ import "../styles/global.css";
 
 
     <!-- ✅ Contact -->
-    <section id="contact" class="py-28 px-6 bg-black/95">
-      <h3 class="text-4xl font-extrabold text-center mb-4 tracking-wide text-white">
+    <section id="contact" class="py-28 px-6 relative">
+      <div class="absolute inset-0 bg-black/95 z-[-1]"></div>
+      <ParticlesBackground particleCount={20} speed={9} />
+      <h3 class="text-4xl font-extrabold text-center mb-4 tracking-wide text-white relative z-10">
         For Query
       </h3>
-      <p class="text-center text-gray-300 text-lg mb-12">
+      <p class="text-center text-gray-300 text-lg mb-12 relative z-10">
         Our team will analyse and contact you
       </p>
       
       <form 
         action="/api/submit" 
         method="POST" 
-        class="max-w-2xl mx-auto bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 p-10 rounded-2xl shadow-2xl space-y-6"
+        class="max-w-2xl mx-auto bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 p-10 rounded-2xl shadow-2xl space-y-6 relative z-10"
       >
         <input type="text" name="name" placeholder="Your Name" required class="w-full border border-gray-600 px-5 py-4 rounded-lg bg-transparent text-white placeholder-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none text-lg font-semibold tracking-wide"/>
         <input type="email" name="email" placeholder="Your Email" required class="w-full border border-gray-600 px-5 py-4 rounded-lg bg-transparent text-white placeholder-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none text-lg font-semibold tracking-wide"/>
@@ -484,40 +499,35 @@ import "../styles/global.css";
   </div>
 </footer>
 
+    <!-- ✅ GSAP Animations (ESM via CDN to avoid UMD/window conflicts) -->
+    <script type="module">
+      import gsap from 'https://esm.sh/gsap@3.12.5';
+      import { ScrollTrigger } from 'https://esm.sh/gsap@3.12.5/ScrollTrigger';
+
+      try {
+        gsap.registerPlugin(ScrollTrigger);
+        const services = document.querySelectorAll('.service');
+        services.forEach((service, i) => {
+          gsap.fromTo(
+            service,
+            { y: 100, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              duration: 1,
+              delay: i * 0.2,
+              scrollTrigger: {
+                trigger: service,
+                start: 'top 80%',
+                toggleActions: 'play none none reverse',
+              },
+            }
+          );
+        });
+      } catch (e) {
+        console.warn('GSAP init failed:', e);
+      }
+    </script>
+
 </body>
 </html>
-
-
-
-    <!-- ✅ GSAP Animations -->
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script type="module">
-  import { ScrollSmoother } from "gsap/ScrollSmoother"; // only works with paid plugin
-</script>
-    <script>
-      import gsap from "gsap";
-      import { ScrollTrigger } from "gsap/ScrollTrigger";
-      gsap.registerPlugin(ScrollTrigger);
-
-      const services = document.querySelectorAll(".service");
-      services.forEach((service, i) => {
-        gsap.fromTo(service,
-          { y: 100, opacity: 0 },
-          {
-            y: 0, opacity: 1, duration: 1,
-            delay: i * 0.2,
-            scrollTrigger: {
-              trigger: service,
-              start: "top 80%",
-              toggleActions: "play none none reverse"
-            }
-          }
-        );
-      });
- 
-
-       
-      
-    </script>
