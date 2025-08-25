@@ -15,19 +15,30 @@ import ParticlesBackground from "../components/ParticlesBackground.astro";
   <body class="font-sans bg-black text-white">
     
 
-  
+  <!-- ✅ Navbar -->
+<header class="bg-black/80 backdrop-blur-lg sticky top-0 z-50 border-b border-gray-800">
+  <div class="container mx-auto flex justify-between items-center p-4">
     
-    <!-- ✅ Navbar -->
-    <header class="bg-black/80 backdrop-blur-lg sticky top-0 z-50 border-b border-gray-800">
-      <div class="container mx-auto flex justify-between items-center p-4">
-        <!-- Logo + Brand Name -->
+    <!-- Logo + Brand Name -->
     <a href="#home" class="flex items-center space-x-3">
       <!-- Small Logo -->
       <img src="/logo.png" alt="TheArkTech Logo" class="h-12 w-16 object-contain" />
-      <h1 class="text-2xl font-bold text-white tracking-wide">TheArkTech</h1>
+      <h1 class="text-2xl font-extrabold text-white tracking-wide">TheArkTech</h1>
     </a>
-      </div>
-    </header>
+
+    <!-- ✅ Navigation Menu -->
+    <nav class="hidden md:flex space-x-4 font-bold text-white">
+  
+  
+  <a href="#services" class="hover:text-blue-400 transition">Services</a>
+  <a href="#tech-stack" class="hover:text-blue-400 transition">Tech Stack</a>
+  <a href="#industries" class="hover:text-blue-400 transition">Industries</a>
+  <a href="#contact" class="hover:text-blue-400 transition">Contact</a>
+</nav>
+    
+  </div>
+</header>
+
 
 
 
@@ -466,7 +477,7 @@ import ParticlesBackground from "../components/ParticlesBackground.astro";
         <input type="text" name="name" placeholder="Your Name" required class="w-full border border-gray-600 px-5 py-4 rounded-lg bg-transparent text-white placeholder-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none text-lg font-semibold tracking-wide"/>
         <input type="email" name="email" placeholder="Your Email" required class="w-full border border-gray-600 px-5 py-4 rounded-lg bg-transparent text-white placeholder-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none text-lg font-semibold tracking-wide"/>
         <input type="tel" name="phone" placeholder="Your Phone" required class="w-full border border-gray-600 px-5 py-4 rounded-lg bg-transparent text-white placeholder-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none text-lg font-semibold tracking-wide"/>
-        <textarea name="requirement" placeholder="Your Query  Requirement" rows="5" required class="w-full border border-gray-600 px-5 py-4 rounded-lg bg-transparent text-white placeholder-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none text-lg font-semibold tracking-wide"></textarea>
+        <textarea name="requirement" placeholder="Your Query " rows="5" required class="w-full border border-gray-600 px-5 py-4 rounded-lg bg-transparent text-white placeholder-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none text-lg font-semibold tracking-wide"></textarea>
         <button type="submit" class="w-full bg-blue-600 text-white py-4 rounded-lg font-bold text-lg tracking-wide hover:bg-blue-700 hover:scale-105 transform transition duration-300 shadow-lg">
           Submit Query
         </button>
