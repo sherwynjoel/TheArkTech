@@ -35,4 +35,7 @@ a:hover .cb-btn_cta-border {
   opacity: 0.6;
 }
 
+html {
+  scroll-behavior: smooth;
+}
 

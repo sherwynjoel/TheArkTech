@@ -5,7 +5,7 @@ import ParticlesBackground from "../components/ParticlesBackground.astro";
 ---
 
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
@@ -18,28 +18,36 @@ import ParticlesBackground from "../components/ParticlesBackground.astro";
   
     
     <!-- ✅ Navbar -->
-<header class="bg-black/80 backdrop-blur-lg sticky top-0 z-50 border-b border-gray-800">
-  <div class="container mx-auto flex justify-between items-center p-4">
+    <header class="bg-black/80 backdrop-blur-lg sticky top-0 z-50 border-b border-gray-800">
+      <div class="container mx-auto flex justify-between items-center p-4">
+        <!-- Logo + Brand Name -->
+        <a href="#home" class="flex items-center space-x-3">
+          <!-- Small Logo -->
+          <img src="/logo.png" alt="TheArkTech Logo" class="h-12 w-16 object-contain" />
+          <h1 class="text-2xl font-extrabold text-white tracking-wide">TheArkTech</h1>
+        </a>
 
-    <!-- Logo + Brand Name -->
-    <a href="#home" class="flex items-center space-x-3">
-      <!-- Small Logo -->
-      <img src="/logo.png" alt="TheArkTech Logo" class="h-12 w-16 object-contain" />
-      <span class="text-2xl font-extrabold text-white tracking-wide" aria-label="TheArkTech">TheArkTech</span>
-    </a>
+        <!-- Nav Buttons -->
+        <nav class="flex items-center gap-2">
+          <a href="#services" class="px-3 py-2 rounded-lg text-sm font-bold text-gray-300 hover:text-white hover:bg-white/10 transition">
+            Services
+          </a>
+          <a href="#industries" class="px-3 py-2 rounded-lg text-sm font-bold text-gray-300 hover:text-white hover:bg-white/10 transition">
+            Industries
+          </a>
+          <a href="#contact" class="px-3 py-2 rounded-lg text-sm font-bold text-gray-300 hover:text-white hover:bg-white/10 transition">
+            Contact
+          </a>
+          <a href="#contact" class="relative inline-flex items-center justify-center px-4 py-2 rounded-xl border border-white/15 bg-white/5 text-sm font-bold text-white overflow-hidden group transition">
+            <span class="relative z-10">Get Quote</span>
+            <span class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-700 ease-in-out"></span>
+          </a>
+        </nav>
+      </div>
+    </header>
 
-    <!-- ✅ Navigation Menu -->
-    <nav class="hidden md:flex space-x-4 font-bold text-white">
 
 
-  <a href="#services" class="hover:text-blue-400 transition">Services</a>
-  <a href="#tech-stack" class="hover:text-blue-400 transition">Tech Stack</a>
-  <a href="#industries" class="hover:text-blue-400 transition">Industries</a>
-  <a href="#contact" class="hover:text-blue-400 transition">Contact</a>
-</nav>
-
-  </div>
-</header>
 
 
 
@@ -67,10 +75,6 @@ import ParticlesBackground from "../components/ParticlesBackground.astro";
 </div>
 
     </section>
-
-    <!-- Anime.js full-surface container spanning from after hero to before footer -->
-    <div class="anim-demo relative w-full">
-      <div class="anim-dot"></div>
 
 
     
@@ -134,7 +138,7 @@ import ParticlesBackground from "../components/ParticlesBackground.astro";
       <div class="relative z-10">
       <h2 class="text-4xl font-bold mb-6">Why Choose Us</h2>
       <p class="text-gray-300 max-w-4xl mx-auto leading-relaxed text-lg">
-        At <span class="font-semibold text-blue-400">The Ark Tech</span>, we solve all your 
+        At <span class="font-semibold text-blue-400">TheArkTech</span>, we solve all your 
         <span class="font-semibold">technical problems</span> with smart software solutions that make your work 
         <span class="font-semibold">simple, fast, easy, and reliable</span>.  
         Our mission is to empower <span class="font-semibold">small and growing businesses</span> by bringing them online 
@@ -499,7 +503,7 @@ import ParticlesBackground from "../components/ParticlesBackground.astro";
         <input type="text" name="name" placeholder="Your Name" required class="w-full border border-gray-600 px-5 py-4 rounded-lg bg-transparent text-white placeholder-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none text-lg font-semibold tracking-wide"/>
         <input type="email" name="email" placeholder="Your Email" required class="w-full border border-gray-600 px-5 py-4 rounded-lg bg-transparent text-white placeholder-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none text-lg font-semibold tracking-wide"/>
         <input type="tel" name="phone" placeholder="Your Phone" required class="w-full border border-gray-600 px-5 py-4 rounded-lg bg-transparent text-white placeholder-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none text-lg font-semibold tracking-wide"/>
-        <textarea name="requirement" placeholder="Your Query  Requirement" rows="5" required class="w-full border border-gray-600 px-5 py-4 rounded-lg bg-transparent text-white placeholder-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none text-lg font-semibold tracking-wide"></textarea>
+        <textarea name="requirement" placeholder="Your Query " rows="5" required class="w-full border border-gray-600 px-5 py-4 rounded-lg bg-transparent text-white placeholder-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none text-lg font-semibold tracking-wide"></textarea>
         <button type="submit" class="w-full bg-blue-600 text-white py-4 rounded-lg font-bold text-lg tracking-wide hover:bg-blue-700 hover:scale-105 transform transition duration-300 shadow-lg">
           Submit Query
         </button>
