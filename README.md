@@ -1,46 +1,59 @@
-# Astro Starter Kit: Basics
+# TheArkTech
 
-```sh
-npm create astro@latest -- --template basics
+## Contact form backend (SMTP)
+
+This project includes an Astro API route at `/api/submit` that accepts the contact form and emails it using SMTP via Nodemailer.
+
+Environment variables required (create a `.env` file):
+
+```
+SMTP_HOST=
+SMTP_PORT=
+SMTP_SECURE=
+SMTP_USER=
+SMTP_PASS=
+SMTP_FROM=
+SMTP_TO=
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Example for Hostinger email hosting:
 
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
+```
+SMTP_HOST=smtp.hostinger.com
+SMTP_PORT=587
+SMTP_SECURE=false
+SMTP_USER=you@thearktech.in
+SMTP_PASS=your_app_password
+SMTP_FROM=TheArkTech <you@thearktech.in>
+SMTP_TO=you@thearktech.in
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+## Run locally (SSR)
 
-## 🧞 Commands
+```
+npm i
+npm run dev
+```
 
-All commands are run from the root of the project, from a terminal:
+## Build and run (Node server)
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+```
+npm run build
+npm start
+```
 
-## 👀 Want to learn more?
+## Deploy on Hostinger
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Options:
+
+1. HPanel Node.js app (Business/Cloud plans)
+   - Create a Node.js app in hPanel targeting `dist/server/entry.mjs` after build.
+   - Set environment variables above in the app settings.
+   - Configure start command: `npm run start`.
+
+2. VPS (Docker or Node)
+   - Install Node 20+, clone repo, set `.env`, run `npm i && npm run build && npm start`.
+   - Use Nginx reverse proxy from `thearktech.in` to the Node app port.
+
+3. Alternative: Vercel/Netlify serverless
+   - Use Astro adapter for Vercel instead of Node, deploy, and point Hostinger DNS to Vercel.
