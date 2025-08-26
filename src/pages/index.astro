@@ -54,10 +54,11 @@ import ParticlesBackground from "../components/ParticlesBackground.astro";
     <!-- ✅ Hero Section -->
     <section
       id="home"
-      class="relative flex items-center justify-center text-center h-[70vh] text-white bg-cover bg-center"
+      class="relative flex items-center justify-center text-center min-h-[90vh] text-white bg-cover bg-center"
       style="background-image: url('/banner.png');"
     >
-      <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/90"></div>
+      <div class="absolute inset-0 bg-black/90"></div>
+      
 
       <div class="relative z-10 max-w-3xl px-6 animate-fadeInUp">
   <h1 class="text-4xl font-extrabold mb-6 tracking-tight">TheArkTech — Your Trusted Software Partner</h1>
@@ -75,6 +76,20 @@ import ParticlesBackground from "../components/ParticlesBackground.astro";
 </div>
 
     </section>
+
+    <!-- Anime.js full-page cursor overlay -->
+    <div class="anim-overlay">
+      <div class="anim-dot"></div>
+    </div>
+
+    <!-- Persistent Call Us Button -->
+    <a href="tel:+919489722142" aria-label="Call us at 9489722142"
+       class="fixed bottom-4 right-4 z-50 inline-flex items-center gap-2 px-4 py-3 rounded-full bg-blue-600 text-white shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+        <path d="M2.01 6.003c-.01-1.104.89-2.003 1.994-2.003h2.04c.93 0 1.73.64 1.94 1.548l.47 2.026a2 2 0 0 1-.58 1.916l-1.2 1.2a14.5 14.5 0 0 0 6.2 6.2l1.2-1.2a2 2 0 0 1 1.916-.58l2.026.47A2 2 0 0 1 18 17.956v2.04c0 1.104-.9 2.004-2.004 1.994C7.44 21.83 2.17 16.56 2.01 6.003Z"/>
+      </svg>
+      <span class="font-bold tracking-wide">Call us</span>
+    </a>
 
 
     
@@ -305,12 +320,14 @@ import ParticlesBackground from "../components/ParticlesBackground.astro";
   100% { transform: translateX(-50%); }
 }
 
-/* Anime demo styles */
-.anim-demo {
-  overflow: hidden;
-  position: relative;
+/* Anime cursor overlay */
+.anim-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1; /* keep under content wrappers with z-10 */
+  pointer-events: none;
 }
-.anim-demo .anim-dot {
+.anim-overlay .anim-dot {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -565,24 +582,20 @@ import ParticlesBackground from "../components/ParticlesBackground.astro";
           );
         });
 
-        // Anime.js Animatable demo - follows cursor inside the demo box
-        const demo = document.querySelector('.anim-demo');
-        if (demo) {
-          const dot = demo.querySelector('.anim-dot');
+        // Anime.js full-page cursor overlay
+        const overlay = document.querySelector('.anim-overlay');
+        if (overlay) {
+          const dot = overlay.querySelector('.anim-dot');
           const anim = createAnimatable(dot, { x: 300, y: 300, ease: 'out(3)' });
-          let bounds = demo.getBoundingClientRect();
-          const refresh = () => { bounds = demo.getBoundingClientRect(); };
           const onMove = (e) => {
-            const { width, height, left, top } = bounds;
-            const hw = width / 2; const hh = height / 2;
-            const x = utils.clamp(e.clientX - left - hw, -hw, hw);
-            const y = utils.clamp(e.clientY - top - hh, -hh, hh);
+            const vw = window.innerWidth;
+            const vh = window.innerHeight;
+            const x = utils.clamp(e.clientX - vw / 2, -vw / 2, vw / 2);
+            const y = utils.clamp(e.clientY - vh / 2, -vh / 2, vh / 2);
             anim.x(x);
             anim.y(y);
           };
           window.addEventListener('mousemove', onMove);
-          window.addEventListener('resize', refresh);
-          window.addEventListener('scroll', refresh);
         }
       } catch (e) {
         console.warn('GSAP init failed:', e);
