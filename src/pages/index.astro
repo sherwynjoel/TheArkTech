@@ -1,7 +1,7 @@
 ---
 import "../styles/global.css";
 import ParticlesBackground from "../components/ParticlesBackground.astro";
-
+import SEO from "../components/SEO.astro";
 ---
 
 <html lang="en">
@@ -9,8 +9,24 @@ import ParticlesBackground from "../components/ParticlesBackground.astro";
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
-    <link rel="icon" type="logo.png" sizes="80x80" href="/logo.png" />
-    <title>TheArkTech | Software Solutions</title>
+    <link rel="icon" type="image/png" sizes="80x80" href="/logo.png" />
+    <SEO
+      title="TheArkTech | Software Solutions"
+      description="We build modern websites, apps, AI automation, and cloud solutions for small businesses and startups."
+      url="https://thearktech.in/"
+      image="https://thearktech.in/banner.png"
+      siteName="TheArkTech"
+      keywords={[
+        "web developer in Coimbatore",
+        "software development company Coimbatore",
+        "best website developer near me",
+        "IT services in Coimbatore",
+        "best website design company in coimbatore",
+        "ecommerce website development company in coimbatore",
+        "best website development company in tamilnadu",
+        "software company in tamilnadu"
+      ]}
+    />
   </head>
   <body class="font-sans bg-black text-white">
     
@@ -572,6 +588,7 @@ import ParticlesBackground from "../components/ParticlesBackground.astro";
       <a href="mailto:sherwynjoel@thearktech.in" class="text-blue-400 hover:underline">contact@thearktech.in</a>
       | <a href="tel:+919489722142" class="text-blue-400 hover:underline">+91-9489722142</a>
     </p>
+    <p class="mt-1 text-sm">Coimbatore, Tamil Nadu, India</p>
     <p class="mt-3 text-sm">&copy; 2025 TheArkTech. All rights reserved.</p>
   </div>
 </footer>
@@ -596,7 +613,7 @@ import ParticlesBackground from "../components/ParticlesBackground.astro";
               delay: i * 0.12,
               scrollTrigger: {
                 trigger: service,
-                start: 'top 80%',
+                start: 'top 130%',
                 toggleActions: 'play none none reverse',
               },
             }

@@ -37,6 +37,7 @@
     "zod": "^3.25.76"
   },
   "devDependencies": {
+    "@astrojs/sitemap": "^3.5.1",
     "@types/animejs": "^3.1.13",
     "autoprefixer": "^10.4.21",
     "postcss": "^8.5.6"
