@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://thearktech.in/sitemap-index.xml
+
