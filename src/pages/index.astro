@@ -93,6 +93,8 @@ import SEO from "../components/SEO.astro";
       style="background-image: url('/banner.png');"
     >
       <div class="absolute inset-0 bg-black/20"></div>
+      <!-- bottom fade to smooth transition into the next section -->
+      <div class="absolute inset-x-0 bottom-0 h-32 md:h-48 bg-gradient-to-b from-transparent to-black"></div>
       
 
       <div class="relative z-10 max-w-3xl px-6 animate-fadeInUp">
@@ -210,49 +212,104 @@ import SEO from "../components/SEO.astro";
   
   <div class="space-y-20 text-center max-w-3xl relative z-10">
     <div class="service opacity-0">
-      <h3 class="text-4xl font-semibold mb-4">🌐 Web Development</h3>
+      <h3 class="text-4xl font-semibold mb-4">
+        <svg viewBox="0 0 24 24" class="inline-block h-8 w-8 mr-2 align-[-0.125em]" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M2 12h20"></path>
+          <path d="M12 2v20"></path>
+        </svg>
+        Web Development
+      </h3>
       <p class="text-lg opacity-70">Modern, responsive websites tailored for your brand.</p>
     </div>
     
     <div class="service opacity-0">
-      <h3 class="text-4xl font-semibold mb-4">💻 App Development</h3>
+      <h3 class="text-4xl font-semibold mb-4">
+        <svg viewBox="0 0 24 24" class="inline-block h-8 w-8 mr-2 align-[-0.125em]" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="7" y="2" width="10" height="20" rx="2"></rect>
+          <circle cx="12" cy="18" r="1"></circle>
+        </svg>
+        App Development
+      </h3>
       <p class="text-lg opacity-70">High-performing mobile apps for iOS and Android.</p>
     </div>
     
     <div class="service opacity-0">
-      <h3 class="text-4xl font-semibold mb-4">💳 Billing Software</h3>
+      <h3 class="text-4xl font-semibold mb-4">
+        <svg viewBox="0 0 24 24" class="inline-block h-8 w-8 mr-2 align-[-0.125em]" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+          <path d="M3 10h18"></path>
+        </svg>
+        Billing Software
+      </h3>
       <p class="text-lg opacity-70">Custom solutions to streamline your business.</p>
     </div>
     
     <div class="service opacity-0">
-      <h3 class="text-4xl font-semibold mb-4">🤖 IoT & AI Solutions</h3>
+      <h3 class="text-4xl font-semibold mb-4">
+        <svg viewBox="0 0 24 24" class="inline-block h-8 w-8 mr-2 align-[-0.125em]" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="8" y="8" width="8" height="8" rx="1"></rect>
+          <path d="M12 2v4M12 18v4M2 12h4M18 12h4M5 5l2 2M17 5l-2 2M5 19l2-2M17 19l-2-2"></path>
+        </svg>
+        IoT & AI Solutions
+      </h3>
       <p class="text-lg opacity-70">Cutting-edge tech for automation and smart systems.</p>
     </div>
     
     <div class="service opacity-0">
-      <h3 class="text-4xl font-semibold mb-4">☁️ Cloud Solutions</h3>
+      <h3 class="text-4xl font-semibold mb-4">
+        <svg viewBox="0 0 24 24" class="inline-block h-8 w-8 mr-2 align-[-0.125em]" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M20 17.5a4.5 4.5 0 0 0-3.5-7 5.5 5.5 0 0 0-10.5 2 4 4 0 0 0 1 7.5h13"></path>
+        </svg>
+        Cloud Solutions
+      </h3>
       <p class="text-lg opacity-70">Secure cloud infrastructure, hosting, and migration services.</p>
     </div>
     
     <div class="service opacity-0">
-      <h3 class="text-4xl font-semibold mb-4">🛡️ Cybersecurity</h3>
+      <h3 class="text-4xl font-semibold mb-4">
+        <svg viewBox="0 0 24 24" class="inline-block h-8 w-8 mr-2 align-[-0.125em]" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 2l7 3v7c0 7-7 10-7 10s-7-3-7-10V5l7-3z"></path>
+          <path d="M9.5 12.5l2 2 3.5-3.5"></path>
+        </svg>
+        Cybersecurity
+      </h3>
       <p class="text-lg opacity-70">Protect your digital assets with advanced security solutions.</p>
     </div>
     
     <div class="service opacity-0">
-      <h3 class="text-4xl font-semibold mb-4">📈 Data Analytics</h3>
+      <h3 class="text-4xl font-semibold mb-4">
+        <svg viewBox="0 0 24 24" class="inline-block h-8 w-8 mr-2 align-[-0.125em]" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 3v18h18"></path>
+          <rect x="7" y="13" width="3" height="5"></rect>
+          <rect x="12" y="9" width="3" height="9"></rect>
+          <rect x="17" y="5" width="3" height="13"></rect>
+        </svg>
+        Data Analytics
+      </h3>
       <p class="text-lg opacity-70">Turn raw data into actionable insights with AI-driven analytics.</p>
     </div>
     
    
     
     <div class="service opacity-0">
-      <h3 class="text-4xl font-semibold mb-4">⚙️ IT Consulting</h3>
+      <h3 class="text-4xl font-semibold mb-4">
+        <svg viewBox="0 0 24 24" class="inline-block h-8 w-8 mr-2 align-[-0.125em]" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V22a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H2a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h0a1.65 1.65 0 0 0 1-1.51V2a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h0a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H22a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+        </svg>
+        IT Consulting
+      </h3>
       <p class="text-lg opacity-70">Expert guidance to optimize technology for your business growth.</p>
     </div>
     
     <div class="service opacity-0">
-      <p class="text-lg opacity-70 font-bold">✨ If you can imagine it, we can build it.</p>
+      <p class="text-lg opacity-70 font-bold">
+        <svg viewBox="0 0 24 24" class="inline-block h-6 w-6 mr-2 align-[-0.125em]" fill="currentColor" aria-hidden="true">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.76 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z"></path>
+        </svg>
+        If you can imagine it, we can build it.
+      </p>
     </div>
   </div>
 </section>
