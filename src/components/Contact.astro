@@ -1,11 +1,11 @@
 ---
-import WarpBackground from "./react/WarpBackground.tsx";
+import WarpShaderBackground from "@/components/ui/wrap-shader.tsx";
 const action = import.meta.env.DEV ? "/api/submit" : "/contact.php";
 ---
 <section id="contact" class="relative py-28 overflow-hidden">
-  <div class="absolute inset-0 -z-10">
-    <WarpBackground client:visible />
-    <div class="absolute inset-0 bg-black/40"></div>
+  <div class="absolute inset-0 -z-10" style="background: linear-gradient(135deg, var(--brand-deep), #04060d 70%);">
+    <WarpShaderBackground client:visible />
+    <div class="absolute inset-0 bg-black/50"></div>
   </div>
 
   <div class="container-x">
