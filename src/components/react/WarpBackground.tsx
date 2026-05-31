@@ -31,6 +31,10 @@ export default function WarpBackground() {
         "linear-gradient(135deg, var(--brand-deep), #04060d 70%)";
       return;
     }
+    const fallback = () => {
+      canvas.style.background =
+        "linear-gradient(135deg, var(--brand-deep), #04060d 70%)";
+    };
     const compile = (type: number, src: string) => {
       const s = gl.createShader(type)!;
       gl.shaderSource(s, src); gl.compileShader(s); return s;
@@ -38,7 +42,14 @@ export default function WarpBackground() {
     const prog = gl.createProgram()!;
     gl.attachShader(prog, compile(gl.VERTEX_SHADER, VERT));
     gl.attachShader(prog, compile(gl.FRAGMENT_SHADER, FRAG));
-    gl.linkProgram(prog); gl.useProgram(prog);
+    gl.linkProgram(prog);
+    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
+      // Shader failed to compile/link (common on some old/mobile GPUs):
+      // degrade to the same static gradient as the no-WebGL path.
+      fallback();
+      return;
+    }
+    gl.useProgram(prog);
 
     const buf = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, buf);
@@ -70,8 +81,10 @@ export default function WarpBackground() {
     loop();
 
     const io = new IntersectionObserver(([e]) => {
-      running = e.isIntersecting;
-      if (running) loop(); else cancelAnimationFrame(raf);
+      // Guard re-entry: only (re)start the loop if it isn't already running,
+      // so rapid visibility toggles can't schedule overlapping RAF loops.
+      if (e.isIntersecting && !running) { running = true; loop(); }
+      else if (!e.isIntersecting) { running = false; cancelAnimationFrame(raf); }
     });
     io.observe(canvas);
 
