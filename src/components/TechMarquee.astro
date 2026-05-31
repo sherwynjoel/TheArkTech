@@ -1,0 +1,24 @@
+---
+const row1 = ["React","Angular","Vue.js","Next.js","Node.js","Python","Java",".NET","PHP","Flutter"];
+const row2 = ["React Native","Swift","AWS","Azure","GCP","Docker","Kubernetes","PostgreSQL","MongoDB","MySQL"];
+---
+<section id="tech" class="py-24 overflow-hidden">
+  <div class="container-x text-center mb-10">
+    <p class="eyebrow mb-3">Our stack</p>
+    <h2 class="font-display text-[clamp(2rem,4vw,3.25rem)]">Technology we work with</h2>
+  </div>
+  <div class="marquee-mask space-y-6">
+    <div class="flex w-max" style="animation: marquee-left 32s linear infinite;">
+      {[...row1, ...row1].map((t) => <span class="marq-item">{t}</span>)}
+    </div>
+    <div class="flex w-max" style="animation: marquee-right 36s linear infinite;">
+      {[...row2, ...row2].map((t) => <span class="marq-item">{t}</span>)}
+    </div>
+  </div>
+</section>
+
+<style>
+  .marquee-mask { -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); }
+  .marq-item { display: inline-block; margin: 0 1.5rem; font-family: "Clash Display", sans-serif; font-size: 1.5rem; color: var(--ink-faint); transition: color .3s; }
+  .marq-item:hover { color: var(--brand-bright); }
+</style>

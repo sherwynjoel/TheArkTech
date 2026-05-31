@@ -1,0 +1,39 @@
+---
+const email = "contact@thearktech.in";
+const phone = "+919489722142";
+const phoneLabel = "+91 94897 22142";
+---
+<footer class="relative overflow-hidden border-t border-white/10">
+  <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover opacity-30">
+    <source src="/footer bg.mp4" type="video/mp4" />
+  </video>
+  <div class="absolute inset-0 bg-black/80"></div>
+  <div class="relative container-x py-16 grid gap-10 md:grid-cols-4">
+    <div class="md:col-span-2">
+      <div class="flex items-center gap-3">
+        <img src="/logo.png" alt="TheArkTech logo" class="h-10 w-12 object-contain" />
+        <span class="font-display text-xl font-bold">TheArkTech</span>
+      </div>
+      <p class="mt-4 max-w-sm text-ink-muted">Your trusted software partner — websites, apps, and AI-powered automation for businesses that want to grow.</p>
+    </div>
+    <div>
+      <p class="eyebrow mb-4">Explore</p>
+      <ul class="space-y-2 text-ink-muted">
+        <li><a href="#services" class="hover:text-ink">Services</a></li>
+        <li><a href="#industries" class="hover:text-ink">Industries</a></li>
+        <li><a href="#contact" class="hover:text-ink">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="eyebrow mb-4">Get in touch</p>
+      <ul class="space-y-2 text-ink-muted">
+        <li><a href={`mailto:${email}`} class="hover:text-ink">{email}</a></li>
+        <li><a href={`tel:${phone}`} class="hover:text-ink">{phoneLabel}</a></li>
+        <li>Coimbatore, Tamil Nadu, India</li>
+      </ul>
+    </div>
+  </div>
+  <div class="relative container-x border-t border-white/10 py-6 text-sm text-ink-faint">
+    &copy; 2025 TheArkTech. All rights reserved.
+  </div>
+</footer>

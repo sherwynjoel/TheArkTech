@@ -1,0 +1,30 @@
+---
+const reasons = [
+  { t: "Innovation-Driven", d: "Creativity plus the latest technologies, smart architecture, and future-ready design." },
+  { t: "High Performance", d: "Lightweight, optimized code for fast load times and smooth experiences." },
+  { t: "Security You Can Trust", d: "Industry-grade encryption and secure authentication across every build." },
+  { t: "End-to-End Support", d: "Design, build, test, deploy, and maintain — a complete, worry-free service." },
+  { t: "Modern UI/UX", d: "Clean layouts and intuitive navigation that build trust and clarity." },
+  { t: "Transparent Communication", d: "Regular updates, clear timelines, and honest communication throughout." },
+  { t: "Custom Solutions", d: "Tailored to your brand and goals — never generic templates." },
+  { t: "Proven Results", d: "Successful projects across e-commerce, corporate, mobile, and dashboards." },
+];
+const span = (i: number) => (i === 0 || i === 5) ? "lg:col-span-2" : "";
+---
+<section id="why" class="py-28">
+  <div class="container-x">
+    <div class="max-w-2xl mb-14">
+      <p class="eyebrow mb-3">Why choose us</p>
+      <h2 class="font-display text-[clamp(2rem,4vw,3.25rem)]">Built to make a difference</h2>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 auto-rows-fr">
+      {reasons.map((r, i) => (
+        <div class={`reveal glass rounded-3xl p-7 hover:-translate-y-1 hover:border-brand/40 transition ${span(i)}`}>
+          <div class="h-10 w-10 rounded-xl bg-brand/15 border border-brand/30 mb-5"></div>
+          <h3 class="font-display text-xl">{r.t}</h3>
+          <p class="mt-2 text-sm text-ink-muted">{r.d}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

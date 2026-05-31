@@ -1,0 +1,56 @@
+---
+const links = [
+  { href: "#services", label: "Services" },
+  { href: "#industries", label: "Industries" },
+  { href: "#contact", label: "Contact" },
+];
+---
+<header id="site-nav" class="fixed top-0 inset-x-0 z-50 transition-all duration-300">
+  <div class="container-x flex items-center justify-between py-3">
+    <a href="#home" class="flex items-center gap-3">
+      <img src="/logo.png" alt="TheArkTech logo" class="h-10 w-12 object-contain" />
+      <span class="font-display text-xl font-bold tracking-tight">TheArkTech</span>
+    </a>
+    <nav class="hidden md:flex items-center gap-1 glass rounded-full px-2 py-1">
+      {links.map((l) => (
+        <a href={l.href} class="px-4 py-2 rounded-full text-sm font-medium text-ink-muted hover:text-ink hover:bg-white/10 transition">{l.label}</a>
+      ))}
+    </nav>
+    <a href="#contact" class="hidden md:inline-flex btn-glass text-sm py-2 px-5">Get Quote</a>
+    <button id="nav-toggle" aria-label="Open menu" aria-expanded="false" class="md:hidden glass rounded-xl p-2">
+      <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+  </div>
+  <div id="nav-mobile" class="md:hidden hidden container-x pb-4">
+    <div class="glass rounded-2xl p-3 flex flex-col gap-1">
+      {links.map((l) => (
+        <a href={l.href} class="px-4 py-3 rounded-xl text-sm font-medium text-ink-muted hover:text-ink hover:bg-white/10 transition">{l.label}</a>
+      ))}
+      <a href="#contact" class="btn-glass mt-1">Get Quote</a>
+    </div>
+  </div>
+</header>
+
+<script>
+  const nav = document.getElementById("site-nav");
+  const onScroll = () => {
+    if (!nav) return;
+    if (window.scrollY > 24) nav.classList.add("nav-scrolled");
+    else nav.classList.remove("nav-scrolled");
+  };
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+  const toggle = document.getElementById("nav-toggle");
+  const menu = document.getElementById("nav-mobile");
+  toggle?.addEventListener("click", () => {
+    const open = menu?.classList.toggle("hidden") === false;
+    toggle.setAttribute("aria-expanded", String(open));
+  });
+  menu?.querySelectorAll("a").forEach((a) =>
+    a.addEventListener("click", () => menu.classList.add("hidden"))
+  );
+</script>
+
+<style>
+  #site-nav.nav-scrolled { background: rgba(0,0,0,0.55); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid rgba(255,255,255,0.08); }
+</style>

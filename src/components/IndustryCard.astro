@@ -1,0 +1,17 @@
+---
+interface Props { slug: string; title: string; desc: string; tag: string; }
+const { slug, title, desc, tag } = Astro.props as Props;
+---
+<article class="reveal group glass rounded-3xl overflow-hidden flex flex-col hover:-translate-y-1.5 transition duration-300">
+  <div class="relative h-44 overflow-hidden">
+    <img src={`/industries/${slug}.jpg`} alt={title} loading="lazy" decoding="async"
+         class="h-full w-full object-cover scale-105 group-hover:scale-110 transition-transform duration-500" />
+    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent"></div>
+    <span class="absolute top-3 left-3 glass rounded-full px-3 py-1 text-xs font-medium">{tag}</span>
+  </div>
+  <div class="flex flex-col flex-1 p-5">
+    <h3 class="font-display text-lg">{title}</h3>
+    <p class="mt-2 text-sm text-ink-muted flex-1">{desc}</p>
+    <a href="#contact" class="btn-glass mt-5 w-full text-sm py-3">Explore →</a>
+  </div>
+</article>

@@ -1,0 +1,5 @@
+use wrap shader from 21st.dev for contact form background but color should be relevant to the theme, contact form elements should be glass 
+use Shiny Button from 21st.dev for emphasis important button alone
+Use Flip Words for catchline for to bring emphasis to some Word
+pick a good but font and glass buttons for other buttons
+also glass nav bar too
