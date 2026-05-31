@@ -18,13 +18,17 @@ const action = import.meta.env.DEV ? "/api/submit" : "/contact.php";
     <div id="contact-status" class="max-w-xl mx-auto mb-6"></div>
 
     <form action={action} method="POST" class="glass max-w-xl mx-auto rounded-3xl p-8 space-y-5">
-      <input name="name" type="text" placeholder="Your name" required
+      <label for="cf-name" class="sr-only">Your name</label>
+      <input id="cf-name" name="name" type="text" placeholder="Your name" required autocomplete="name"
         class="w-full rounded-xl bg-white/5 border border-white/15 px-4 py-3.5 text-ink placeholder-ink-faint focus:border-brand focus:ring-2 focus:ring-[var(--ring)] outline-none transition" />
-      <input name="email" type="email" placeholder="Your email" required
+      <label for="cf-email" class="sr-only">Your email</label>
+      <input id="cf-email" name="email" type="email" placeholder="Your email" required autocomplete="email"
         class="w-full rounded-xl bg-white/5 border border-white/15 px-4 py-3.5 text-ink placeholder-ink-faint focus:border-brand focus:ring-2 focus:ring-[var(--ring)] outline-none transition" />
-      <input name="phone" type="tel" placeholder="Your phone" required
+      <label for="cf-phone" class="sr-only">Your phone</label>
+      <input id="cf-phone" name="phone" type="tel" placeholder="Your phone" required autocomplete="tel"
         class="w-full rounded-xl bg-white/5 border border-white/15 px-4 py-3.5 text-ink placeholder-ink-faint focus:border-brand focus:ring-2 focus:ring-[var(--ring)] outline-none transition" />
-      <textarea name="requirement" rows="5" minlength="5" placeholder="Your query (min 5 characters)" required
+      <label for="cf-requirement" class="sr-only">Your query</label>
+      <textarea id="cf-requirement" name="requirement" rows="5" minlength="5" placeholder="Your query (min 5 characters)" required
         class="w-full rounded-xl bg-white/5 border border-white/15 px-4 py-3.5 text-ink placeholder-ink-faint focus:border-brand focus:ring-2 focus:ring-[var(--ring)] outline-none transition"></textarea>
       <button type="submit"
         class="w-full rounded-xl py-4 font-semibold text-white transition hover:-translate-y-0.5"
