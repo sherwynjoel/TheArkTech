@@ -1,41 +1,102 @@
-html,
+/* ============ Fonts (self-hosted) ============ */
+@font-face {
+  font-family: "Clash Display"; src: url("/fonts/ClashDisplay-Semibold.woff2") format("woff2");
+  font-weight: 600; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Clash Display"; src: url("/fonts/ClashDisplay-Bold.woff2") format("woff2");
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Satoshi"; src: url("/fonts/Satoshi-Regular.woff2") format("woff2");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Satoshi"; src: url("/fonts/Satoshi-Medium.woff2") format("woff2");
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Satoshi"; src: url("/fonts/Satoshi-Bold.woff2") format("woff2");
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+
+/* ============ Design tokens ============ */
+:root {
+  --bg: #000000;
+  --bg-elev: #0a0e1a;
+  --bg-elev-2: #0d1426;
+  --ink: #ffffff;
+  --ink-muted: #9aa6bd;
+  --ink-faint: #64748b;
+  --brand: #3b82f6;
+  --brand-bright: #60a5fa;
+  --brand-deep: #1e3a8a;
+  --accent-cyan: #22d3ee;
+  --glass-bg: rgba(255, 255, 255, 0.06);
+  --glass-brd: rgba(255, 255, 255, 0.12);
+  --glass-blur: 16px;
+  --ring: rgba(59, 130, 246, 0.55);
+  --maxw: 80rem;
+}
+
+/* ============ Base ============ */
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
 body {
-  margin: 0;
-  padding: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Satoshi", ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+h1, h2, h3, .font-display {
+  font-family: "Clash Display", "Satoshi", sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+
+:focus-visible { outline: 2px solid var(--brand-bright); outline-offset: 2px; }
+
+/* ============ Reusable utilities ============ */
+.container-x { width: 100%; max-width: var(--maxw); margin-inline: auto; padding-inline: 1.5rem; }
+
+.eyebrow {
+  font-family: "Satoshi", sans-serif; font-weight: 500;
+  text-transform: uppercase; letter-spacing: 0.18em;
+  font-size: 0.75rem; color: var(--ink-faint);
 }
 
-main {
-  width: 100%;
-  height: 100vh;
-  background: #000000;
+.glass {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-brd);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
 }
 
-.fade-up,
-.service {
-  opacity: 0; /* hidden until animated */
+.btn-glass {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+  padding: 0.85rem 1.6rem; border-radius: 9999px;
+  background: var(--glass-bg); border: 1px solid var(--glass-brd);
+  backdrop-filter: blur(var(--glass-blur)); -webkit-backdrop-filter: blur(var(--glass-blur));
+  font-weight: 500; color: var(--ink);
+  transition: transform .25s ease, background .25s ease, border-color .25s ease;
 }
-.progress-bar {
-  transform: scaleX(0);
-}
+.btn-glass:hover { transform: translateY(-2px); background: rgba(255,255,255,0.10); border-color: rgba(255,255,255,0.22); }
 
-.cb-btn_cta-border {
-  position: absolute;
-  inset: 0;
-  border: 2px solid #3b82f6; /* Tailwind blue-600 */
-  border-radius: 9999px; /* rounded-full */
-  opacity: 1;
-  transform: scale(1);
-  transition: transform 0.3s ease, opacity 0.3s ease;
-  pointer-events: none; /* allows clicks on the button */
-}
+/* ============ Scroll reveal ============ */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s cubic-bezier(.2,.7,.2,1); }
+.reveal.is-in { opacity: 1; transform: none; }
 
-/* Hover effect */
-a:hover .cb-btn_cta-border {
-  transform: scale(1.1);
-  opacity: 0.6;
-}
+/* ============ Marquee ============ */
+@keyframes marquee-left { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes marquee-right { from { transform: translateX(-50%); } to { transform: translateX(0); } }
 
-html {
-  scroll-behavior: smooth;
+/* ============ Reduced motion ============ */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
 }
-
