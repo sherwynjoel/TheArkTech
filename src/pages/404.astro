@@ -1,0 +1,159 @@
+---
+import "../styles/global.css";
+import Nav from "../components/Nav.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import SEO from "../components/SEO.astro";
+---
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="/logo.png" />
+    <SEO
+      title="404 — Page Not Found | TheArkTech"
+      description="The page you're looking for doesn't exist. Head back to TheArkTech and explore our services."
+      url="https://thearktech.in/404"
+      image="https://thearktech.in/banner.png"
+      siteName="TheArkTech"
+      keywords={[]}
+    />
+  </head>
+  <body class="bg-bg text-ink">
+    <Nav />
+    <main class="not-found">
+      <!-- ambient blobs -->
+      <div class="nf-blob nf-blob--1" aria-hidden="true"></div>
+      <div class="nf-blob nf-blob--2" aria-hidden="true"></div>
+
+      <div class="container-x nf-content">
+        <p class="nf-code">404</p>
+        <h1 class="font-display nf-title">Page not found</h1>
+        <p class="nf-desc">
+          Looks like this URL doesn't exist. It may have moved, been deleted, or
+          never existed in the first place.
+        </p>
+        <div class="nf-actions">
+          <a href="/" class="nf-btn-primary">← Back to home</a>
+          <a href="#contact" class="btn-glass">Contact us</a>
+        </div>
+
+        <!-- Quick nav links -->
+        <div class="nf-links">
+          <p class="eyebrow mb-4">Or jump to</p>
+          <div class="nf-pills">
+            <a href="/#services" class="nf-pill">Services</a>
+            <a href="/#industries" class="nf-pill">Industries</a>
+            <a href="/#pricing" class="nf-pill">Pricing</a>
+            <a href="/#faq" class="nf-pill">FAQ</a>
+            <a href="/#contact" class="nf-pill">Contact</a>
+          </div>
+        </div>
+      </div>
+    </main>
+    <SiteFooter />
+  </body>
+</html>
+
+<style>
+  .not-found {
+    min-height: calc(100svh - 5rem);
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    padding: 6rem 0 4rem;
+  }
+
+  .nf-blob {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(80px);
+    pointer-events: none;
+    will-change: transform;
+  }
+  .nf-blob--1 {
+    top: -8rem; left: -6rem;
+    width: 32rem; height: 32rem;
+    background: radial-gradient(circle, var(--brand-deep), transparent 65%);
+    opacity: 0.5;
+    animation: nf-drift-1 20s ease-in-out infinite alternate;
+  }
+  .nf-blob--2 {
+    bottom: -6rem; right: -6rem;
+    width: 28rem; height: 28rem;
+    background: radial-gradient(circle, rgba(34,211,238,0.2), transparent 65%);
+    opacity: 0.4;
+    animation: nf-drift-2 24s ease-in-out infinite alternate;
+  }
+  @keyframes nf-drift-1 { from { transform: translate(0,0); } to { transform: translate(30px,20px); } }
+  @keyframes nf-drift-2 { from { transform: translate(0,0); } to { transform: translate(-20px,-30px); } }
+  @media (prefers-reduced-motion: reduce) {
+    .nf-blob { animation: none; }
+  }
+
+  .nf-content {
+    max-width: 36rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    position: relative;
+  }
+
+  .nf-code {
+    font-family: "Clash Display", sans-serif;
+    font-size: clamp(6rem, 18vw, 10rem);
+    font-weight: 700;
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 2px rgba(96, 165, 250, 0.35);
+    margin: 0;
+    letter-spacing: -0.04em;
+  }
+
+  .nf-title {
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    line-height: 1.1;
+    margin: 0;
+  }
+
+  .nf-desc {
+    color: var(--ink-muted);
+    font-size: 1rem;
+    line-height: 1.65;
+    max-width: 30ch;
+    margin: 0;
+  }
+
+  .nf-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+    margin-top: 0.5rem;
+  }
+
+  .nf-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.85rem 1.75rem;
+    border-radius: 9999px;
+    background: linear-gradient(120deg, var(--brand-deep), var(--brand) 60%, var(--brand-bright));
+    color: #fff;
+    font-weight: 600;
+    box-shadow: 0 6px 24px rgba(59,130,246,0.35);
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+  .nf-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 36px rgba(59,130,246,0.5); }
+
+  .nf-links { margin-top: 1rem; }
+  .nf-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .nf-pill {
+    padding: 0.4rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.85rem;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-brd);
+    color: var(--ink-muted);
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .nf-pill:hover { color: var(--brand-bright); border-color: rgba(96,165,250,0.35); }
+</style>

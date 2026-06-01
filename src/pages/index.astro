@@ -2,15 +2,24 @@
 import "../styles/global.css";
 import SEO from "../components/SEO.astro";
 import Nav from "../components/Nav.astro";
+import LoadingScreen from "../components/LoadingScreen.astro";
+import ScrollProgress from "../components/ScrollProgress.astro";
+import Cursor from "../components/Cursor.astro";
 import Hero from "../components/Hero.astro";
 import TrustStrip from "../components/TrustStrip.astro";
+import Stats from "../components/Stats.astro";
 import Services from "../components/Services.astro";
+import HowWeWork from "../components/HowWeWork.astro";
 import WhyChooseUs from "../components/WhyChooseUs.astro";
 import Industries from "../components/Industries.astro";
 import TechMarquee from "../components/TechMarquee.astro";
+import ServiceQuiz from "../components/ServiceQuiz.astro";
+import ConsultationBooking from "../components/ConsultationBooking.astro";
+import FAQ from "../components/FAQ.astro";
 import Contact from "../components/Contact.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import CallFab from "../components/CallFab.astro";
+import CookieBanner from "../components/CookieBanner.astro";
 ---
 <html lang="en">
   <head>
@@ -34,18 +43,27 @@ import CallFab from "../components/CallFab.astro";
     />
   </head>
   <body class="bg-bg text-ink">
+    <LoadingScreen />
+    <ScrollProgress />
+    <Cursor />
     <Nav />
     <main>
       <Hero />
       <TrustStrip />
+      <Stats />
       <Services />
+      <ServiceQuiz />
+      <HowWeWork />
       <WhyChooseUs />
       <Industries />
       <TechMarquee />
+      <FAQ />
+      <ConsultationBooking />
       <Contact />
     </main>
     <SiteFooter />
     <CallFab />
+    <CookieBanner />
 
     <script>
       const obs = new IntersectionObserver((entries) => {

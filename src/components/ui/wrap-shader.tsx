@@ -39,8 +39,7 @@ export default function WarpShaderBackground() {
     <div ref={wrapRef} style={{ height: "100%", width: "100%" }}>
       <Warp
         style={{ height: "100%", width: "100%" }}
-        maxPixelRatio={1.5}
-        isPaused={paused}
+        maxPixelCount={1920 * 1080}
         proportion={0.45}
         softness={1}
         distortion={0.25}
@@ -50,7 +49,7 @@ export default function WarpShaderBackground() {
         shapeScale={0.1}
         scale={1}
         rotation={0}
-        speed={reduce ? 0 : 0.6}
+        speed={paused || reduce ? 0 : 0.6}
         colors={[
           "hsl(222, 66%, 6%)",   // near-black navy base
           "hsl(224, 64%, 22%)",  // deep blue  (~brand-deep #1e3a8a)

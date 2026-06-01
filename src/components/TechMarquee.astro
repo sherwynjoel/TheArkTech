@@ -1,6 +1,10 @@
 ---
 const row1 = ["React","Angular","Vue.js","Next.js","Node.js","Python","Java",".NET","PHP","Flutter"];
 const row2 = ["React Native","Swift","AWS","Azure","GCP","Docker","Kubernetes","PostgreSQL","MongoDB","MySQL"];
+// 4 copies ensures one set always exceeds any viewport width, eliminating
+// the blank-gap that appears when items are narrower than the screen.
+const r1 = [...row1, ...row1, ...row1, ...row1];
+const r2 = [...row2, ...row2, ...row2, ...row2];
 ---
 <section id="tech" class="py-24 overflow-hidden">
   <div class="container-x text-center mb-10">
@@ -8,17 +12,44 @@ const row2 = ["React Native","Swift","AWS","Azure","GCP","Docker","Kubernetes","
     <h2 class="font-display text-[clamp(2rem,4vw,3.25rem)]">Technology we work with</h2>
   </div>
   <div class="marquee-mask space-y-6">
-    <div class="flex w-max" style="animation: marquee-left 32s linear infinite;">
-      {[...row1, ...row1].map((t) => <span class="marq-item">{t}</span>)}
+    <div class="marq-track marq-left">
+      {r1.map((t) => <span class="marq-item">{t}</span>)}
     </div>
-    <div class="flex w-max" style="animation: marquee-right 36s linear infinite;">
-      {[...row2, ...row2].map((t) => <span class="marq-item">{t}</span>)}
+    <div class="marq-track marq-right">
+      {r2.map((t) => <span class="marq-item">{t}</span>)}
     </div>
   </div>
 </section>
 
 <style>
-  .marquee-mask { -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); }
-  .marq-item { display: inline-block; margin: 0 1.5rem; font-family: "Clash Display", sans-serif; font-size: 1.5rem; color: var(--ink-faint); transition: color .3s; }
+  .marquee-mask {
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  }
+
+  .marq-track {
+    display: flex;
+    width: max-content;
+    will-change: transform;
+  }
+  .marq-left  { animation: marq-left  32s linear infinite; }
+  .marq-right { animation: marq-right 36s linear infinite; }
+
+  /* -25% = one set (1/4 of 4 copies), guaranteeing a seamless loop */
+  @keyframes marq-left  { from { transform: translateX(0); }     to { transform: translateX(-25%); } }
+  @keyframes marq-right { from { transform: translateX(-25%); }  to { transform: translateX(0); }    }
+
+  .marq-item {
+    display: inline-block;
+    margin: 0 1.5rem;
+    font-family: "Clash Display", sans-serif;
+    font-size: 1.5rem;
+    color: var(--ink-faint);
+    transition: color .3s;
+  }
   .marq-item:hover { color: var(--brand-bright); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marq-track { animation: none; }
+  }
 </style>

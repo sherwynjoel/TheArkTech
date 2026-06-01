@@ -1,10 +1,8 @@
 ---
 import FlipWords from "./react/FlipWords.tsx";
 import ShinyButton from "./react/ShinyButton.tsx";
-const words = ["websites", "apps", "AI automation", "cloud"];
+const words = ["websites", "apps", "custom software", "AI automation"];
 
-// Particles drifting left -> right across the hero. Varied size/speed/opacity,
-// with negative delays so the stream is already populated on first paint.
 const particles = [
   { top: 8,  size: 2, dur: 30, delay: -2,  kind: "soft", op: 0.35 },
   { top: 16, size: 4, dur: 24, delay: -14, kind: "cyan", op: 0.5 },
@@ -18,7 +16,11 @@ const particles = [
   { top: 84, size: 4, dur: 26, delay: -3,  kind: "cyan", op: 0.5 },
   { top: 92, size: 3, dur: 32, delay: -16, kind: "soft", op: 0.4 },
 ];
+
+const techBadges = ["React", "Next.js", "Flutter", "Node.js", "AWS", "Python", "Figma", "PostgreSQL"];
+
 ---
+
 <section id="home" class="relative min-h-[100svh] flex items-center overflow-hidden pt-28 pb-16">
   <!-- animated ambient backdrop -->
   <div class="hero-bg pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
@@ -36,125 +38,156 @@ const particles = [
   </div>
 
   <div class="container-x grid lg:grid-cols-12 gap-12 items-center">
-    <div class="lg:col-span-7">
-      <p class="eyebrow mb-5">Software studio · Coimbatore, India</p>
-      <h1 class="font-display font-bold leading-[1.02] text-[clamp(2.75rem,6vw,5rem)]">
-        We build<br />
-        <FlipWords client:load words={words} /><br />
+
+    <!-- ── LEFT: copy ── -->
+    <div class="lg:col-span-6">
+      <!-- live badge -->
+      <div class="hero-live-badge mb-6">
+        <span class="hero-live-dot" aria-hidden="true"></span>
+        Available for new projects
+      </div>
+
+      <p class="eyebrow mb-4">Software studio · Coimbatore, India</p>
+      <h1 class="font-display font-bold leading-[1.1] text-[clamp(2.4rem,5vw,4.5rem)]">
+        We build <FlipWords client:load words={words} /><br />
         that ship.
       </h1>
-      <p class="mt-6 max-w-xl text-lg text-ink-muted">
+      <p class="mt-6 max-w-lg text-lg text-ink-muted leading-relaxed">
         TheArkTech delivers premium, end-to-end digital products — from
         modern websites and apps to AI-powered automation — for small
-        businesses and startups.
+        businesses and startups across India.
       </p>
+
       <div class="mt-9 flex flex-wrap items-center gap-4">
         <ShinyButton client:load href="#contact">Start a project</ShinyButton>
-        <a href="#services" class="btn-glass">See our work</a>
+        <a href="#services" class="btn-glass">Explore services</a>
+      </div>
+
+      <!-- social proof row -->
+      <div class="hero-proof mt-10">
+        <div class="hero-proof-text">
+          <div class="hero-stars" aria-label="5 star rating">★★★★★</div>
+          <p>Trusted by <strong>200+ businesses</strong> across India</p>
+        </div>
       </div>
     </div>
 
-    <div class="lg:col-span-5 relative">
-      <div class="glass rounded-3xl p-5 rotate-2 hover:rotate-0 transition-transform duration-500">
-        <div class="rounded-2xl bg-bg-elev-2 p-4 font-mono text-sm text-ink-muted">
-          <p><span class="text-accent-cyan">const</span> ark = <span class="text-brand-bright">build</span>(idea);</p>
-          <p class="mt-1">ark.ship(); <span class="text-ink-faint">// fast, secure, yours</span></p>
+    <!-- ── RIGHT: visual showcase ── -->
+    <div class="lg:col-span-6 relative hero-visual">
+
+      <!-- floating "just launched" pill -->
+      <div class="hv-pill hv-pill--launch" aria-hidden="true">
+        <span class="hv-pill-dot"></span>
+        Just launched — E-Commerce store
+      </div>
+
+      <!-- main project card -->
+      <div class="hv-card">
+        <!-- mock browser chrome -->
+        <div class="hv-browser-bar">
+          <span class="hv-dot" style="background:#ff5f57"></span>
+          <span class="hv-dot" style="background:#ffbd2e"></span>
+          <span class="hv-dot" style="background:#28c840"></span>
+          <span class="hv-url">thearktech.in/client-preview</span>
         </div>
-        <div class="mt-4 grid grid-cols-3 gap-3 text-center">
-          <div class="rounded-xl bg-white/5 py-4"><p class="font-display text-2xl">Web</p></div>
-          <div class="rounded-xl bg-white/5 py-4"><p class="font-display text-2xl">Apps</p></div>
-          <div class="rounded-xl bg-white/5 py-4"><p class="font-display text-2xl">AI</p></div>
+
+        <!-- mock site content -->
+        <div class="hv-browser-body">
+          <div class="hv-mock-nav">
+            <div class="hv-mock-logo"></div>
+            <div class="hv-mock-links">
+              <div class="hv-mock-line hv-w-8"></div>
+              <div class="hv-mock-line hv-w-10"></div>
+              <div class="hv-mock-line hv-w-12"></div>
+              <div class="hv-mock-btn"></div>
+            </div>
+          </div>
+          <div class="hv-mock-hero">
+            <div class="hv-mock-hero-bg"></div>
+            <div class="hv-mock-hero-text">
+              <div class="hv-mock-h1"></div>
+              <div class="hv-mock-h1 hv-w-70"></div>
+              <div class="hv-mock-p"></div>
+              <div class="hv-mock-p hv-w-60"></div>
+              <div class="hv-mock-cta-row">
+                <div class="hv-mock-cta"></div>
+                <div class="hv-mock-cta hv-mock-cta--ghost"></div>
+              </div>
+            </div>
+          </div>
+          <div class="hv-mock-cards">
+            <div class="hv-mock-card"></div>
+            <div class="hv-mock-card"></div>
+            <div class="hv-mock-card"></div>
+          </div>
         </div>
       </div>
+
+      <!-- floating stats card -->
+      <div class="hv-pill hv-pill--stats" aria-hidden="true">
+        <div class="hv-stats-row">
+          <div class="hv-stat">
+            <span class="hv-stat-num">200+</span>
+            <span class="hv-stat-lbl">Projects</span>
+          </div>
+          <div class="hv-stat-divider"></div>
+          <div class="hv-stat">
+            <span class="hv-stat-num">4 wks</span>
+            <span class="hv-stat-lbl">Avg delivery</span>
+          </div>
+          <div class="hv-stat-divider"></div>
+          <div class="hv-stat">
+            <span class="hv-stat-num">4.9★</span>
+            <span class="hv-stat-lbl">Rating</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- tech badges strip -->
+      <div class="hv-badges" aria-hidden="true">
+        {techBadges.map((t) => (
+          <span class="hv-badge">{t}</span>
+        ))}
+      </div>
+
     </div>
   </div>
 </section>
 
 <style>
-  /* Ambient hero backdrop. All motion is transform/opacity on pre-rendered,
-     pre-blurred layers (the blur is cached once, then the layer is moved), so it
-     stays on the compositor and costs nothing per frame. No backdrop-filter. */
+  /* ── backdrop ── */
   .hero-bg { overflow: hidden; }
-
-  /* faint blueprint grid, fading out toward the edges */
   .hero-grid {
-    position: absolute;
-    inset: 0;
+    position: absolute; inset: 0;
     background-image:
-      linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+      linear-gradient(to right, rgba(255,255,255,0.035) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,255,255,0.035) 1px, transparent 1px);
     background-size: 56px 56px;
     -webkit-mask-image: radial-gradient(115% 90% at 28% 22%, #000 0%, transparent 72%);
     mask-image: radial-gradient(115% 90% at 28% 22%, #000 0%, transparent 72%);
   }
-
-  /* drifting, breathing color blobs */
-  .hero-blob {
-    position: absolute;
-    border-radius: 9999px;
-    filter: blur(72px);
-    will-change: transform;
-  }
-  .hero-blob--1 {
-    top: -10rem;
-    left: -8rem;
-    height: 36rem;
-    width: 36rem;
-    opacity: 0.45;
+  .hero-blob { position: absolute; border-radius: 9999px; filter: blur(72px); will-change: transform; }
+  .hero-blob--1 { top:-10rem; left:-8rem; height:36rem; width:36rem; opacity:.45;
     background: radial-gradient(circle, var(--brand-deep), transparent 60%);
-    animation: hero-drift-1 26s ease-in-out infinite alternate;
-  }
-  .hero-blob--2 {
-    top: 26%;
-    right: -8rem;
-    height: 34rem;
-    width: 34rem;
-    opacity: 0.3;
+    animation: hero-drift-1 26s ease-in-out infinite alternate; }
+  .hero-blob--2 { top:26%; right:-8rem; height:34rem; width:34rem; opacity:.3;
     background: radial-gradient(circle, var(--brand), transparent 60%);
-    animation: hero-drift-2 32s ease-in-out infinite alternate;
-  }
-
-  /* slow diagonal cyan glow sweep (sparing accent) */
+    animation: hero-drift-2 32s ease-in-out infinite alternate; }
   .hero-glow {
-    position: absolute;
-    top: -18%;
-    left: 8%;
-    height: 40rem;
-    width: 40rem;
-    background: radial-gradient(circle, rgba(34, 211, 238, 0.1), transparent 62%);
-    filter: blur(40px);
-    will-change: transform, opacity;
-    animation: hero-sweep 22s ease-in-out infinite alternate;
-  }
-
-  /* particles drifting left -> right, varied size/speed/opacity */
-  .hero-particle {
-    position: absolute;
-    left: 0;
-    width: var(--size);
-    height: var(--size);
-    border-radius: 9999px;
-    opacity: 0;
-    box-shadow: 0 0 calc(var(--size) * 1.5) rgba(96, 165, 250, 0.25);
-    animation: hero-cross var(--dur) linear var(--delay) infinite;
-    will-change: transform;
-  }
-  .hero-particle--soft { background: rgba(226, 234, 252, 0.85); }
+    position: absolute; top:-18%; left:8%; height:40rem; width:40rem;
+    background: radial-gradient(circle, rgba(34,211,238,0.1), transparent 62%);
+    filter: blur(40px); will-change: transform, opacity;
+    animation: hero-sweep 22s ease-in-out infinite alternate; }
+  .hero-particle { position: absolute; left:0; width:var(--size); height:var(--size);
+    border-radius:9999px; opacity:0; box-shadow:0 0 calc(var(--size)*1.5) rgba(96,165,250,0.25);
+    animation: hero-cross var(--dur) linear var(--delay) infinite; will-change: transform; }
+  .hero-particle--soft { background: rgba(226,234,252,0.85); }
   .hero-particle--blue { background: var(--brand-bright); }
   .hero-particle--cyan { background: var(--accent-cyan); }
 
-  @keyframes hero-drift-1 {
-    from { transform: translate(0, 0) scale(1); }
-    to   { transform: translate(42px, 30px) scale(1.08); }
-  }
-  @keyframes hero-drift-2 {
-    from { transform: translate(0, 0) scale(1); }
-    to   { transform: translate(-50px, -26px) scale(1.12); }
-  }
-  @keyframes hero-sweep {
-    from { transform: translate(-6%, -4%); opacity: 0.65; }
-    to   { transform: translate(20%, 12%); opacity: 1; }
-  }
+  @keyframes hero-drift-1 { from { transform: translate(0,0) scale(1); } to { transform: translate(42px,30px) scale(1.08); } }
+  @keyframes hero-drift-2 { from { transform: translate(0,0) scale(1); } to { transform: translate(-50px,-26px) scale(1.12); } }
+  @keyframes hero-sweep   { from { transform: translate(-6%,-4%); opacity:.65; } to { transform: translate(20%,12%); opacity:1; } }
   @keyframes hero-cross {
     0%   { transform: translateX(-6vw); opacity: 0; }
     10%  { opacity: var(--op); }
@@ -162,8 +195,176 @@ const particles = [
     100% { transform: translateX(106vw); opacity: 0; }
   }
 
+  /* ── live badge ── */
+  .hero-live-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.35rem 0.85rem; border-radius: 9999px;
+    background: rgba(34,211,238,0.08); border: 1px solid rgba(34,211,238,0.25);
+    font-size: 0.78rem; color: var(--accent-cyan); font-weight: 500;
+  }
+  .hero-live-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent-cyan);
+    box-shadow: 0 0 6px var(--accent-cyan);
+    animation: pulse-dot 2s ease-in-out infinite;
+  }
+  @keyframes pulse-dot {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50%     { opacity: 0.5; transform: scale(1.4); }
+  }
+
+  /* ── social proof ── */
+  .hero-proof { display: flex; align-items: center; gap: 1rem; }
+  .hero-avatars { display: flex; }
+  .hero-avatar {
+    width: 2rem; height: 2rem; border-radius: 50%;
+    border: 2px solid #000; margin-left: -0.5rem;
+    display: grid; place-items: center;
+  }
+  .hero-avatars .hero-avatar:first-child { margin-left: 0; }
+  .hero-proof-text p { font-size: 0.85rem; color: var(--ink-muted); margin: 0; }
+  .hero-proof-text strong { color: var(--ink); }
+  .hero-stars { color: #facc15; font-size: 0.8rem; letter-spacing: 1px; margin-bottom: 2px; }
+
+  /* ── right visual ── */
+  .hero-visual { position: relative; padding: 2rem 0; }
+
+  /* floating pills */
+  .hv-pill {
+    position: absolute; z-index: 10;
+    background: rgba(10,14,26,0.92);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 0.85rem;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    animation: hv-float 4s ease-in-out infinite alternate;
+  }
+  .hv-pill--launch {
+    top: -0.5rem; left: -1rem;
+    display: flex; align-items: center; gap: 0.5rem;
+    padding: 0.5rem 0.9rem;
+    font-size: 0.78rem; font-weight: 500; color: var(--ink-muted);
+    animation-delay: 0s;
+  }
+  .hv-pill-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: #22c55e; box-shadow: 0 0 6px #22c55e;
+    flex: none; animation: pulse-dot 2s ease-in-out infinite;
+  }
+
+  .hv-pill--stats {
+    bottom: 3.5rem; left: -1.5rem;
+    padding: 0.85rem 1.1rem;
+    animation-delay: 1.2s;
+    border-color: rgba(96,165,250,0.2);
+  }
+  .hv-stats-row { display: flex; align-items: center; gap: 0.85rem; }
+  .hv-stat { display: flex; flex-direction: column; align-items: center; }
+  .hv-stat-num { font-family: "Clash Display", sans-serif; font-size: 1rem; font-weight: 700; color: var(--ink); }
+  .hv-stat-lbl { font-size: 0.65rem; color: var(--ink-faint); margin-top: 1px; }
+  .hv-stat-divider { width: 1px; height: 1.75rem; background: rgba(255,255,255,0.1); }
+
+  @keyframes hv-float {
+    from { transform: translateY(0px); }
+    to   { transform: translateY(-8px); }
+  }
+
+  /* main card */
+  .hv-card {
+    border-radius: 1.25rem;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 24px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(96,165,250,0.08);
+    background: var(--bg-elev);
+  }
+
+  /* browser bar */
+  .hv-browser-bar {
+    display: flex; align-items: center; gap: 0.5rem;
+    padding: 0.65rem 1rem;
+    background: rgba(255,255,255,0.04);
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  .hv-dot { width: 10px; height: 10px; border-radius: 50%; flex: none; }
+  .hv-url {
+    margin-left: 0.5rem; flex: 1;
+    background: rgba(255,255,255,0.05); border-radius: 4px;
+    padding: 2px 8px; font-size: 0.7rem; color: var(--ink-faint);
+  }
+
+  /* mock site skeleton */
+  .hv-browser-body { padding: 0.85rem; display: flex; flex-direction: column; gap: 0.75rem; }
+
+  .hv-mock-nav { display: flex; align-items: center; justify-content: space-between; }
+  .hv-mock-logo { width: 2.5rem; height: 0.6rem; border-radius: 3px; background: rgba(96,165,250,0.35); }
+  .hv-mock-links { display: flex; align-items: center; gap: 0.5rem; }
+
+  .hv-mock-line { height: 0.45rem; border-radius: 3px; background: rgba(255,255,255,0.12); }
+  .hv-w-8  { width: 2rem; }
+  .hv-w-10 { width: 2.5rem; }
+  .hv-w-12 { width: 3rem; }
+  .hv-w-70 { width: 70%; }
+  .hv-w-60 { width: 60%; }
+  .hv-mock-btn { width: 2.5rem; height: 1rem; border-radius: 9999px; background: rgba(59,130,246,0.4); }
+
+  .hv-mock-hero {
+    position: relative; border-radius: 0.75rem; overflow: hidden;
+    padding: 1.25rem;
+    min-height: 7rem;
+  }
+  .hv-mock-hero-bg {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(30,58,138,0.5) 0%, rgba(8,12,22,0.9) 100%);
+  }
+  .hv-mock-hero-text { position: relative; z-index: 1; display: flex; flex-direction: column; gap: 0.4rem; }
+  .hv-mock-h1 { height: 0.85rem; width: 85%; border-radius: 4px; background: rgba(255,255,255,0.25); }
+  .hv-mock-p  { height: 0.5rem; width: 75%; border-radius: 3px; background: rgba(255,255,255,0.12); }
+  .hv-mock-cta-row { display: flex; gap: 0.5rem; margin-top: 0.4rem; }
+  .hv-mock-cta { height: 1.25rem; width: 3.5rem; border-radius: 9999px; background: rgba(59,130,246,0.6); }
+  .hv-mock-cta--ghost { background: transparent; border: 1px solid rgba(255,255,255,0.2); }
+
+  .hv-mock-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 0.5rem; }
+  .hv-mock-card { height: 2.5rem; border-radius: 0.5rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); }
+
+  /* tech badges strip */
+  .hv-badges {
+    display: flex; flex-wrap: wrap; gap: 0.4rem;
+    margin-top: 1rem;
+    padding-left: 0.5rem;
+  }
+  .hv-badge {
+    font-size: 0.7rem; padding: 3px 9px; border-radius: 9999px;
+    background: rgba(59,130,246,0.08); border: 1px solid rgba(59,130,246,0.18);
+    color: var(--brand-bright);
+    animation: badge-in 0.4s ease both;
+  }
+  .hv-badge:nth-child(1) { animation-delay: 0.1s; }
+  .hv-badge:nth-child(2) { animation-delay: 0.15s; }
+  .hv-badge:nth-child(3) { animation-delay: 0.2s; }
+  .hv-badge:nth-child(4) { animation-delay: 0.25s; }
+  .hv-badge:nth-child(5) { animation-delay: 0.3s; }
+  .hv-badge:nth-child(6) { animation-delay: 0.35s; }
+  .hv-badge:nth-child(7) { animation-delay: 0.4s; }
+  .hv-badge:nth-child(8) { animation-delay: 0.45s; }
+  @keyframes badge-in {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  /* hide floating pills on anything below large desktop to avoid overflow */
+  @media (max-width: 1199px) {
+    .hv-pill--launch { display: none; }
+    .hv-pill--stats  { position: static; margin-top: 1rem; animation: none; }
+    .hv-stats-row    { justify-content: center; }
+    .hero-visual     { padding: 0; }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .hero-blob, .hero-glow { animation: none; }
     .hero-particle { display: none; }
+    .hv-pill { animation: none; }
+    .hero-live-dot { animation: none; }
+    .hv-badge { animation: none; }
   }
 </style>

@@ -1,0 +1,323 @@
+---
+const steps = [
+  {
+    q: "What best describes your business?",
+    options: [
+      { label: "Retail / E-Commerce",    value: "retail"    },
+      { label: "Healthcare / Clinic",    value: "health"    },
+      { label: "Corporate / Startup",    value: "corporate" },
+      { label: "Personal / Freelancer",  value: "personal"  },
+    ],
+  },
+  {
+    q: "What is your primary goal?",
+    options: [
+      { label: "Get a new website",        value: "website" },
+      { label: "Sell products online",     value: "ecom"    },
+      { label: "Build a mobile app",       value: "app"     },
+      { label: "Automate / build software",value: "software"},
+      { label: "Improve branding & design",value: "brand"   },
+      { label: "Grow search traffic",      value: "seo"     },
+    ],
+  },
+  {
+    q: "What's your timeline?",
+    options: [
+      { label: "As soon as possible", value: "asap"     },
+      { label: "1–2 months",          value: "soon"     },
+      { label: "3+ months",           value: "later"    },
+      { label: "Just exploring",      value: "explore"  },
+    ],
+  },
+];
+
+---
+
+<section id="quiz" class="py-28 border-y border-white/8">
+  <div class="container-x">
+    <div class="max-w-2xl mx-auto text-center mb-12">
+      <p class="eyebrow mb-3">Find your fit</p>
+      <h2 class="font-display text-[clamp(2rem,4vw,3.25rem)] leading-[1.05]">
+        Not sure which service you need?
+      </h2>
+      <p class="mt-4 text-ink-muted">
+        Answer three quick questions and we'll point you to the right solution.
+      </p>
+    </div>
+
+    <div class="quiz-shell" id="quiz-shell">
+      <!-- progress bar -->
+      <div class="quiz-progress" aria-hidden="true">
+        <div class="quiz-progress-fill" id="quiz-progress-fill"></div>
+      </div>
+
+      <!-- steps -->
+      {steps.map((s, i) => (
+        <div class={`quiz-step ${i === 0 ? "is-active" : ""}`} data-step={i} id={`qstep-${i}`}>
+          <p class="quiz-step-label">Step {i + 1} of {steps.length}</p>
+          <h3 class="quiz-q">{s.q}</h3>
+          <div class="quiz-options">
+            {s.options.map((o) => (
+              <button class="quiz-opt" data-value={o.value} data-step={i}>
+                {o.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      ))}
+
+      <!-- result -->
+      <div class="quiz-step quiz-result" id="quiz-result" data-step="result">
+        <p class="quiz-step-label">Your recommendation</p>
+        <div class="quiz-result-card">
+          <p class="quiz-result-service" id="quiz-result-service">—</p>
+          <p class="quiz-result-desc" id="quiz-result-desc"></p>
+          <div class="quiz-result-actions">
+            <a href="#contact" id="quiz-result-cta" class="quiz-cta-primary">Start this project →</a>
+            <a href="#" id="quiz-result-learn" class="btn-glass text-sm">See service details</a>
+          </div>
+        </div>
+        <button class="quiz-restart" id="quiz-restart">← Start over</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .quiz-shell {
+    max-width: 36rem;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  /* progress bar */
+  .quiz-progress {
+    height: 3px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 9999px;
+    margin-bottom: 2.5rem;
+    overflow: hidden;
+  }
+  .quiz-progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--brand), var(--accent-cyan));
+    border-radius: 9999px;
+    transition: width 0.4s cubic-bezier(0.2,0.7,0.2,1);
+  }
+
+  /* steps */
+  .quiz-step {
+    display: none;
+    flex-direction: column;
+    gap: 1.5rem;
+    animation: quiz-in 0.4s cubic-bezier(0.2,0.7,0.2,1) both;
+  }
+  .quiz-step.is-active { display: flex; }
+
+  @keyframes quiz-in {
+    from { opacity: 0; transform: translateX(24px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  .quiz-step-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+    margin: 0;
+  }
+
+  .quiz-q {
+    font-family: "Clash Display", sans-serif;
+    font-size: clamp(1.3rem, 3vw, 1.75rem);
+    font-weight: 600;
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  .quiz-options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.65rem;
+  }
+  @media (max-width: 640px) { .quiz-options { grid-template-columns: 1fr; } }
+
+  .quiz-opt {
+    padding: 0.85rem 1.1rem;
+    border-radius: 0.85rem;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-brd);
+    color: var(--ink-muted);
+    font-size: 0.9rem;
+    text-align: left;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s, color 0.2s, transform 0.2s;
+  }
+  .quiz-opt:hover {
+    border-color: rgba(96,165,250,0.45);
+    background: rgba(59,130,246,0.08);
+    color: var(--ink);
+    transform: translateY(-2px);
+  }
+  .quiz-opt.is-selected {
+    border-color: var(--brand-bright);
+    background: rgba(59,130,246,0.15);
+    color: var(--ink);
+  }
+
+  /* result */
+  .quiz-result-card {
+    padding: 1.75rem;
+    background: linear-gradient(135deg, rgba(30,58,138,0.4), rgba(8,12,22,0.8));
+    border: 1px solid rgba(96,165,250,0.4);
+    border-radius: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    box-shadow: 0 0 40px rgba(59,130,246,0.12);
+  }
+
+  .quiz-result-service {
+    font-family: "Clash Display", sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+    background: linear-gradient(135deg, var(--ink), var(--brand-bright));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .quiz-result-desc {
+    font-size: 0.92rem;
+    color: var(--ink-muted);
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  .quiz-result-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-top: 0.25rem;
+  }
+
+  .quiz-cta-primary {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    border-radius: 9999px;
+    background: linear-gradient(120deg, var(--brand-deep), var(--brand) 60%, var(--brand-bright));
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 18px rgba(59,130,246,0.35);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .quiz-cta-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(59,130,246,0.5); }
+
+  .quiz-restart {
+    background: none;
+    border: none;
+    color: var(--ink-faint);
+    font-size: 0.85rem;
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.2s;
+    align-self: flex-start;
+  }
+  .quiz-restart:hover { color: var(--ink-muted); }
+</style>
+
+<script>
+  const WA_NUMBER = "919489722142";
+  const TOTAL = 3;
+  const answers: Record<number, { value: string; label: string }> = {};
+
+  const fillEl    = document.getElementById("quiz-progress-fill")!;
+  const resultEl  = document.getElementById("quiz-result")!;
+  const serviceEl = document.getElementById("quiz-result-service")!;
+  const descEl    = document.getElementById("quiz-result-desc")!;
+  const ctaEl     = document.getElementById("quiz-result-cta") as HTMLAnchorElement;
+  const learnEl   = document.getElementById("quiz-result-learn") as HTMLAnchorElement;
+  const restartEl = document.getElementById("quiz-restart")!;
+
+  const results: Record<string, { title: string; desc: string; anchor: string }> = {
+    ecom:    { title: "E-Commerce Development",       desc: "You need a full online store with secure payments, product management, and a seamless checkout experience.", anchor: "#svc-02" },
+    app:     { title: "Mobile App Development",       desc: "A cross-platform iOS & Android app is the right fit — designed for speed, UX, and scalability.", anchor: "#svc-03" },
+    software:{ title: "Custom Software & Automation", desc: "A bespoke web application or AI-powered automation tool will eliminate manual work and scale with you.", anchor: "#svc-04" },
+    brand:   { title: "Branding & UI/UX",             desc: "A strong visual identity and intuitive interface design will set your brand apart from competitors.", anchor: "#svc-05" },
+    seo:     { title: "SEO & Digital Marketing",      desc: "Data-driven SEO and targeted digital campaigns will grow your organic visibility and turn visitors into leads.", anchor: "#svc-06" },
+    website: { title: "Website Development",          desc: "A custom, fast, and responsive website is the perfect starting point to establish your online presence.", anchor: "#svc-01" },
+  };
+
+  const stepLabels = ["Business type", "Primary goal", "Timeline"];
+
+  function showStep(idx: number) {
+    document.querySelectorAll(".quiz-step").forEach((el) => el.classList.remove("is-active"));
+    const target = idx === TOTAL
+      ? resultEl
+      : document.getElementById(`qstep-${idx}`);
+    target?.classList.remove("is-active");
+    void (target as HTMLElement)?.offsetWidth;
+    target?.classList.add("is-active");
+
+    const pct = idx === TOTAL ? 100 : Math.round((idx / TOTAL) * 100);
+    fillEl.style.width = `${pct}%`;
+  }
+
+  function showResult() {
+    const goal   = answers[1]?.value ?? "website";
+    const result = results[goal] ?? results["website"];
+
+    serviceEl.textContent = result.title;
+    descEl.textContent    = result.desc;
+    learnEl.href          = result.anchor;
+
+    // Build WhatsApp pre-typed message with quiz answers
+    const lines = [
+      `Hi TheArkTech! 👋 I just used your service quiz and I'm interested in *${result.title}*.`,
+      "",
+      "*My answers:*",
+      ...stepLabels.map((lbl, i) => `• ${lbl}: ${answers[i]?.label ?? "—"}`),
+      "",
+      "Could we have a quick call to discuss?",
+    ];
+    const waUrl = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(lines.join("\n"))}`;
+    ctaEl.href   = waUrl;
+    ctaEl.target = "_blank";
+    ctaEl.rel    = "noopener noreferrer";
+
+    showStep(TOTAL);
+  }
+
+  document.querySelectorAll<HTMLButtonElement>(".quiz-opt").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const step = Number(btn.dataset.step);
+      const value = btn.dataset.value!;
+
+      // highlight selected
+      document.querySelectorAll<HTMLButtonElement>(`.quiz-opt[data-step="${step}"]`)
+        .forEach((b) => b.classList.remove("is-selected"));
+      btn.classList.add("is-selected");
+
+      answers[step] = { value, label: btn.textContent?.trim() ?? value };
+
+      // advance after short delay
+      setTimeout(() => {
+        if (step + 1 < TOTAL) showStep(step + 1);
+        else showResult();
+      }, 280);
+    });
+  });
+
+  restartEl.addEventListener("click", () => {
+    Object.keys(answers).forEach((k) => delete (answers as any)[k]);
+    document.querySelectorAll<HTMLButtonElement>(".quiz-opt").forEach((b) => b.classList.remove("is-selected"));
+    showStep(0);
+  });
+
+  // init progress
+  fillEl.style.width = "0%";
+</script>

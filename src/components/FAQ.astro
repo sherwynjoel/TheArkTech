@@ -1,0 +1,147 @@
+---
+const faqs = [
+  {
+    q: "How long does a project take?",
+    a: "A simple landing page takes 1–2 weeks. A full website with CMS takes 3–5 weeks. A custom mobile app or software platform typically takes 8–14 weeks. We give you a firm timeline in your project scope document before we start.",
+  },
+  {
+    q: "What is your pricing?",
+    a: "Projects start at ₹25,000 for a basic website and go up based on scope. We provide fixed-price quotes — you'll never get a surprise invoice. See our Pricing section for starting estimates, or contact us for an exact quote.",
+  },
+  {
+    q: "Do you provide post-launch support?",
+    a: "Yes. Every project includes a support period (1–3 months depending on plan). After that, we offer monthly maintenance packages covering updates, security patches, backups, and priority bug fixes.",
+  },
+  {
+    q: "Can you redesign my existing website?",
+    a: "Absolutely. We handle full redesigns — new design, improved performance, and cleaner code. We also migrate content, preserve your SEO rankings, and can integrate your existing tools.",
+  },
+  {
+    q: "What technologies do you use?",
+    a: "Our stack spans React, Next.js, Node.js, Python, Flutter, AWS, PostgreSQL, MongoDB, and more. We choose the right technology for your project's needs — not just what we're comfortable with.",
+  },
+  {
+    q: "Do you work with clients outside Coimbatore?",
+    a: "Yes. We work with clients across India and internationally. All communication, handoffs, and reviews happen remotely via video calls, Notion, and staging environments. Location is no barrier.",
+  },
+  {
+    q: "Can I see examples of your work?",
+    a: "Yes — scroll to our Industries section to see the verticals we've shipped for. For detailed case studies and live URLs, reach out and we'll share a tailored portfolio relevant to your industry.",
+  },
+  {
+    q: "Do you offer SEO?",
+    a: "Yes. SEO & Digital Marketing is one of our six core services. We cover on-page SEO, technical SEO, Google Business Profile, local SEO (key for Coimbatore businesses), and content strategy.",
+  },
+];
+---
+<section id="faq" class="py-28">
+  <div class="container-x">
+    <div class="max-w-2xl mb-14 mx-auto text-center">
+      <p class="eyebrow mb-3">FAQ</p>
+      <h2 class="font-display text-[clamp(2rem,4vw,3.25rem)] leading-[1.05]">
+        Questions we hear most
+      </h2>
+      <p class="mt-4 text-ink-muted">
+        Can't find your answer? <a href="#contact" class="text-brand-bright hover:underline">Just ask us.</a>
+      </p>
+    </div>
+
+    <div class="faq-list mx-auto" id="faq-list">
+      {faqs.map((f, i) => (
+        <div class="faq-item reveal" data-index={i}>
+          <button class="faq-q" aria-expanded="false" aria-controls={`faq-ans-${i}`}>
+            <span>{f.q}</span>
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" id={`faq-ans-${i}`} role="region" hidden>
+            <p>{f.a}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq-list { max-width: 52rem; }
+
+  .faq-item {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .faq-item:first-child { border-top: 1px solid rgba(255, 255, 255, 0.08); }
+
+  .faq-q {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.25rem 0;
+    background: none;
+    border: none;
+    color: var(--ink);
+    font-size: 1rem;
+    font-weight: 500;
+    text-align: left;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+  .faq-q:hover { color: var(--brand-bright); }
+  .faq-q[aria-expanded="true"] { color: var(--brand-bright); }
+
+  .faq-icon {
+    flex: none;
+    width: 1.5rem;
+    height: 1.5rem;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.15);
+    font-size: 1.1rem;
+    line-height: 1;
+    transition: transform 0.3s ease, border-color 0.2s;
+  }
+  .faq-q[aria-expanded="true"] .faq-icon {
+    transform: rotate(45deg);
+    border-color: var(--brand-bright);
+  }
+
+  .faq-a {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .faq-a:not([hidden]) { max-height: 20rem; }
+  .faq-a[hidden] { display: block !important; }
+
+  .faq-a p {
+    padding-bottom: 1.25rem;
+    font-size: 0.92rem;
+    line-height: 1.7;
+    color: var(--ink-muted);
+    margin: 0;
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>(".faq-q").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const expanded = btn.getAttribute("aria-expanded") === "true";
+      const answerId = btn.getAttribute("aria-controls")!;
+      const answerEl = document.getElementById(answerId)!;
+
+      // Close all others
+      document.querySelectorAll<HTMLButtonElement>(".faq-q").forEach((b) => {
+        b.setAttribute("aria-expanded", "false");
+        const id = b.getAttribute("aria-controls")!;
+        const el = document.getElementById(id)!;
+        el.hidden = true;
+      });
+
+      if (!expanded) {
+        btn.setAttribute("aria-expanded", "true");
+        answerEl.hidden = false;
+      }
+    });
+  });
+</script>

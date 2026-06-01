@@ -1,6 +1,5 @@
 ---
 import WarpShaderBackground from "@/components/ui/wrap-shader.tsx";
-const action = import.meta.env.DEV ? "/api/submit" : "/contact.php";
 ---
 <section id="contact" class="relative py-28 overflow-hidden">
   <div class="absolute inset-0 -z-10" style="background: linear-gradient(135deg, var(--brand-deep), #04060d 70%);">
@@ -12,12 +11,10 @@ const action = import.meta.env.DEV ? "/api/submit" : "/contact.php";
     <div class="max-w-xl mx-auto text-center mb-10">
       <p class="eyebrow mb-3">Contact</p>
       <h2 class="font-display text-[clamp(2rem,4vw,3.25rem)]">Let's build it together</h2>
-      <p class="mt-3 text-ink-muted">Tell us your requirement — our team will analyse and contact you.</p>
+      <p class="mt-3 text-ink-muted">Fill in your details and we'll open WhatsApp with a pre-typed message — reply whenever you're ready.</p>
     </div>
 
-    <div id="contact-status" class="max-w-xl mx-auto mb-6"></div>
-
-    <form action={action} method="POST" class="contact-card max-w-xl mx-auto rounded-3xl p-8 space-y-5">
+    <form id="contact-form" class="contact-card max-w-xl mx-auto rounded-3xl p-4 sm:p-8 space-y-5" novalidate>
       <label for="cf-name" class="sr-only">Your name</label>
       <input id="cf-name" name="name" type="text" placeholder="Your name" required autocomplete="name"
         class="w-full rounded-xl bg-white/5 border border-white/15 px-4 py-3.5 text-ink placeholder-ink-faint focus:border-brand focus:ring-2 focus:ring-[var(--ring)] outline-none transition" />
@@ -28,52 +25,73 @@ const action = import.meta.env.DEV ? "/api/submit" : "/contact.php";
       <input id="cf-phone" name="phone" type="tel" placeholder="Your phone" required autocomplete="tel"
         class="w-full rounded-xl bg-white/5 border border-white/15 px-4 py-3.5 text-ink placeholder-ink-faint focus:border-brand focus:ring-2 focus:ring-[var(--ring)] outline-none transition" />
       <label for="cf-requirement" class="sr-only">Your query</label>
-      <textarea id="cf-requirement" name="requirement" rows="5" minlength="5" placeholder="Your query (min 5 characters)" required
+      <textarea id="cf-requirement" name="requirement" rows="5" minlength="5" placeholder="Your requirement (min 5 characters)" required
         class="w-full rounded-xl bg-white/5 border border-white/15 px-4 py-3.5 text-ink placeholder-ink-faint focus:border-brand focus:ring-2 focus:ring-[var(--ring)] outline-none transition"></textarea>
-      <button type="submit"
-        class="w-full rounded-xl py-4 font-semibold text-white transition hover:-translate-y-0.5"
-        style="background: linear-gradient(120deg, var(--brand-deep), var(--brand) 60%, var(--brand-bright)); box-shadow: 0 8px 30px rgba(59,130,246,0.35);">
-        Submit query
+
+      <button type="submit" class="cf-submit w-full rounded-xl py-4 font-semibold text-white flex items-center justify-center gap-2 transition hover:-translate-y-0.5">
+        <!-- WhatsApp icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
+          <path d="M16 2C8.268 2 2 8.268 2 16c0 2.49.65 4.826 1.787 6.854L2 30l7.336-1.756A13.94 13.94 0 0 0 16 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm6.328 19.928c-.346-.173-2.047-1.01-2.364-1.125-.317-.116-.548-.173-.779.173-.23.347-.894 1.126-1.096 1.357-.202.23-.404.26-.75.086-.346-.174-1.46-.538-2.782-1.716-1.028-.916-1.722-2.047-1.924-2.393-.202-.347-.021-.534.152-.707.156-.155.346-.404.52-.606.173-.202.23-.347.346-.578.115-.23.058-.433-.029-.606-.086-.173-.779-1.878-1.068-2.572-.28-.674-.566-.583-.78-.594l-.664-.01c-.23 0-.606.086-.924.433-.317.347-1.212 1.184-1.212 2.887 0 1.703 1.241 3.349 1.414 3.58.173.23 2.44 3.724 5.913 5.224.827.356 1.47.568 1.974.728.829.263 1.583.226 2.179.137.664-.099 2.047-.837 2.335-1.645.288-.808.288-1.501.202-1.645-.086-.144-.317-.23-.663-.404z"/>
+        </svg>
+        Send via WhatsApp
       </button>
+
+      <p id="cf-error" class="cf-error" aria-live="polite"></p>
     </form>
   </div>
 </section>
 
 <style>
-  /* Solid-ish dark panel instead of `glass glass-blur`.
-     backdrop-filter over the animating WebGL shader forced the browser to
-     re-blur the whole form every shader frame (~60fps) = page-wide jank.
-     A semi-opaque panel reads as glass, keeps inputs legible over the moving
-     shader, and costs nothing per frame. The shader stays visible around it. */
   .contact-card {
     background: rgba(9, 13, 24, 0.82);
     border: 1px solid rgba(255, 255, 255, 0.12);
     box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
   }
+  .cf-submit {
+    background: linear-gradient(120deg, #075e54, #128c7e 50%, #25d366);
+    box-shadow: 0 8px 30px rgba(37, 211, 102, 0.35);
+  }
+  .cf-submit:hover { box-shadow: 0 12px 36px rgba(37, 211, 102, 0.5); }
+  .cf-error {
+    font-size: 0.82rem;
+    color: #f87171;
+    min-height: 1rem;
+    margin: 0;
+  }
 </style>
 
 <script>
-  const statusEl = document.getElementById("contact-status");
-  if (statusEl) {
-    const params = new URLSearchParams(window.location.search);
-    const ok = params.get("submitted") === "1";
-    const error = params.get("error");
-    if (ok) {
-      statusEl.innerHTML = `<div class="rounded-xl border border-green-500/30 bg-green-500/10 text-green-300 px-4 py-3 text-sm">Thanks! Your query has been sent. We'll get back to you soon.</div>`;
-    } else if (error) {
-      const fields = (params.get("fields") || "").split(",").filter(Boolean);
-      let msg = "There was a problem submitting the form. Please try again.";
-      if (error === "validation" && fields.length) {
-        msg = `Please fix: ${fields.join(", ")}.`;
-        fields.forEach((n) => document.querySelector(`[name="${n}"]`)?.classList.add("ring-2", "ring-red-500"));
-      } else if (error === "server") {
-        msg = "Email sending failed. Please try again later.";
-      }
-      statusEl.innerHTML = `<div class="rounded-xl border border-red-500/30 bg-red-500/10 text-red-300 px-4 py-3 text-sm">${msg}</div>`;
+  const WA_NUMBER = "919489722142";
+  const form = document.getElementById("contact-form") as HTMLFormElement | null;
+  const errEl = document.getElementById("cf-error")!;
+
+  form?.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const name  = (form.querySelector("#cf-name")        as HTMLInputElement).value.trim();
+    const email = (form.querySelector("#cf-email")       as HTMLInputElement).value.trim();
+    const phone = (form.querySelector("#cf-phone")       as HTMLInputElement).value.trim();
+    const req   = (form.querySelector("#cf-requirement") as HTMLTextAreaElement).value.trim();
+
+    // basic validation
+    if (!name || !email || !phone || req.length < 5) {
+      errEl.textContent = "Please fill in all fields (requirement must be at least 5 characters).";
+      return;
     }
-    if (window.history && (ok || error)) {
-      const url = new URL(window.location.href); url.search = "";
-      window.history.replaceState({}, "", url.toString());
-    }
-  }
+    errEl.textContent = "";
+
+    const msg = [
+      "Hi TheArkTech! 👋 I found you on your website and would like to discuss a project.",
+      "",
+      `*Name:* ${name}`,
+      `*Email:* ${email}`,
+      `*Phone:* ${phone}`,
+      "",
+      `*Requirement:*`,
+      req,
+    ].join("\n");
+
+    const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
+    window.open(url, "_blank", "noopener,noreferrer");
+  });
 </script>

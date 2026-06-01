@@ -1,0 +1,31 @@
+<!-- Thin brand-blue progress bar fixed at the very top of the viewport -->
+<div id="scroll-progress" aria-hidden="true"></div>
+
+<style>
+  #scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 0%;
+    z-index: 9999;
+    background: linear-gradient(90deg, var(--brand), var(--accent-cyan));
+    border-radius: 0 2px 2px 0;
+    transition: width 0.05s linear;
+    pointer-events: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #scroll-progress { display: none; }
+  }
+</style>
+
+<script>
+  const bar = document.getElementById("scroll-progress")!;
+  function update() {
+    const scrolled = window.scrollY;
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.width = total > 0 ? `${(scrolled / total) * 100}%` : "0%";
+  }
+  window.addEventListener("scroll", update, { passive: true });
+  update();
+</script>

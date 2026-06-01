@@ -1,0 +1,50 @@
+---
+const phone = "919489722142"; // WhatsApp number without +
+const message = encodeURIComponent("Hi TheArkTech! I'd like to discuss a project.");
+const href = `https://wa.me/${phone}?text=${message}`;
+---
+<a
+  href={href}
+  target="_blank"
+  rel="noopener noreferrer"
+  class="wa-fab"
+  aria-label="Chat on WhatsApp"
+  title="Chat on WhatsApp"
+>
+  <!-- WhatsApp logo SVG -->
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="currentColor" width="22" height="22" aria-hidden="true">
+    <path d="M16 2C8.268 2 2 8.268 2 16c0 2.49.65 4.826 1.787 6.854L2 30l7.336-1.756A13.94 13.94 0 0 0 16 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm0 25.6a11.54 11.54 0 0 1-5.888-1.607l-.422-.25-4.356 1.043 1.068-4.245-.276-.435A11.562 11.562 0 0 1 4.4 16C4.4 9.593 9.593 4.4 16 4.4S27.6 9.593 27.6 16 22.407 27.6 16 27.6zm6.328-8.672c-.346-.173-2.047-1.01-2.364-1.125-.317-.116-.548-.173-.779.173-.23.347-.894 1.126-1.096 1.357-.202.23-.404.26-.75.086-.346-.174-1.46-.538-2.782-1.716-1.028-.916-1.722-2.047-1.924-2.393-.202-.347-.021-.534.152-.707.156-.155.346-.404.52-.606.173-.202.23-.347.346-.578.115-.23.058-.433-.029-.606-.086-.173-.779-1.878-1.068-2.572-.28-.674-.566-.583-.78-.594l-.664-.01c-.23 0-.606.086-.924.433-.317.347-1.212 1.184-1.212 2.887 0 1.703 1.241 3.349 1.414 3.58.173.23 2.44 3.724 5.913 5.224.827.356 1.47.568 1.974.728.829.263 1.583.226 2.179.137.664-.099 2.047-.837 2.335-1.645.288-.808.288-1.501.202-1.645-.086-.144-.317-.23-.663-.404z"/>
+  </svg>
+  <span class="wa-label">WhatsApp</span>
+</a>
+
+<style>
+  .wa-fab {
+    position: fixed;
+    bottom: 6rem;     /* sits above the CallFab */
+    right: 1.5rem;
+    z-index: 9000;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.7rem 1.1rem 0.7rem 0.85rem;
+    border-radius: 9999px;
+    background: #25d366;
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.875rem;
+    box-shadow: 0 6px 24px rgba(37, 211, 102, 0.4);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    text-decoration: none;
+  }
+  .wa-fab:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 32px rgba(37, 211, 102, 0.55);
+  }
+
+  /* On narrow screens, hide the label to show icon-only */
+  @media (max-width: 400px) {
+    .wa-label { display: none; }
+    .wa-fab { padding: 0.85rem; }
+  }
+</style>
