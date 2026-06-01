@@ -26,9 +26,10 @@ jobs:
       - name: Deploy to Hostinger via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
+          server: 145.79.209.109
+          username: u107134759.thearktech.in
           password: ${{ secrets.FTP_PASSWORD }}
+          port: 21
           local-dir: ./dist/
           server-dir: /public_html/
           dangerous-clean-slate: false
