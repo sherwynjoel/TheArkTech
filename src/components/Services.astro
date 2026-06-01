@@ -1,28 +1,158 @@
 ---
 import { services } from "../data/services.ts";
+import Icon from "./Icon.astro";
 ---
 <section id="services" class="relative py-28">
-  <div class="container-x">
-    <div class="max-w-2xl mb-16">
-      <p class="eyebrow mb-3">What we do</p>
-      <h2 class="font-display text-[clamp(2rem,4vw,3.25rem)]">Our services</h2>
-    </div>
+  <div class="container-x lg:grid lg:grid-cols-12 lg:gap-16">
+    <!-- sticky index (desktop) -->
+    <aside class="hidden lg:block lg:col-span-4">
+      <div class="lg:sticky lg:top-28">
+        <p class="eyebrow mb-3">What we do</p>
+        <h2 class="font-display text-[clamp(2rem,4vw,3.25rem)] leading-[1.04]">
+          Services, built<br />end to end
+        </h2>
+        <p class="mt-4 max-w-sm text-ink-muted">
+          Six ways we take an idea from a first sketch to something live, fast, and yours.
+        </p>
+        <nav class="svc-index mt-9" aria-label="Jump to a service">
+          <ul>
+            {services.map((s) => (
+              <li>
+                <a href={`#svc-${s.num}`} class="svc-index-link" data-target={`svc-${s.num}`}>
+                  <span class="svc-index-num">{s.num}</span>
+                  <span class="svc-index-title">{s.title}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </div>
+    </aside>
 
-    <div class="flex flex-col">
-      {services.map((s, idx) => (
-        <article class={`reveal group border-t border-white/10 py-10 grid md:grid-cols-12 gap-6 items-start ${idx % 2 === 1 ? "md:[&>*:first-child]:order-2" : ""}`}>
-          <div class="md:col-span-3">
-            <span class="font-display text-5xl text-ink-faint group-hover:text-brand-bright transition-colors">{s.num}</span>
-          </div>
-          <div class="md:col-span-9">
-            <h3 class="font-display text-2xl md:text-3xl">{s.title}</h3>
-            <p class="mt-3 max-w-2xl text-ink-muted">{s.desc}</p>
-          </div>
-        </article>
-      ))}
-      <div class="border-t border-white/10 py-12 text-center">
-        <p class="font-display text-2xl md:text-3xl text-brand-bright">If you can imagine it, we can build it.</p>
+    <!-- blocks -->
+    <div class="lg:col-span-8">
+      <!-- mobile heading -->
+      <div class="lg:hidden mb-12">
+        <p class="eyebrow mb-3">What we do</p>
+        <h2 class="font-display text-[clamp(2rem,7vw,2.75rem)] leading-[1.05]">Services, built end to end</h2>
+      </div>
+
+      <div class="svc-list">
+        {services.map((s) => (
+          <article id={`svc-${s.num}`} class="svc-block reveal">
+            <span class="svc-num" aria-hidden="true">{s.num}</span>
+            <div class="svc-body">
+              <div class="svc-head">
+                <span class="svc-icon"><Icon name={s.icon} class="h-7 w-7" /></span>
+                <h3 class="font-display text-2xl md:text-3xl">{s.title}</h3>
+              </div>
+              <p class="mt-3 max-w-xl text-ink-muted">{s.desc}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <div class="svc-closer reveal">
+        <p class="font-display text-2xl md:text-3xl">
+          If you can imagine it, <span class="text-brand-bright">we can build it.</span>
+        </p>
+        <a href="#contact" class="btn-glass mt-6">Start a project</a>
       </div>
     </div>
   </div>
 </section>
+
+<style>
+  /* ----- sticky index ----- */
+  .svc-index ul { list-style: none; margin: 0; padding: 0; }
+  .svc-index-link {
+    display: flex;
+    align-items: baseline;
+    gap: 0.9rem;
+    padding: 0.75rem 0;
+    color: var(--ink-muted);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    transition: color 0.25s ease;
+  }
+  .svc-index li:last-child .svc-index-link { border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+  .svc-index-num {
+    font-family: "Clash Display", sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    min-width: 1.6rem;
+    opacity: 0.7;
+    transition: color 0.25s ease, opacity 0.25s ease;
+  }
+  .svc-index-title { font-size: 0.95rem; transition: transform 0.25s cubic-bezier(0.2, 0.7, 0.2, 1); }
+  .svc-index-link:hover { color: var(--ink); }
+  .svc-index-link.is-active { color: var(--ink); }
+  .svc-index-link.is-active .svc-index-num { color: var(--brand-bright); opacity: 1; }
+  .svc-index-link.is-active .svc-index-title { transform: translateX(5px); }
+
+  /* ----- editorial blocks ----- */
+  .svc-block {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0 clamp(1.25rem, 3vw, 2.25rem);
+    align-items: start;
+    padding: clamp(2rem, 4vw, 2.75rem) 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    scroll-margin-top: 7rem;
+  }
+  .svc-list .svc-block:first-child { border-top: 0; padding-top: 0; }
+
+  .svc-num {
+    font-family: "Clash Display", sans-serif;
+    font-weight: 700;
+    font-size: clamp(2.5rem, 6vw, 3.5rem);
+    line-height: 0.9;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
+    transition: -webkit-text-stroke-color 0.3s ease;
+  }
+  .svc-block:hover .svc-num { -webkit-text-stroke-color: rgba(96, 165, 250, 0.6); }
+
+  .svc-head { display: flex; align-items: center; gap: 0.85rem; }
+  .svc-icon {
+    flex: none;
+    display: grid;
+    place-items: center;
+    height: 3rem;
+    width: 3rem;
+    border-radius: 14px;
+    color: var(--brand-bright);
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.22);
+    transition: background 0.3s ease, border-color 0.3s ease;
+  }
+  .svc-block:hover .svc-icon { background: rgba(59, 130, 246, 0.16); border-color: rgba(96, 165, 250, 0.45); }
+
+  .svc-closer {
+    margin-top: clamp(2rem, 4vw, 2.75rem);
+    padding-top: clamp(2rem, 4vw, 2.75rem);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  @media (max-width: 1023px) {
+    .svc-num { font-size: clamp(2rem, 9vw, 2.75rem); }
+  }
+</style>
+
+<script>
+  // Scroll-spy: highlight the index entry whose block is crossing the viewport center.
+  const links = Array.from(document.querySelectorAll<HTMLAnchorElement>(".svc-index-link"));
+  if (links.length) {
+    const byId = new Map(links.map((l) => [l.dataset.target, l]));
+    const spy = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (!e.isIntersecting) continue;
+          links.forEach((l) => l.classList.remove("is-active"));
+          byId.get(e.target.id)?.classList.add("is-active");
+        }
+      },
+      { rootMargin: "-45% 0px -45% 0px", threshold: 0 }
+    );
+    document.querySelectorAll(".svc-block").forEach((b) => spy.observe(b));
+  }
+</script>

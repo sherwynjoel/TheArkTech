@@ -2,14 +2,36 @@
 import FlipWords from "./react/FlipWords.tsx";
 import ShinyButton from "./react/ShinyButton.tsx";
 const words = ["websites", "apps", "AI automation", "cloud"];
+
+// Particles drifting left -> right across the hero. Varied size/speed/opacity,
+// with negative delays so the stream is already populated on first paint.
+const particles = [
+  { top: 8,  size: 2, dur: 30, delay: -2,  kind: "soft", op: 0.35 },
+  { top: 16, size: 4, dur: 24, delay: -14, kind: "cyan", op: 0.5 },
+  { top: 24, size: 3, dur: 38, delay: -8,  kind: "soft", op: 0.4 },
+  { top: 33, size: 6, dur: 20, delay: -18, kind: "blue", op: 0.65 },
+  { top: 42, size: 2, dur: 34, delay: -25, kind: "soft", op: 0.35 },
+  { top: 50, size: 5, dur: 28, delay: -6,  kind: "cyan", op: 0.55 },
+  { top: 58, size: 3, dur: 42, delay: -30, kind: "soft", op: 0.4 },
+  { top: 67, size: 7, dur: 22, delay: -12, kind: "blue", op: 0.7 },
+  { top: 75, size: 2, dur: 36, delay: -20, kind: "soft", op: 0.35 },
+  { top: 84, size: 4, dur: 26, delay: -3,  kind: "cyan", op: 0.5 },
+  { top: 92, size: 3, dur: 32, delay: -16, kind: "soft", op: 0.4 },
+];
 ---
 <section id="home" class="relative min-h-[100svh] flex items-center overflow-hidden pt-28 pb-16">
-  <!-- gradient mesh backdrop -->
-  <div class="pointer-events-none absolute inset-0 -z-10">
-    <div class="absolute -top-32 -left-24 h-[36rem] w-[36rem] rounded-full blur-3xl opacity-40"
-         style="background: radial-gradient(circle, var(--brand-deep), transparent 60%);"></div>
-    <div class="absolute top-1/3 -right-24 h-[34rem] w-[34rem] rounded-full blur-3xl opacity-30"
-         style="background: radial-gradient(circle, var(--brand), transparent 60%);"></div>
+  <!-- animated ambient backdrop -->
+  <div class="hero-bg pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
+    <div class="hero-grid"></div>
+    <div class="hero-blob hero-blob--1"></div>
+    <div class="hero-blob hero-blob--2"></div>
+    <div class="hero-glow"></div>
+    {particles.map((p) => (
+      <span
+        class={`hero-particle hero-particle--${p.kind}`}
+        style={`top:${p.top}%;--size:${p.size}px;--dur:${p.dur}s;--delay:${p.delay}s;--op:${p.op}`}
+      ></span>
+    ))}
     <div class="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-black"></div>
   </div>
 
@@ -47,3 +69,101 @@ const words = ["websites", "apps", "AI automation", "cloud"];
     </div>
   </div>
 </section>
+
+<style>
+  /* Ambient hero backdrop. All motion is transform/opacity on pre-rendered,
+     pre-blurred layers (the blur is cached once, then the layer is moved), so it
+     stays on the compositor and costs nothing per frame. No backdrop-filter. */
+  .hero-bg { overflow: hidden; }
+
+  /* faint blueprint grid, fading out toward the edges */
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+    background-size: 56px 56px;
+    -webkit-mask-image: radial-gradient(115% 90% at 28% 22%, #000 0%, transparent 72%);
+    mask-image: radial-gradient(115% 90% at 28% 22%, #000 0%, transparent 72%);
+  }
+
+  /* drifting, breathing color blobs */
+  .hero-blob {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(72px);
+    will-change: transform;
+  }
+  .hero-blob--1 {
+    top: -10rem;
+    left: -8rem;
+    height: 36rem;
+    width: 36rem;
+    opacity: 0.45;
+    background: radial-gradient(circle, var(--brand-deep), transparent 60%);
+    animation: hero-drift-1 26s ease-in-out infinite alternate;
+  }
+  .hero-blob--2 {
+    top: 26%;
+    right: -8rem;
+    height: 34rem;
+    width: 34rem;
+    opacity: 0.3;
+    background: radial-gradient(circle, var(--brand), transparent 60%);
+    animation: hero-drift-2 32s ease-in-out infinite alternate;
+  }
+
+  /* slow diagonal cyan glow sweep (sparing accent) */
+  .hero-glow {
+    position: absolute;
+    top: -18%;
+    left: 8%;
+    height: 40rem;
+    width: 40rem;
+    background: radial-gradient(circle, rgba(34, 211, 238, 0.1), transparent 62%);
+    filter: blur(40px);
+    will-change: transform, opacity;
+    animation: hero-sweep 22s ease-in-out infinite alternate;
+  }
+
+  /* particles drifting left -> right, varied size/speed/opacity */
+  .hero-particle {
+    position: absolute;
+    left: 0;
+    width: var(--size);
+    height: var(--size);
+    border-radius: 9999px;
+    opacity: 0;
+    box-shadow: 0 0 calc(var(--size) * 1.5) rgba(96, 165, 250, 0.25);
+    animation: hero-cross var(--dur) linear var(--delay) infinite;
+    will-change: transform;
+  }
+  .hero-particle--soft { background: rgba(226, 234, 252, 0.85); }
+  .hero-particle--blue { background: var(--brand-bright); }
+  .hero-particle--cyan { background: var(--accent-cyan); }
+
+  @keyframes hero-drift-1 {
+    from { transform: translate(0, 0) scale(1); }
+    to   { transform: translate(42px, 30px) scale(1.08); }
+  }
+  @keyframes hero-drift-2 {
+    from { transform: translate(0, 0) scale(1); }
+    to   { transform: translate(-50px, -26px) scale(1.12); }
+  }
+  @keyframes hero-sweep {
+    from { transform: translate(-6%, -4%); opacity: 0.65; }
+    to   { transform: translate(20%, 12%); opacity: 1; }
+  }
+  @keyframes hero-cross {
+    0%   { transform: translateX(-6vw); opacity: 0; }
+    10%  { opacity: var(--op); }
+    90%  { opacity: var(--op); }
+    100% { transform: translateX(106vw); opacity: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-blob, .hero-glow { animation: none; }
+    .hero-particle { display: none; }
+  }
+</style>

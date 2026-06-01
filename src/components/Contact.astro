@@ -17,7 +17,7 @@ const action = import.meta.env.DEV ? "/api/submit" : "/contact.php";
 
     <div id="contact-status" class="max-w-xl mx-auto mb-6"></div>
 
-    <form action={action} method="POST" class="glass glass-blur max-w-xl mx-auto rounded-3xl p-8 space-y-5">
+    <form action={action} method="POST" class="contact-card max-w-xl mx-auto rounded-3xl p-8 space-y-5">
       <label for="cf-name" class="sr-only">Your name</label>
       <input id="cf-name" name="name" type="text" placeholder="Your name" required autocomplete="name"
         class="w-full rounded-xl bg-white/5 border border-white/15 px-4 py-3.5 text-ink placeholder-ink-faint focus:border-brand focus:ring-2 focus:ring-[var(--ring)] outline-none transition" />
@@ -38,6 +38,19 @@ const action = import.meta.env.DEV ? "/api/submit" : "/contact.php";
     </form>
   </div>
 </section>
+
+<style>
+  /* Solid-ish dark panel instead of `glass glass-blur`.
+     backdrop-filter over the animating WebGL shader forced the browser to
+     re-blur the whole form every shader frame (~60fps) = page-wide jank.
+     A semi-opaque panel reads as glass, keeps inputs legible over the moving
+     shader, and costs nothing per frame. The shader stays visible around it. */
+  .contact-card {
+    background: rgba(9, 13, 24, 0.82);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+  }
+</style>
 
 <script>
   const statusEl = document.getElementById("contact-status");

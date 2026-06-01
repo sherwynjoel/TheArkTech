@@ -1,18 +1,106 @@
 ---
-const items = [
-  { k: "End-to-end", v: "design → deploy" },
-  { k: "Coimbatore", v: "Tamil Nadu, India" },
-  { k: "Web · Apps · AI", v: "one partner" },
-  { k: "Fast & secure", v: "by default" },
+import Icon from "./Icon.astro";
+
+const marks = [
+  { icon: "pin", k: "Coimbatore, India", v: "Tamil Nadu, working worldwide" },
+  { icon: "commit", k: "End-to-end delivery", v: "From first sketch to deploy" },
+  { icon: "grid", k: "Web · Apps · AI · Cloud", v: "One partner, the whole stack" },
+  { icon: "shield", k: "Secure by default", v: "Fast, hardened builds" },
 ];
 ---
-<section class="border-y border-white/5 bg-bg-elev/40">
-  <div class="container-x grid grid-cols-2 md:grid-cols-4 divide-x divide-white/5">
-    {items.map((it) => (
-      <div class="px-4 py-6 text-center md:text-left">
-        <p class="font-display text-lg">{it.k}</p>
-        <p class="text-sm text-ink-faint">{it.v}</p>
-      </div>
-    ))}
+<section class="trust" aria-label="How TheArkTech works">
+  <div class="container-x">
+    <ul class="trust-row">
+      {marks.map((m) => (
+        <li class="trust-mark">
+          <span class="trust-ic"><Icon name={m.icon} class="h-5 w-5" /></span>
+          <span class="trust-txt">
+            <span class="trust-k">{m.k}</span>
+            <span class="trust-v">{m.v}</span>
+          </span>
+        </li>
+      ))}
+    </ul>
   </div>
 </section>
+
+<style>
+  .trust {
+    position: relative;
+    background: var(--bg-elev);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  /* thin blue -> cyan accent line riding the top edge */
+  .trust::before {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    top: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.55), rgba(34, 211, 238, 0.4), transparent);
+  }
+
+  .trust-row {
+    list-style: none;
+    margin: 0;
+    padding: clamp(1.15rem, 3vw, 1.6rem) 0;
+    display: flex;
+    align-items: center;
+  }
+
+  .trust-mark {
+    flex: 1 1 0;
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding-inline: clamp(1rem, 2.5vw, 2rem);
+    min-width: 0;
+  }
+  .trust-mark:first-child { padding-left: 0; }
+  .trust-mark:last-child { padding-right: 0; }
+  .trust-mark + .trust-mark { border-left: 1px solid rgba(255, 255, 255, 0.08); }
+  /* asymmetry: the capability mark earns more room */
+  .trust-mark:nth-child(3) { flex-grow: 1.35; }
+
+  .trust-ic {
+    flex: none;
+    display: grid;
+    place-items: center;
+    height: 2.5rem;
+    width: 2.5rem;
+    border-radius: 12px;
+    color: var(--brand-bright);
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.22);
+  }
+  .trust-txt { min-width: 0; }
+  .trust-k {
+    display: block;
+    font-family: "Clash Display", sans-serif;
+    font-weight: 600;
+    font-size: 1.0625rem;
+    letter-spacing: -0.01em;
+    line-height: 1.15;
+  }
+  .trust-v {
+    display: block;
+    margin-top: 0.15rem;
+    font-size: 0.8125rem;
+    color: var(--ink-muted);
+  }
+
+  /* phones: 2x2, drop the dividers, let each mark breathe */
+  @media (max-width: 767px) {
+    .trust-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.35rem 1rem;
+    }
+    .trust-mark {
+      flex: none;
+      padding: 0;
+      border-left: 0 !important;
+    }
+    .trust-mark:nth-child(3) { flex-grow: 0; }
+  }
+</style>

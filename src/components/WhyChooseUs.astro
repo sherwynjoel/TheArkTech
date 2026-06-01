@@ -1,30 +1,203 @@
 ---
-const reasons = [
-  { t: "Innovation-Driven", d: "Creativity plus the latest technologies, smart architecture, and future-ready design." },
-  { t: "High Performance", d: "Lightweight, optimized code for fast load times and smooth experiences." },
-  { t: "Security You Can Trust", d: "Industry-grade encryption and secure authentication across every build." },
-  { t: "End-to-End Support", d: "Design, build, test, deploy, and maintain — a complete, worry-free service." },
-  { t: "Modern UI/UX", d: "Clean layouts and intuitive navigation that build trust and clarity." },
-  { t: "Transparent Communication", d: "Regular updates, clear timelines, and honest communication throughout." },
-  { t: "Custom Solutions", d: "Tailored to your brand and goals — never generic templates." },
-  { t: "Proven Results", d: "Successful projects across e-commerce, corporate, mobile, and dashboards." },
+import Icon from "./Icon.astro";
+
+interface Reason { t: string; d: string; icon: string; cls: string; tone: string; img?: string; }
+
+// Order drives the bento layout below. `cls` = lg span, `tone` = surface treatment.
+// `photo` tiles carry a dark blue abstract background image (self-hosted in /why).
+const reasons: Reason[] = [
+  { t: "End-to-End Support", icon: "lifebuoy", tone: "feature", cls: "sm:col-span-2 lg:col-span-2 lg:row-span-2",
+    d: "Design, build, test, deploy, and maintain. One team stays accountable from kickoff to launch and well beyond." },
+  { t: "Innovation-Driven", icon: "bulb", tone: "photo", cls: "lg:col-span-2", img: "/why/innovation.jpg",
+    d: "Creativity plus current technologies, smart architecture, and future-ready design." },
+  { t: "High Performance", icon: "zap", tone: "photo", cls: "lg:col-span-1", img: "/why/performance.jpg",
+    d: "Lightweight, optimized code for fast load times and smooth experiences." },
+  { t: "Security You Can Trust", icon: "lock", tone: "photo", cls: "lg:col-span-1", img: "/why/security.jpg",
+    d: "Industry-grade encryption and secure authentication across every build." },
+  { t: "Modern UI/UX", icon: "layout", tone: "photo", cls: "lg:col-span-1", img: "/why/uiux.jpg",
+    d: "Clean layouts and intuitive navigation that build trust and clarity." },
+  { t: "Transparent Communication", icon: "message", tone: "photo", cls: "lg:col-span-1", img: "/why/communication.jpg",
+    d: "Regular updates, clear timelines, and honest communication throughout." },
+  { t: "Custom Solutions", icon: "sliders", tone: "pattern", cls: "lg:col-span-2",
+    d: "Tailored to your brand and goals, never generic templates." },
+  { t: "Proven Results", icon: "trophy", tone: "banner", cls: "sm:col-span-2 lg:col-span-4",
+    d: "Successful projects shipped across these industries and more." },
 ];
-const span = (i: number) => (i === 0 || i === 5) ? "lg:col-span-2" : "";
+
+const proof = ["E-commerce", "Corporate", "Mobile", "Dashboards"];
 ---
 <section id="why" class="py-28">
   <div class="container-x">
-    <div class="max-w-2xl mb-14">
+    <div class="max-w-2xl mb-12">
       <p class="eyebrow mb-3">Why choose us</p>
-      <h2 class="font-display text-[clamp(2rem,4vw,3.25rem)]">Built to make a difference</h2>
+      <h2 class="font-display text-[clamp(2rem,4vw,3.25rem)] leading-[1.05]">Why teams build with us</h2>
+      <p class="mt-4 text-ink-muted">Eight things we get right, from the first call to long after launch.</p>
     </div>
-    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 auto-rows-fr">
+
+    <div id="why-bento" class="bento">
       {reasons.map((r, i) => (
-        <div class={`reveal glass rounded-3xl p-7 hover:-translate-y-1 hover:border-brand/40 transition ${span(i)}`}>
-          <div class="h-10 w-10 rounded-xl bg-brand/15 border border-brand/30 mb-5"></div>
-          <h3 class="font-display text-xl">{r.t}</h3>
-          <p class="mt-2 text-sm text-ink-muted">{r.d}</p>
-        </div>
+        <article class={`tile tile--${r.tone} reveal ${r.cls}`} style={`transition-delay:${i * 55}ms`}>
+          {r.img && (
+            <Fragment>
+              <img class="tile-img" src={r.img} alt="" loading="lazy" decoding="async" />
+              <span class="tile-scrim"></span>
+            </Fragment>
+          )}
+          <span class="tile-ic"><Icon name={r.icon} class={r.tone === "feature" ? "h-7 w-7" : "h-6 w-6"} /></span>
+          <div class="tile-txt">
+            <h3>{r.t}</h3>
+            <p>{r.d}</p>
+            {r.tone === "banner" && (
+              <ul class="proof">
+                {proof.map((p) => <li>{p}</li>)}
+              </ul>
+            )}
+          </div>
+        </article>
       ))}
     </div>
   </div>
 </section>
+
+<style>
+  .bento { display: grid; gap: clamp(0.85rem, 1.5vw, 1.1rem); grid-template-columns: 1fr; }
+  @media (min-width: 640px) { .bento { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1024px) {
+    .bento { grid-template-columns: repeat(4, 1fr); grid-auto-rows: minmax(13rem, auto); }
+  }
+
+  .tile {
+    position: relative;
+    overflow: hidden;
+    border-radius: 1.5rem;
+    padding: clamp(1.4rem, 2.5vw, 1.75rem);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-brd);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    /* covers both the reveal entrance (opacity + transform) and hover lift */
+    transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1), opacity 0.5s ease,
+      border-color 0.35s ease, background 0.35s ease;
+  }
+  .tile:hover { transform: translateY(-4px); border-color: rgba(96, 165, 250, 0.45); background: rgba(255, 255, 255, 0.08); }
+
+  /* pointer spotlight */
+  .tile::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    background: radial-gradient(16rem 16rem at var(--mx, 50%) var(--my, 0%), rgba(59, 130, 246, 0.18), transparent 60%);
+  }
+  .tile:hover::after { opacity: 1; }
+
+  /* photo tiles: dark blue abstract image behind a readability scrim */
+  .tile--photo { background: var(--bg-elev); }
+  .tile-img {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.7;
+    transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1), opacity 0.4s ease;
+  }
+  .tile-scrim {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(160deg, rgba(8, 12, 22, 0.6) 0%, rgba(8, 12, 22, 0.8) 55%, rgba(8, 12, 22, 0.93) 100%);
+  }
+  .tile--photo:hover .tile-img { transform: scale(1.06); opacity: 0.85; }
+
+  .tile-ic {
+    position: relative;
+    z-index: 2;
+    flex: none;
+    display: grid;
+    place-items: center;
+    height: 2.75rem;
+    width: 2.75rem;
+    border-radius: 13px;
+    color: var(--brand-bright);
+    background: rgba(59, 130, 246, 0.12);
+    border: 1px solid rgba(59, 130, 246, 0.25);
+  }
+  .tile-txt { position: relative; z-index: 2; }
+  .tile h3 {
+    font-family: "Clash Display", sans-serif;
+    font-weight: 600;
+    font-size: 1.15rem;
+    letter-spacing: -0.01em;
+  }
+  .tile p { margin-top: 0.4rem; font-size: 0.9rem; line-height: 1.55; color: var(--ink-muted); }
+
+  /* feature: 2x2 anchor with a navy/blue mesh */
+  .tile--feature {
+    justify-content: flex-start;
+    background:
+      radial-gradient(120% 95% at 0% 0%, rgba(30, 58, 138, 0.6), transparent 55%),
+      radial-gradient(110% 85% at 100% 100%, rgba(59, 130, 246, 0.28), transparent 55%),
+      var(--bg-elev-2);
+    border-color: rgba(59, 130, 246, 0.3);
+  }
+  .tile--feature .tile-ic { height: 3.25rem; width: 3.25rem; }
+  .tile--feature h3 { font-size: clamp(1.4rem, 2.4vw, 1.9rem); margin-top: 0.35rem; }
+  .tile--feature p { font-size: 0.98rem; max-width: 34ch; }
+
+  /* pattern: subtle dot field */
+  .tile--pattern {
+    background-color: var(--bg-elev);
+    background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1.6px);
+    background-size: 16px 16px;
+  }
+
+  /* banner: full-width gradient sheen with inline proof chips */
+  .tile--banner {
+    background: linear-gradient(100deg, var(--bg-elev-2), rgba(30, 58, 138, 0.35) 58%, var(--bg-elev));
+    border-color: rgba(59, 130, 246, 0.22);
+  }
+  .proof { list-style: none; margin: 1rem 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .proof li {
+    font-size: 0.8rem;
+    color: var(--ink-muted);
+    padding: 0.35rem 0.75rem;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  @media (min-width: 1024px) {
+    .tile--banner { flex-direction: row; align-items: center; gap: 1.5rem; }
+    .tile--banner .tile-txt { flex: 1; }
+    .tile--banner .proof { margin-top: 0; flex: none; max-width: 50%; justify-content: flex-end; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tile, .tile::after, .tile-img { transition: none; }
+  }
+</style>
+
+<script>
+  // Pointer spotlight: only for fine pointers, and never under reduced motion.
+  const grid = document.getElementById("why-bento");
+  const fine = window.matchMedia("(pointer: fine)").matches;
+  const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (grid && fine && !still) {
+    grid.addEventListener(
+      "pointermove",
+      (e) => {
+        const tile = (e.target as HTMLElement).closest<HTMLElement>(".tile");
+        if (!tile) return;
+        const r = tile.getBoundingClientRect();
+        tile.style.setProperty("--mx", `${((e.clientX - r.left) / r.width) * 100}%`);
+        tile.style.setProperty("--my", `${((e.clientY - r.top) / r.height) * 100}%`);
+      },
+      { passive: true }
+    );
+  }
+</script>
