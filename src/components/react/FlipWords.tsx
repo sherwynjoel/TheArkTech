@@ -34,6 +34,8 @@ export default function FlipWords({ words, interval = 2200 }: Props) {
     <span
       style={{
         display: "inline-block",
+        whiteSpace: "nowrap",
+        minHeight: "1.1em",
         color: "var(--brand-bright)",
         transition: "opacity .28s ease, transform .28s cubic-bezier(.2,.7,.2,1)",
         opacity: visible ? 1 : 0,

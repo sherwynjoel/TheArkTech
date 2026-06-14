@@ -7,9 +7,7 @@ import ScrollProgress from "../components/ScrollProgress.astro";
 import Cursor from "../components/Cursor.astro";
 import Hero from "../components/Hero.astro";
 import TrustStrip from "../components/TrustStrip.astro";
-import Stats from "../components/Stats.astro";
 import Services from "../components/Services.astro";
-import HowWeWork from "../components/HowWeWork.astro";
 import WhyChooseUs from "../components/WhyChooseUs.astro";
 import Industries from "../components/Industries.astro";
 import TechMarquee from "../components/TechMarquee.astro";
@@ -19,7 +17,6 @@ import FAQ from "../components/FAQ.astro";
 import Contact from "../components/Contact.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import CallFab from "../components/CallFab.astro";
-import CookieBanner from "../components/CookieBanner.astro";
 ---
 <html lang="en">
   <head>
@@ -50,10 +47,8 @@ import CookieBanner from "../components/CookieBanner.astro";
     <main>
       <Hero />
       <TrustStrip />
-      <Stats />
       <Services />
       <ServiceQuiz />
-      <HowWeWork />
       <WhyChooseUs />
       <Industries />
       <TechMarquee />
@@ -63,7 +58,6 @@ import CookieBanner from "../components/CookieBanner.astro";
     </main>
     <SiteFooter />
     <CallFab />
-    <CookieBanner />
 
     <script>
       const obs = new IntersectionObserver((entries) => {

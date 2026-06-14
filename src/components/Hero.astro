@@ -1,6 +1,8 @@
 ---
+import { Image } from "astro:assets";
 import FlipWords from "./react/FlipWords.tsx";
 import ShinyButton from "./react/ShinyButton.tsx";
+import heroArt from "../assets/hero.png";
 const words = ["websites", "apps", "custom software", "AI automation"];
 
 const particles = [
@@ -16,8 +18,6 @@ const particles = [
   { top: 84, size: 4, dur: 26, delay: -3,  kind: "cyan", op: 0.5 },
   { top: 92, size: 3, dur: 32, delay: -16, kind: "soft", op: 0.4 },
 ];
-
-const techBadges = ["React", "Next.js", "Flutter", "Node.js", "AWS", "Python", "Figma", "PostgreSQL"];
 
 ---
 
@@ -49,7 +49,8 @@ const techBadges = ["React", "Next.js", "Flutter", "Node.js", "AWS", "Python", "
 
       <p class="eyebrow mb-4">Software studio · Coimbatore, India</p>
       <h1 class="font-display font-bold leading-[1.1] text-[clamp(2.4rem,5vw,4.5rem)]">
-        We build <FlipWords client:load words={words} /><br />
+        We build<br />
+        <FlipWords client:load words={words} /><br />
         that ship.
       </h1>
       <p class="mt-6 max-w-lg text-lg text-ink-muted leading-relaxed">
@@ -72,84 +73,18 @@ const techBadges = ["React", "Next.js", "Flutter", "Node.js", "AWS", "Python", "
       </div>
     </div>
 
-    <!-- ── RIGHT: visual showcase ── -->
+    <!-- ── RIGHT: product illustration ── -->
     <div class="lg:col-span-6 relative hero-visual">
-
-      <!-- floating "just launched" pill -->
-      <div class="hv-pill hv-pill--launch" aria-hidden="true">
-        <span class="hv-pill-dot"></span>
-        Just launched — E-Commerce store
+      <div class="hero-figure">
+        <Image
+          src={heroArt}
+          alt="3D render of a laptop with glowing blue connections linking floating dashboard and app screens TheArkTech builds"
+          class="hero-art"
+          widths={[480, 760, 1100, 1536]}
+          sizes="(min-width: 1024px) 34rem, 90vw"
+          loading="eager"
+        />
       </div>
-
-      <!-- main project card -->
-      <div class="hv-card">
-        <!-- mock browser chrome -->
-        <div class="hv-browser-bar">
-          <span class="hv-dot" style="background:#ff5f57"></span>
-          <span class="hv-dot" style="background:#ffbd2e"></span>
-          <span class="hv-dot" style="background:#28c840"></span>
-          <span class="hv-url">thearktech.in/client-preview</span>
-        </div>
-
-        <!-- mock site content -->
-        <div class="hv-browser-body">
-          <div class="hv-mock-nav">
-            <div class="hv-mock-logo"></div>
-            <div class="hv-mock-links">
-              <div class="hv-mock-line hv-w-8"></div>
-              <div class="hv-mock-line hv-w-10"></div>
-              <div class="hv-mock-line hv-w-12"></div>
-              <div class="hv-mock-btn"></div>
-            </div>
-          </div>
-          <div class="hv-mock-hero">
-            <div class="hv-mock-hero-bg"></div>
-            <div class="hv-mock-hero-text">
-              <div class="hv-mock-h1"></div>
-              <div class="hv-mock-h1 hv-w-70"></div>
-              <div class="hv-mock-p"></div>
-              <div class="hv-mock-p hv-w-60"></div>
-              <div class="hv-mock-cta-row">
-                <div class="hv-mock-cta"></div>
-                <div class="hv-mock-cta hv-mock-cta--ghost"></div>
-              </div>
-            </div>
-          </div>
-          <div class="hv-mock-cards">
-            <div class="hv-mock-card"></div>
-            <div class="hv-mock-card"></div>
-            <div class="hv-mock-card"></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- floating stats card -->
-      <div class="hv-pill hv-pill--stats" aria-hidden="true">
-        <div class="hv-stats-row">
-          <div class="hv-stat">
-            <span class="hv-stat-num">200+</span>
-            <span class="hv-stat-lbl">Projects</span>
-          </div>
-          <div class="hv-stat-divider"></div>
-          <div class="hv-stat">
-            <span class="hv-stat-num">4 wks</span>
-            <span class="hv-stat-lbl">Avg delivery</span>
-          </div>
-          <div class="hv-stat-divider"></div>
-          <div class="hv-stat">
-            <span class="hv-stat-num">4.9★</span>
-            <span class="hv-stat-lbl">Rating</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- tech badges strip -->
-      <div class="hv-badges" aria-hidden="true">
-        {techBadges.map((t) => (
-          <span class="hv-badge">{t}</span>
-        ))}
-      </div>
-
     </div>
   </div>
 </section>
@@ -226,145 +161,33 @@ const techBadges = ["React", "Next.js", "Flutter", "Node.js", "AWS", "Python", "
   .hero-proof-text strong { color: var(--ink); }
   .hero-stars { color: #facc15; font-size: 0.8rem; letter-spacing: 1px; margin-bottom: 2px; }
 
-  /* ── right visual ── */
-  .hero-visual { position: relative; padding: 2rem 0; }
+  /* ── right visual: product illustration ── */
+  .hero-visual { position: relative; }
 
-  /* floating pills */
-  .hv-pill {
-    position: absolute; z-index: 10;
-    background: rgba(10,14,26,0.92);
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 0.85rem;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-    animation: hv-float 4s ease-in-out infinite alternate;
+  .hero-figure {
+    position: relative;
+    display: grid;
+    place-items: center;
+    padding: 1rem 0;
   }
-  .hv-pill--launch {
-    top: -0.5rem; left: -1rem;
-    display: flex; align-items: center; gap: 0.5rem;
-    padding: 0.5rem 0.9rem;
-    font-size: 0.78rem; font-weight: 500; color: var(--ink-muted);
-    animation-delay: 0s;
+  .hero-art {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 34rem;
+    height: auto;
+    filter: drop-shadow(0 28px 55px rgba(0,0,0,0.55));
+    animation: hero-art-float 8s ease-in-out infinite alternate;
   }
-  .hv-pill-dot {
-    width: 7px; height: 7px; border-radius: 50%;
-    background: #22c55e; box-shadow: 0 0 6px #22c55e;
-    flex: none; animation: pulse-dot 2s ease-in-out infinite;
-  }
-
-  .hv-pill--stats {
-    bottom: 3.5rem; left: -1.5rem;
-    padding: 0.85rem 1.1rem;
-    animation-delay: 1.2s;
-    border-color: rgba(96,165,250,0.2);
-  }
-  .hv-stats-row { display: flex; align-items: center; gap: 0.85rem; }
-  .hv-stat { display: flex; flex-direction: column; align-items: center; }
-  .hv-stat-num { font-family: "Clash Display", sans-serif; font-size: 1rem; font-weight: 700; color: var(--ink); }
-  .hv-stat-lbl { font-size: 0.65rem; color: var(--ink-faint); margin-top: 1px; }
-  .hv-stat-divider { width: 1px; height: 1.75rem; background: rgba(255,255,255,0.1); }
-
-  @keyframes hv-float {
-    from { transform: translateY(0px); }
-    to   { transform: translateY(-8px); }
-  }
-
-  /* main card */
-  .hv-card {
-    border-radius: 1.25rem;
-    overflow: hidden;
-    border: 1px solid rgba(255,255,255,0.1);
-    box-shadow: 0 24px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(96,165,250,0.08);
-    background: var(--bg-elev);
-  }
-
-  /* browser bar */
-  .hv-browser-bar {
-    display: flex; align-items: center; gap: 0.5rem;
-    padding: 0.65rem 1rem;
-    background: rgba(255,255,255,0.04);
-    border-bottom: 1px solid rgba(255,255,255,0.07);
-  }
-  .hv-dot { width: 10px; height: 10px; border-radius: 50%; flex: none; }
-  .hv-url {
-    margin-left: 0.5rem; flex: 1;
-    background: rgba(255,255,255,0.05); border-radius: 4px;
-    padding: 2px 8px; font-size: 0.7rem; color: var(--ink-faint);
-  }
-
-  /* mock site skeleton */
-  .hv-browser-body { padding: 0.85rem; display: flex; flex-direction: column; gap: 0.75rem; }
-
-  .hv-mock-nav { display: flex; align-items: center; justify-content: space-between; }
-  .hv-mock-logo { width: 2.5rem; height: 0.6rem; border-radius: 3px; background: rgba(96,165,250,0.35); }
-  .hv-mock-links { display: flex; align-items: center; gap: 0.5rem; }
-
-  .hv-mock-line { height: 0.45rem; border-radius: 3px; background: rgba(255,255,255,0.12); }
-  .hv-w-8  { width: 2rem; }
-  .hv-w-10 { width: 2.5rem; }
-  .hv-w-12 { width: 3rem; }
-  .hv-w-70 { width: 70%; }
-  .hv-w-60 { width: 60%; }
-  .hv-mock-btn { width: 2.5rem; height: 1rem; border-radius: 9999px; background: rgba(59,130,246,0.4); }
-
-  .hv-mock-hero {
-    position: relative; border-radius: 0.75rem; overflow: hidden;
-    padding: 1.25rem;
-    min-height: 7rem;
-  }
-  .hv-mock-hero-bg {
-    position: absolute; inset: 0;
-    background: linear-gradient(135deg, rgba(30,58,138,0.5) 0%, rgba(8,12,22,0.9) 100%);
-  }
-  .hv-mock-hero-text { position: relative; z-index: 1; display: flex; flex-direction: column; gap: 0.4rem; }
-  .hv-mock-h1 { height: 0.85rem; width: 85%; border-radius: 4px; background: rgba(255,255,255,0.25); }
-  .hv-mock-p  { height: 0.5rem; width: 75%; border-radius: 3px; background: rgba(255,255,255,0.12); }
-  .hv-mock-cta-row { display: flex; gap: 0.5rem; margin-top: 0.4rem; }
-  .hv-mock-cta { height: 1.25rem; width: 3.5rem; border-radius: 9999px; background: rgba(59,130,246,0.6); }
-  .hv-mock-cta--ghost { background: transparent; border: 1px solid rgba(255,255,255,0.2); }
-
-  .hv-mock-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 0.5rem; }
-  .hv-mock-card { height: 2.5rem; border-radius: 0.5rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); }
-
-  /* tech badges strip */
-  .hv-badges {
-    display: flex; flex-wrap: wrap; gap: 0.4rem;
-    margin-top: 1rem;
-    padding-left: 0.5rem;
-  }
-  .hv-badge {
-    font-size: 0.7rem; padding: 3px 9px; border-radius: 9999px;
-    background: rgba(59,130,246,0.08); border: 1px solid rgba(59,130,246,0.18);
-    color: var(--brand-bright);
-    animation: badge-in 0.4s ease both;
-  }
-  .hv-badge:nth-child(1) { animation-delay: 0.1s; }
-  .hv-badge:nth-child(2) { animation-delay: 0.15s; }
-  .hv-badge:nth-child(3) { animation-delay: 0.2s; }
-  .hv-badge:nth-child(4) { animation-delay: 0.25s; }
-  .hv-badge:nth-child(5) { animation-delay: 0.3s; }
-  .hv-badge:nth-child(6) { animation-delay: 0.35s; }
-  .hv-badge:nth-child(7) { animation-delay: 0.4s; }
-  .hv-badge:nth-child(8) { animation-delay: 0.45s; }
-  @keyframes badge-in {
-    from { opacity: 0; transform: translateY(6px); }
-    to   { opacity: 1; transform: none; }
-  }
-
-  /* hide floating pills on anything below large desktop to avoid overflow */
-  @media (max-width: 1199px) {
-    .hv-pill--launch { display: none; }
-    .hv-pill--stats  { position: static; margin-top: 1rem; animation: none; }
-    .hv-stats-row    { justify-content: center; }
-    .hero-visual     { padding: 0; }
+  @keyframes hero-art-float {
+    from { transform: translateY(-8px); }
+    to   { transform: translateY(10px); }
   }
 
   @media (prefers-reduced-motion: reduce) {
     .hero-blob, .hero-glow { animation: none; }
     .hero-particle { display: none; }
-    .hv-pill { animation: none; }
     .hero-live-dot { animation: none; }
-    .hv-badge { animation: none; }
+    .hero-art { animation: none; }
   }
 </style>
