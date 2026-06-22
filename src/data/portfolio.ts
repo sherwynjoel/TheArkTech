@@ -91,4 +91,74 @@ export const portfolioProjects: PortfolioProject[] = [
     ],
     tags: ["Education", "R&D", "Training", "Lead Gen"],
   },
+  {
+    title: "Axis Upgraders",
+    sector: "Business Services",
+    type: "Business Website",
+    summary:
+      "A live business website for Axis Upgraders with clear service positioning, mobile-friendly presentation, and direct enquiry flow.",
+    image: "/industries/corporate.png",
+    url: "https://axisupgraders.com/",
+    metrics: [
+      { value: "Live", label: "website project" },
+      { value: "24/7", label: "online presence" },
+    ],
+    tags: ["Business Site", "Responsive", "Lead Gen", "SEO"],
+  },
+  {
+    title: "Deva Sea Food",
+    sector: "Food & Export",
+    type: "Business Website",
+    summary:
+      "A business website for a frozen seafood import and export brand, focused on product credibility, company presence, and direct enquiry flow.",
+    image: "/industries/food.png",
+    url: "https://devaseafood.com/",
+    metrics: [
+      { value: "B2B", label: "export presence" },
+      { value: "24/7", label: "online visibility" },
+    ],
+    tags: ["Food Export", "Business Site", "Responsive", "Lead Gen"],
+  },
+  {
+    title: "Southern Group of Companies",
+    sector: "Conglomerate",
+    type: "Corporate Website",
+    summary:
+      "A corporate website for a South India group spanning scrap trading, clean energy, logistics, commodity trading, and real estate divisions.",
+    image: "/industries/corporate.png",
+    url: "https://southerngoc.com/",
+    metrics: [
+      { value: "6", label: "group companies" },
+      { value: "2015", label: "founded" },
+    ],
+    tags: ["Corporate", "Multi-Sector", "Clean Energy", "Logistics"],
+  },
+  {
+    title: "FD Sports Infrastructure",
+    sector: "Sports Infrastructure",
+    type: "Business Website",
+    summary:
+      "A sports infrastructure website for turf construction, courts, cricket nets, project galleries, process education, and consultation-led enquiries.",
+    image: "/industries/custom.png",
+    url: "https://fdsports.in/",
+    metrics: [
+      { value: "10+", label: "years experience" },
+      { value: "40+", label: "team members" },
+    ],
+    tags: ["Sports", "Infrastructure", "Gallery", "Lead Gen"],
+  },
+  {
+    title: "Grace Dental Care Kovai",
+    sector: "Healthcare",
+    type: "Clinic Website",
+    summary:
+      "A dental clinic website for patient education, treatment discovery, doctor profiles, international patient support, and direct appointment enquiries.",
+    image: "/industries/healthcare.png",
+    url: "https://www.gracedentalcarekovai.com/",
+    metrics: [
+      { value: "10+", label: "years experience" },
+      { value: "1-stop", label: "dental facility" },
+    ],
+    tags: ["Dental", "Healthcare", "Treatments", "Appointments"],
+  },
 ];
