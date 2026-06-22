@@ -4,6 +4,7 @@ export interface PortfolioProject {
   type: string;
   summary: string;
   image: string;
+  gallery?: string[];
   metrics: { value: string; label: string }[];
   tags: string[];
   url?: string;
@@ -160,5 +161,22 @@ export const portfolioProjects: PortfolioProject[] = [
       { value: "1-stop", label: "dental facility" },
     ],
     tags: ["Dental", "Healthcare", "Treatments", "Appointments"],
+  },
+  {
+    title: "Social Media Lead Generation",
+    sector: "Fashion Retail",
+    type: "Instagram Growth",
+    summary:
+      "A social media lead generation campaign for Sthri by Saranya, growing a new boutique profile into a sales-ready Instagram presence for cotton saree enquiries.",
+    image: "/portfolio/sthriby-saranya-after.jpeg",
+    gallery: [
+      "/portfolio/sthriby-saranya-before.jpeg",
+      "/portfolio/sthriby-saranya-after.jpeg",
+    ],
+    metrics: [
+      { value: "0 to 10K", label: "followers grown" },
+      { value: "14", label: "content posts" },
+    ],
+    tags: ["Instagram", "Lead Gen", "Fashion", "WhatsApp"],
   },
 ];

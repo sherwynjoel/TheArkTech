@@ -20,7 +20,20 @@ import { portfolioProjects } from "../data/portfolio.ts";
       {portfolioProjects.map((project, index) => (
         <article class="portfolio-card reveal" style={`transition-delay:${index * 70}ms`}>
           <div class="portfolio-media">
-            <img src={project.image} alt={`${project.title} project preview`} loading="lazy" decoding="async" />
+            {project.gallery ? (
+              <div class="portfolio-gallery">
+                {project.gallery.map((image, imageIndex) => (
+                  <img
+                    src={image}
+                    alt={`${project.title} ${imageIndex === 0 ? "before" : "after"} screenshot`}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ))}
+              </div>
+            ) : (
+              <img src={project.image} alt={`${project.title} project preview`} loading="lazy" decoding="async" />
+            )}
             <div class="portfolio-media-overlay"></div>
             <span class="portfolio-type">{project.type}</span>
           </div>
@@ -112,6 +125,21 @@ import { portfolioProjects } from "../data/portfolio.ts";
     background: var(--bg-elev);
   }
 
+  .portfolio-gallery {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.5rem;
+    height: 100%;
+    padding: 0.5rem;
+    background: rgba(0, 0, 0, 0.28);
+  }
+
+  .portfolio-gallery img {
+    border-radius: 0.85rem;
+    object-fit: contain;
+    background: #05080d;
+  }
+
   .portfolio-media img {
     width: 100%;
     height: 100%;
@@ -119,7 +147,8 @@ import { portfolioProjects } from "../data/portfolio.ts";
     transition: transform 0.65s cubic-bezier(0.2, 0.7, 0.2, 1);
   }
 
-  .portfolio-card:hover .portfolio-media img { transform: scale(1.06); }
+  .portfolio-card:hover .portfolio-media > img { transform: scale(1.06); }
+  .portfolio-card:hover .portfolio-gallery img { transform: scale(1.03); }
 
   .portfolio-media-overlay {
     position: absolute;
