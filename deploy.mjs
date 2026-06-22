@@ -16,14 +16,14 @@ async function deploy() {
         await client.ensureDir("_astro");
         await client.uploadFromDir("dist/_astro");
         
-        await client.cd("/");
+        await client.cd("/public_html");
+        console.log("Deploying index.html...");
+        await client.uploadFrom("dist/index.html", "index.html");
+        
+        await client.cd("/public_html");
         console.log("Deploying portfolio...");
         await client.ensureDir("portfolio");
         await client.uploadFromDir("dist/portfolio");
-        
-        await client.cd("/");
-        console.log("Deploying index.html...");
-        await client.uploadFrom("dist/index.html", "index.html");
         
         console.log("Deployment complete.");
     } catch(err) {
