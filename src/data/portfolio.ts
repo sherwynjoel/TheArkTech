@@ -12,51 +12,41 @@ export interface PortfolioProject {
 
 export const portfolioProjects: PortfolioProject[] = [
   {
-    title: "Retail Commerce Platform",
-    sector: "E-commerce",
-    type: "Website + Admin",
+    title: "Hars Jewellery",
+    sector: "Jewelry Retail",
+    type: "Premium E-Commerce",
     summary:
-      "A fast online storefront with product discovery, secure checkout flow, and an owner-friendly product management dashboard.",
-    image: "/industries/ecommerce.png",
+      "A luxurious e-commerce platform for a premium jewelry brand, showcasing handcrafted gold and diamond collections with an elegant, immersive shopping experience.",
+    image: "/portfolio/harsjewellery.png",
+    url: "https://harsjewellery.in",
     metrics: [
-      { value: "42%", label: "faster browsing" },
-      { value: "3x", label: "simpler updates" },
+      { value: "Premium", label: "brand design" },
+      { value: "100%", label: "authenticity" },
     ],
-    tags: ["Astro", "React", "Payments", "Admin"],
+    tags: ["E-Commerce", "Jewelry", "Luxury", "Online Store"],
   },
   {
-    title: "Clinic Appointment System",
-    sector: "Healthcare",
-    type: "Web App",
+    title: "Zetra Electronics",
+    sector: "E-Commerce",
+    type: "Online Store",
     summary:
-      "A responsive booking workflow for patients, with staff-side schedule visibility and automated consultation reminders.",
-    image: "/industries/healthcare.png",
+      "India's premium destination for electronic components, sensors, IoT modules, and robotics kits. A complete e-commerce experience.",
+    image: "/portfolio/zetraelectronics.png",
+    url: "https://zetraelectronics.com",
     metrics: [
-      { value: "65%", label: "less manual follow-up" },
-      { value: "24/7", label: "booking access" },
+      { value: "5000+", label: "products listed" },
+      { value: "24/7", label: "sales automation" },
     ],
-    tags: ["Automation", "Dashboard", "Forms", "WhatsApp"],
+    tags: ["E-Commerce", "Electronics", "IoT", "Robotics"],
   },
-  {
-    title: "Real Estate Lead Website",
-    sector: "Real Estate",
-    type: "Landing Site",
-    summary:
-      "A premium property showcase with project pages, enquiry prompts, location highlights, and mobile-first lead capture.",
-    image: "/industries/realestate.png",
-    metrics: [
-      { value: "2.4s", label: "target load time" },
-      { value: "18+", label: "lead touchpoints" },
-    ],
-    tags: ["SEO", "UI/UX", "Gallery", "Lead Gen"],
-  },
+
   {
     title: "Opal Media Productions",
     sector: "Media Production",
     type: "Brand Website",
     summary:
       "A full-service agency website presenting media production, photography, digital marketing, branding, and website development services.",
-    image: "/industries/portfolio.png",
+    image: "/portfolio/opalmediaproductions.png",
     url: "https://www.opalmediaproductions.com/",
     metrics: [
       { value: "5+", label: "service verticals" },
@@ -70,7 +60,7 @@ export const portfolioProjects: PortfolioProject[] = [
     type: "Clinic Website",
     summary:
       "A dermatologist-led clinic website for advanced skin, hair, laser, and dermatosurgery treatments with consultation-focused patient journeys.",
-    image: "/industries/healthcare.png",
+    image: "/portfolio/dralamdermcentre.png",
     url: "https://dralamdermcentre.com/",
     metrics: [
       { value: "500+", label: "Google reviews" },
@@ -84,7 +74,7 @@ export const portfolioProjects: PortfolioProject[] = [
     type: "Training Website",
     summary:
       "A project-center website for final year engineering projects, training, domain discovery, student outcomes, and WhatsApp-led enquiries.",
-    image: "/industries/education.png",
+    image: "/portfolio/learnmoreprojects.png",
     url: "https://learnmoreprojects.in/",
     metrics: [
       { value: "7,000+", label: "students supported" },
@@ -98,7 +88,7 @@ export const portfolioProjects: PortfolioProject[] = [
     type: "Business Website",
     summary:
       "A live business website for Axis Upgraders with clear service positioning, mobile-friendly presentation, and direct enquiry flow.",
-    image: "/industries/corporate.png",
+    image: "/portfolio/axisupgraders.png",
     url: "https://axisupgraders.com/",
     metrics: [
       { value: "Live", label: "website project" },
@@ -112,7 +102,7 @@ export const portfolioProjects: PortfolioProject[] = [
     type: "Business Website",
     summary:
       "A business website for a frozen seafood import and export brand, focused on product credibility, company presence, and direct enquiry flow.",
-    image: "/industries/food.png",
+    image: "/portfolio/devaseafood.png",
     url: "https://devaseafood.com/",
     metrics: [
       { value: "B2B", label: "export presence" },
@@ -126,7 +116,7 @@ export const portfolioProjects: PortfolioProject[] = [
     type: "Corporate Website",
     summary:
       "A corporate website for a South India group spanning scrap trading, clean energy, logistics, commodity trading, and real estate divisions.",
-    image: "/industries/corporate.png",
+    image: "/portfolio/southerngoc.png",
     url: "https://southerngoc.com/",
     metrics: [
       { value: "6", label: "group companies" },
@@ -140,7 +130,7 @@ export const portfolioProjects: PortfolioProject[] = [
     type: "Business Website",
     summary:
       "A sports infrastructure website for turf construction, courts, cricket nets, project galleries, process education, and consultation-led enquiries.",
-    image: "/industries/custom.png",
+    image: "/portfolio/fdsports.png",
     url: "https://fdsports.in/",
     metrics: [
       { value: "10+", label: "years experience" },
@@ -154,7 +144,7 @@ export const portfolioProjects: PortfolioProject[] = [
     type: "Clinic Website",
     summary:
       "A dental clinic website for patient education, treatment discovery, doctor profiles, international patient support, and direct appointment enquiries.",
-    image: "/industries/healthcare.png",
+    image: "/portfolio/gracedentalcarekovai.png",
     url: "https://www.gracedentalcarekovai.com/",
     metrics: [
       { value: "10+", label: "years experience" },
@@ -162,16 +152,17 @@ export const portfolioProjects: PortfolioProject[] = [
     ],
     tags: ["Dental", "Healthcare", "Treatments", "Appointments"],
   },
+
   {
     title: "Social Media Lead Generation",
     sector: "Fashion Retail",
     type: "Instagram Growth",
     summary:
       "A social media lead generation campaign for Sthri by Saranya, growing a new boutique profile into a sales-ready Instagram presence for cotton saree enquiries.",
-    image: "/portfolio/sthriby-saranya-after.jpeg",
+    image: "/1.jpeg",
     gallery: [
-      "/portfolio/sthriby-saranya-before.jpeg",
-      "/portfolio/sthriby-saranya-after.jpeg",
+      "/1.jpeg",
+      "/2.jpeg",
     ],
     metrics: [
       { value: "0 to 10K", label: "followers grown" },
@@ -179,4 +170,22 @@ export const portfolioProjects: PortfolioProject[] = [
     ],
     tags: ["Instagram", "Lead Gen", "Fashion", "WhatsApp"],
   },
+  {
+    title: "Personal Branding",
+    sector: "Entrepreneur",
+    type: "Instagram Growth",
+    summary:
+      "A personal branding campaign for Saranyan, scaling a professional Instagram profile from scratch to a 10K+ follower community.",
+    image: "/WhatsApp%20Image%202026-06-08%20at%205.18.13%20PM.jpeg",
+    gallery: [
+      "/WhatsApp%20Image%202026-06-08%20at%205.18.13%20PM.jpeg",
+      "/WhatsApp%20Image%202026-06-08%20at%205.18.14%20PM.jpeg",
+    ],
+    metrics: [
+      { value: "0 to 10K", label: "followers grown" },
+      { value: "82", label: "content posts" },
+    ],
+    tags: ["Personal Branding", "Instagram", "Growth"],
+  },
 ];
+

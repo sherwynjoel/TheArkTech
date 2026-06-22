@@ -21,7 +21,7 @@ const particles = [
 
 ---
 
-<section id="home" class="relative min-h-[100svh] flex items-center overflow-hidden pt-28 pb-16">
+<section id="home" class="relative min-h-[100svh] flex items-center overflow-hidden pt-24 md:pt-32 pb-12 md:pb-16">
   <!-- animated ambient backdrop -->
   <div class="hero-bg pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
     <div class="hero-grid"></div>
@@ -59,9 +59,9 @@ const particles = [
         businesses and startups across India.
       </p>
 
-      <div class="mt-9 flex flex-wrap items-center gap-4">
+      <div class="mt-7 md:mt-9 flex flex-col sm:flex-row flex-wrap sm:items-center gap-4">
         <ShinyButton client:load href="#contact">Start a project</ShinyButton>
-        <a href="#services" class="btn-glass">Explore services</a>
+        <a href="#services" class="btn-glass w-full sm:w-auto text-center">Explore services</a>
       </div>
 
       <!-- social proof row -->

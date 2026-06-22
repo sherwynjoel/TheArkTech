@@ -2,7 +2,7 @@
 import { portfolioProjects } from "../data/portfolio.ts";
 ---
 
-<section id="portfolio" class="portfolio-section py-28 overflow-hidden">
+<section id="portfolio" class="portfolio-section py-20 lg:py-28 overflow-hidden">
   <div class="container-x">
     <div class="portfolio-head reveal">
       <div>
@@ -17,7 +17,7 @@ import { portfolioProjects } from "../data/portfolio.ts";
     </div>
 
     <div class="portfolio-grid">
-      {portfolioProjects.map((project, index) => (
+      {portfolioProjects.filter(p => p.title !== "Social Media Lead Generation" && p.title !== "Personal Branding").map((project, index) => (
         <article class="portfolio-card reveal" style={`transition-delay:${index * 70}ms`}>
           <div class="portfolio-media">
             {project.gallery ? (
@@ -74,7 +74,69 @@ import { portfolioProjects } from "../data/portfolio.ts";
   </div>
 </section>
 
+<section id="social-media-lead" class="portfolio-section py-20 lg:py-28 overflow-hidden">
+  <div class="container-x">
+
+
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6 lg:gap-8">
+      {portfolioProjects.filter(p => p.title === "Social Media Lead Generation" || p.title === "Personal Branding").map((project, index) => (
+        <article class="portfolio-card reveal" style={`transition-delay:${index * 70}ms`}>
+          <div class="portfolio-media">
+            {project.gallery ? (
+              <div class="portfolio-gallery">
+                {project.gallery.map((image, imageIndex) => (
+                  <img src={image} alt={`${project.title} ${imageIndex === 0 ? "before" : "after"} screenshot`} loading="lazy" decoding="async" />
+                ))}
+              </div>
+            ) : (
+              <img src={project.image} alt={`${project.title} project preview`} loading="lazy" decoding="async" />
+            )}
+            <div class="portfolio-media-overlay"></div>
+            <span class="portfolio-type">{project.type}</span>
+          </div>
+
+          <div class="portfolio-body">
+            <div class="portfolio-kicker">{project.sector}</div>
+            <h3 class="font-display">{project.title}</h3>
+            <p>{project.summary}</p>
+
+            <dl class="portfolio-metrics">
+              {project.metrics.map(metric => (
+                <div>
+                  <dt>{metric.value}</dt>
+                  <dd>{metric.label}</dd>
+                </div>
+              ))}
+            </dl>
+
+            <div class="portfolio-bottom">
+              <div class="portfolio-tags" aria-label={`${project.title} technologies and features`}>
+                {project.tags.map(tag => <span>{tag}</span>)}
+              </div>
+              {project.url && (
+                <a href={project.url} target="_blank" rel="noopener noreferrer" class="portfolio-link">
+                  Visit website
+                </a>
+              )}
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+
+
+  </div>
+</section>
+
 <style>
+  .portfolio-media img,
+  .portfolio-gallery img {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    filter: brightness(1.1) contrast(1.1);
+  }
+
   .portfolio-section {
     position: relative;
     background:
@@ -98,7 +160,9 @@ import { portfolioProjects } from "../data/portfolio.ts";
   .portfolio-grid {
     display: grid;
     gap: clamp(1rem, 2vw, 1.35rem);
-  }
+   }
+
+
 
   .portfolio-card {
     overflow: hidden;
@@ -124,6 +188,11 @@ import { portfolioProjects } from "../data/portfolio.ts";
     overflow: hidden;
     background: var(--bg-elev);
   }
+  .portfolio-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
 
   .portfolio-gallery {
     display: grid;
@@ -143,7 +212,7 @@ import { portfolioProjects } from "../data/portfolio.ts";
   .portfolio-media img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     transition: transform 0.65s cubic-bezier(0.2, 0.7, 0.2, 1);
   }
 
