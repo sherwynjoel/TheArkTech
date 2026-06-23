@@ -98,4 +98,19 @@ export const services: Service[] = [
     ],
     tech: ["Google Search Console", "SEMrush", "Google Analytics", "Google Ads", "Meta Ads"],
   },
+  {
+    num: "07",
+    title: "AI Agents & Projects",
+    icon: "cpu",
+    desc: "Intelligent AI agents and projects, including AI calling agents, custom bots, and automated workflows designed to scale your operations.",
+    included: [
+      "Custom AI agent development",
+      "AI calling & voice agents",
+      "LLM integration (OpenAI, Anthropic)",
+      "Automated workflows & pipelines",
+      "Chatbot & support solutions",
+      "AI performance monitoring",
+    ],
+    tech: ["OpenAI", "Python", "Node.js", "LangChain", "Vapi / ElevenLabs"],
+  },
 ];

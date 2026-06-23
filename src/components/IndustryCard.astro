@@ -2,16 +2,40 @@
 interface Props { slug: string; title: string; desc: string; tag: string; }
 const { slug, title, desc, tag } = Astro.props as Props;
 ---
-<article class="reveal group glass rounded-3xl overflow-hidden flex flex-col hover:-translate-y-1.5 transition duration-300">
-  <div class="relative h-44 overflow-hidden">
-    <img src={`/industries/${slug}.png`} alt={title} loading="lazy" decoding="async"
-         class="h-full w-full object-cover scale-105 group-hover:scale-110 transition-transform duration-500" />
-    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent"></div>
-    <span class="absolute top-3 left-3 glass rounded-full px-3 py-1 text-xs font-medium">{tag}</span>
-  </div>
-  <div class="flex flex-col flex-1 p-5">
-    <h3 class="font-display text-lg">{title}</h3>
-    <p class="mt-2 text-sm text-ink-muted flex-1">{desc}</p>
-    <a href="#contact" class="btn-glass mt-5 w-full text-sm py-3">Explore →</a>
+<article class="reveal group relative glass glass-blur rounded-3xl overflow-hidden flex flex-col hover:-translate-y-2 transition-all duration-500">
+  
+  {/* Hover Gradient Background */}
+  <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-brand/10 via-accent-cyan/5 to-transparent pointer-events-none"></div>
+  
+  {/* Glowing orb in corner */}
+  <div class="absolute -top-20 -right-20 w-40 h-40 bg-brand-bright/20 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
+
+  <div class="relative z-10 flex flex-col flex-1 p-6 sm:p-8">
+    <div class="mb-5">
+      <span class="inline-block rounded-full px-3 py-1 text-[0.7rem] uppercase tracking-wider font-semibold text-accent-cyan border border-accent-cyan/20 bg-accent-cyan/10">
+        {tag}
+      </span>
+    </div>
+    
+    <h3 class="font-display text-xl mb-3 text-ink group-hover:text-brand-bright transition-colors duration-300">
+      {title}
+    </h3>
+    
+    <p class="text-sm text-ink-muted flex-1 leading-relaxed">
+      {desc}
+    </p>
+    
+    <div class="mt-8 pt-5 border-t border-glass-brd flex items-center justify-between">
+      <span class="text-sm font-medium text-ink-muted group-hover:text-ink transition-colors duration-300">
+        Explore Solutions
+      </span>
+      <span class="w-8 h-8 rounded-full border border-glass-brd flex items-center justify-center text-ink-muted group-hover:bg-brand group-hover:text-ink group-hover:border-brand transition-all duration-300 group-hover:translate-x-1">
+        →
+      </span>
+    </div>
+    
+    <a href="#contact" class="absolute inset-0 z-20">
+      <span class="sr-only">Explore {title} solutions</span>
+    </a>
   </div>
 </article>
