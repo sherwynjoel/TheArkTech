@@ -152,40 +152,5 @@ export const portfolioProjects: PortfolioProject[] = [
     ],
     tags: ["Dental", "Healthcare", "Treatments", "Appointments"],
   },
-
-  {
-    title: "Social Media Lead Generation",
-    sector: "Fashion Retail",
-    type: "Instagram Growth",
-    summary:
-      "A social media lead generation campaign for Sthri by Saranya, growing a new boutique profile into a sales-ready Instagram presence for cotton saree enquiries.",
-    image: "/1.jpeg",
-    gallery: [
-      "/1.jpeg",
-      "/2.jpeg",
-    ],
-    metrics: [
-      { value: "0 to 10K", label: "followers grown" },
-      { value: "14", label: "content posts" },
-    ],
-    tags: ["Instagram", "Lead Gen", "Fashion", "WhatsApp"],
-  },
-  {
-    title: "Personal Branding",
-    sector: "Entrepreneur",
-    type: "Instagram Growth",
-    summary:
-      "A personal branding campaign for Saranyan, scaling a professional Instagram profile from scratch to a 10K+ follower community.",
-    image: "/WhatsApp%20Image%202026-06-08%20at%205.18.13%20PM.jpeg",
-    gallery: [
-      "/WhatsApp%20Image%202026-06-08%20at%205.18.13%20PM.jpeg",
-      "/WhatsApp%20Image%202026-06-08%20at%205.18.14%20PM.jpeg",
-    ],
-    metrics: [
-      { value: "0 to 10K", label: "followers grown" },
-      { value: "82", label: "content posts" },
-    ],
-    tags: ["Personal Branding", "Instagram", "Growth"],
-  },
 ];
 

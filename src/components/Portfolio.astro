@@ -17,7 +17,7 @@ import { portfolioProjects } from "../data/portfolio.ts";
     </div>
 
     <div class="portfolio-grid">
-      {portfolioProjects.filter(p => p.title !== "Social Media Lead Generation" && p.title !== "Personal Branding").map((project, index) => (
+      {portfolioProjects.map((project, index) => (
         <article class="portfolio-card reveal" style={`transition-delay:${index * 70}ms`}>
           <div class="portfolio-media">
             {project.gallery ? (
@@ -71,70 +71,6 @@ import { portfolioProjects } from "../data/portfolio.ts";
       <p class="font-display">Have a project that should be here next?</p>
       <a href="#contact" class="btn-glass">Plan your build</a>
     </div>
-  </div>
-</section>
-
-<section id="social-media-lead" class="portfolio-section py-20 lg:py-28 overflow-hidden">
-  <div class="container-x">
-    <div class="portfolio-head reveal">
-      <div>
-        <p class="eyebrow mb-3">Parent Company</p>
-        <h2 class="font-display text-[clamp(2rem,4vw,3.25rem)] leading-[1.05]">
-          Elviyan
-        </h2>
-      </div>
-      <p class="portfolio-intro">
-        While TheArkTech focuses on technical builds like software and apps, our parent company Elviyan specializes in digital growth—including lead generation, Meta ads, personal branding, podcasts, videography, and full-scale production work.
-      </p>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6 lg:gap-8">
-      {portfolioProjects.filter(p => p.title === "Social Media Lead Generation" || p.title === "Personal Branding").map((project, index) => (
-        <article class="portfolio-card reveal" style={`transition-delay:${index * 70}ms`}>
-          <div class="portfolio-media">
-            {project.gallery ? (
-              <div class="portfolio-gallery">
-                {project.gallery.map((image, imageIndex) => (
-                  <img src={image} alt={`${project.title} ${imageIndex === 0 ? "before" : "after"} screenshot`} loading="lazy" decoding="async" />
-                ))}
-              </div>
-            ) : (
-              <img src={project.image} alt={`${project.title} project preview`} loading="lazy" decoding="async" />
-            )}
-            <div class="portfolio-media-overlay"></div>
-            <span class="portfolio-type">{project.type}</span>
-          </div>
-
-          <div class="portfolio-body">
-            <div class="portfolio-kicker">{project.sector}</div>
-            <h3 class="font-display">{project.title}</h3>
-            <p>{project.summary}</p>
-
-            <dl class="portfolio-metrics">
-              {project.metrics.map(metric => (
-                <div>
-                  <dt>{metric.value}</dt>
-                  <dd>{metric.label}</dd>
-                </div>
-              ))}
-            </dl>
-
-            <div class="portfolio-bottom">
-              <div class="portfolio-tags" aria-label={`${project.title} technologies and features`}>
-                {project.tags.map(tag => <span>{tag}</span>)}
-              </div>
-              {project.url && (
-                <a href={project.url} target="_blank" rel="noopener noreferrer" class="portfolio-link">
-                  Visit website
-                </a>
-              )}
-            </div>
-          </div>
-        </article>
-      ))}
-    </div>
-
-
   </div>
 </section>
 
