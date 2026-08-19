@@ -1,5 +1,5 @@
 ---
-import { portfolioProjects } from "../data/portfolio.ts";
+import { portfolioProjects, projectSlug } from "../data/portfolio.ts";
 ---
 
 <section id="portfolio" class="portfolio-section section-y-lg overflow-hidden glow-anchor">
@@ -12,7 +12,8 @@ import { portfolioProjects } from "../data/portfolio.ts";
         </h2>
       </div>
       <p class="portfolio-intro">
-        A snapshot of the kinds of digital products we design, build, and launch for growing teams.
+        Real client engagements, each one live and visitable.
+        <a href="/work" class="portfolio-intro-link">See all {portfolioProjects.length} projects →</a>
       </p>
     </div>
 
@@ -56,11 +57,9 @@ import { portfolioProjects } from "../data/portfolio.ts";
               <div class="portfolio-tags" aria-label={`${project.title} technologies and features`}>
                 {project.tags.map((tag) => <span>{tag}</span>)}
               </div>
-              {project.url && (
-                <a href={project.url} target="_blank" rel="noopener noreferrer" class="portfolio-link">
-                  Visit website
-                </a>
-              )}
+              <a href={`/work/${projectSlug(project)}`} class="portfolio-link">
+                Case study →
+              </a>
             </div>
           </div>
         </article>
@@ -69,12 +68,24 @@ import { portfolioProjects } from "../data/portfolio.ts";
 
     <div class="portfolio-cta reveal">
       <p class="font-display">Have a project that should be here next?</p>
-      <a href="#contact" class="btn-glass">Plan your build</a>
+      <div class="portfolio-cta-actions">
+        <a href="/work" class="btn-glass">Browse all work</a>
+        <a href="#contact" class="btn-glass">Plan your build</a>
+      </div>
     </div>
   </div>
 </section>
 
 <style>
+  .portfolio-intro-link {
+    display: inline-block;
+    margin-top: 0.5rem;
+    color: var(--brand-bright);
+  }
+  .portfolio-intro-link:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  .portfolio-cta-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+
   .portfolio-media img,
   .portfolio-gallery img {
     image-rendering: -webkit-optimize-contrast;

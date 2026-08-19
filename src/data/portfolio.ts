@@ -8,6 +8,40 @@ export interface PortfolioProject {
   metrics: { value: string; label: string }[];
   tags: string[];
   url?: string;
+
+  /** Stable URL segment. Derived from the title when omitted. */
+  slug?: string;
+
+  // ---- Optional case-study detail ----------------------------------------
+  // Each of these renders as its own section on /work/<slug> and is skipped
+  // entirely when absent, so a project with none of them still produces a
+  // complete page. Fill them in as you write up each engagement — nothing
+  // here should be guessed, since these are claims about real client work.
+  /** The situation the client came with. 2-4 sentences. */
+  challenge?: string;
+  /** What was actually built, one item per line. */
+  approach?: string[];
+  /** What changed for the client after launch. 2-4 sentences. */
+  outcome?: string;
+  /** Technologies used on this specific project. */
+  stack?: string[];
+  /** Delivery year, e.g. "2025". */
+  year?: string;
+  /** Short pull-quote from the client, if you have one on record. */
+  testimonial?: { quote: string; author: string; role?: string };
+}
+
+/** URL-safe slug for a project, derived from the title unless one is set. */
+export function projectSlug(project: PortfolioProject): string {
+  return (
+    project.slug ??
+    project.title
+      .toLowerCase()
+      // Drop apostrophes first so "Dr. Alam's" becomes "dr-alams", not "dr-alam-s".
+      .replace(/['’]/g, "")
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "")
+  );
 }
 
 export const portfolioProjects: PortfolioProject[] = [
