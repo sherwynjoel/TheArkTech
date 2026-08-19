@@ -1,8 +1,10 @@
 ---
-interface Props { slug: string; title: string; desc: string; tag: string; }
-const { slug, title, desc, tag } = Astro.props as Props;
+interface Props { slug: string; title: string; desc: string; tag: string; index?: number; }
+const { slug, title, desc, tag, index = 0 } = Astro.props as Props;
+// Stagger the reveal by column so a row lights up left-to-right, not all at once.
+const revealDelay = (index % 3) * 80;
 ---
-<article class="reveal group relative glass glass-blur rounded-3xl overflow-hidden flex flex-col hover:-translate-y-2 transition-all duration-500">
+<article class="reveal group relative glass rounded-3xl overflow-hidden flex flex-col hover:-translate-y-2 transition duration-300 hover:border-white/20" style={`--reveal-delay:${revealDelay}ms`}>
   
   {/* Hover Gradient Background */}
   <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-brand/10 via-accent-cyan/5 to-transparent pointer-events-none"></div>

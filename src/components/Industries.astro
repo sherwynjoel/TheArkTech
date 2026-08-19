@@ -2,7 +2,7 @@
 import { industries } from "../data/industries.ts";
 import IndustryCard from "./IndustryCard.astro";
 ---
-<section id="industries" class="py-28">
+<section id="industries" class="section-y">
   <div class="container-x">
     <div class="flex flex-wrap items-end justify-between gap-6 mb-14">
       <div class="max-w-2xl">
@@ -13,8 +13,8 @@ import IndustryCard from "./IndustryCard.astro";
       <a href="#contact" class="btn-glass hidden md:inline-flex">Get a consultation →</a>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {industries.map((it) => (
-        <IndustryCard slug={it.slug} title={it.title} desc={it.desc} tag={it.tag} />
+      {industries.map((it, i) => (
+        <IndustryCard slug={it.slug} title={it.title} desc={it.desc} tag={it.tag} index={i} />
       ))}
     </div>
   </div>

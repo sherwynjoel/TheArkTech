@@ -14,7 +14,7 @@ const links = [
     </a>
     <nav class="hidden md:flex items-center gap-1 glass glass-blur rounded-full px-2 py-1">
       {links.map((l) => (
-        <a href={l.href} class="px-4 py-2 rounded-full text-sm font-medium text-ink-muted hover:text-ink hover:bg-white/10 transition">{l.label}</a>
+        <a href={l.href} data-nav={l.href} class="nav-link px-4 py-2 rounded-full text-sm font-medium text-ink-muted hover:text-ink hover:bg-white/10 transition">{l.label}</a>
       ))}
     </nav>
     <a href="#contact" class="hidden md:inline-flex btn-glass text-sm py-2 px-5">Get Quote</a>
@@ -25,7 +25,7 @@ const links = [
   <div id="nav-mobile" class="md:hidden hidden container-x pb-4">
     <div class="glass glass-blur rounded-2xl p-3 flex flex-col gap-1">
       {links.map((l) => (
-        <a href={l.href} class="px-4 py-3 rounded-xl text-sm font-medium text-ink-muted hover:text-ink hover:bg-white/10 transition">{l.label}</a>
+        <a href={l.href} data-nav={l.href} class="nav-link px-4 py-3 rounded-xl text-sm font-medium text-ink-muted hover:text-ink hover:bg-white/10 transition">{l.label}</a>
       ))}
       <a href="#contact" class="btn-glass mt-1">Get Quote</a>
     </div>
@@ -50,9 +50,37 @@ const links = [
   menu?.querySelectorAll("a").forEach((a) =>
     a.addEventListener("click", () => menu.classList.add("hidden"))
   );
+
+  // Scroll-spy: reflect the section in view on the nav links (desktop + mobile share hrefs).
+  const navLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>(".nav-link"));
+  const watched = ["services", "industries", "portfolio", "contact"]
+    .map((id) => document.getElementById(id))
+    .filter((el): el is HTMLElement => !!el);
+  if (navLinks.length && watched.length) {
+    const setCurrent = (id: string | null) => {
+      navLinks.forEach((l) =>
+        l.classList.toggle("is-current", !!id && l.dataset.nav === `#${id}`)
+      );
+    };
+    const spy = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible) setCurrent(visible.target.id);
+      },
+      { rootMargin: "-45% 0px -50% 0px", threshold: [0, 0.25, 0.5] }
+    );
+    watched.forEach((el) => spy.observe(el));
+  }
 </script>
 
 <style>
-  #site-nav.nav-scrolled { background: rgba(0,0,0,0.55); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid rgba(255,255,255,0.08); }
+  #site-nav { transition: background var(--dur-2) var(--ease-out-quart), border-color var(--dur-2) var(--ease-out-quart); }
+  #site-nav.nav-scrolled { background: rgba(0,0,0,0.55); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--hairline); }
+
+  /* Active section — a quiet, persistent highlight (not a shouty pill). */
+  .nav-link.is-current { color: var(--ink); background: rgba(96, 165, 250, 0.14); }
+  #nav-mobile .nav-link.is-current { background: rgba(96, 165, 250, 0.12); }
 </style>
 

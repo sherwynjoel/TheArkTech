@@ -23,6 +23,9 @@ import CallFab from "../components/CallFab.astro";
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Confirm JS before opting into hide-then-reveal motion, so content is never gated
+         on a class that a failed/absent script would leave un-set (blank sections). -->
+    <script is:inline>document.documentElement.classList.add("js");</script>
     <link rel="icon" type="image/png" href="/logo.png" />
     <SEO
       title="TheArkTech | Software Solutions"
@@ -49,12 +52,15 @@ import CallFab from "../components/CallFab.astro";
       <Hero />
       <TrustStrip />
       <Services />
+      <hr class="section-rule" aria-hidden="true" />
       <ServiceQuiz />
       <WhyChooseUs />
       <Industries />
+      <hr class="section-rule" aria-hidden="true" />
       <Portfolio />
       <TechMarquee />
       <FAQ />
+      <hr class="section-rule" aria-hidden="true" />
       <ConsultationBooking />
       <Contact />
     </main>

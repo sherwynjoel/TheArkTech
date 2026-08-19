@@ -40,12 +40,40 @@
   --glass-blur: 14px;
   --ring: rgba(59, 130, 246, 0.55);
   --maxw: 80rem;
+
+  /* ---- hairline / border scale (was scattered as ad-hoc rgba across ~15 files) ---- */
+  --hairline: rgba(255, 255, 255, 0.08);
+  --line: rgba(255, 255, 255, 0.12);
+  --line-strong: rgba(255, 255, 255, 0.18);
+  --line-brand: rgba(96, 165, 250, 0.45);
+
+  /* ---- motion: one easing + duration language for the whole site ---- */
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-1: 0.18s; /* taps, small state */
+  --dur-2: 0.28s; /* hover, lifts */
+  --dur-3: 0.55s; /* reveals, larger moves */
+
+  /* ---- vertical rhythm scale (replaces uniform py-28 everywhere) ---- */
+  --section-y: clamp(4.5rem, 8vw, 7rem);
+  --section-y-lg: clamp(6rem, 11vw, 9rem);
+  --section-y-tight: clamp(3.25rem, 6vw, 5rem);
+
+  /* ---- brand accent rule: blue -> cyan hairline, reused for connective tissue ---- */
+  --rule-accent: linear-gradient(
+    90deg,
+    transparent,
+    rgba(59, 130, 246, 0.5),
+    rgba(34, 211, 238, 0.4),
+    transparent
+  );
 }
 
 /* ============ Base ============ */
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; scroll-padding-top: 5.5rem; }
 body {
   background: var(--bg);
   color: var(--ink);
@@ -65,6 +93,38 @@ img { display: block; max-width: 100%; }
 
 /* ============ Reusable utilities ============ */
 .container-x { width: 100%; max-width: var(--maxw); margin-inline: auto; padding-inline: clamp(1rem, 4vw, 1.5rem); }
+
+/* Section vertical rhythm — deliberate, varied, token-driven (not a flat py-28). */
+.section-y { padding-block: var(--section-y); }
+.section-y-lg { padding-block: var(--section-y-lg); }
+.section-y-tight { padding-block: var(--section-y-tight); }
+
+/* Connective tissue: a hairline that carries the blue->cyan accent, fading at the edges.
+   Placed between major sections so the long scroll reads as one composition. */
+.section-rule {
+  height: 1px;
+  border: 0;
+  margin: 0 auto;
+  width: min(var(--maxw), 92vw);
+  background: var(--rule-accent);
+  opacity: 0.55;
+}
+
+/* Ambient anchor: a soft brand light source behind a section, so key moments feel
+   lit from within rather than pasted onto flat black. Applied to a few sections, not all. */
+.glow-anchor { position: relative; isolation: isolate; }
+.glow-anchor::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+  left: 50%;
+  top: -6%;
+  transform: translateX(-50%);
+  width: min(78rem, 130vw);
+  height: 78%;
+  background: radial-gradient(52% 46% at 50% 0%, rgba(59, 130, 246, 0.11), transparent 72%);
+}
 
 .sr-only {
   position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
@@ -96,19 +156,34 @@ img { display: block; max-width: 100%; }
   padding: 0.85rem 1.6rem; border-radius: 9999px;
   background: var(--glass-bg); border: 1px solid var(--glass-brd);
   font-weight: 500; color: var(--ink);
-  transition: transform .25s ease, background .25s ease, border-color .25s ease;
+  transition: transform var(--dur-2) var(--ease-out-quart), background var(--dur-2) var(--ease-out-quart), border-color var(--dur-2) var(--ease-out-quart);
 }
-.btn-glass:hover { transform: translateY(-2px); background: rgba(255,255,255,0.10); border-color: rgba(255,255,255,0.22); }
+.btn-glass:hover { transform: translateY(-2px); background: rgba(255,255,255,0.10); border-color: var(--line-strong); }
+.btn-glass:active { transform: translateY(0); }
 
 /* ============ Scroll reveal ============ */
-.reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s cubic-bezier(.2,.7,.2,1); }
-.reveal.is-in { opacity: 1; transform: none; }
+/* Robust-by-default: content is visible with NO JavaScript. We only opt into the
+   hidden-then-revealed state once JS has confirmed itself (html.js, set in <head>).
+   This prevents blank sections when JS fails, on bots/crawlers, or in headless renders
+   where the IntersectionObserver never fires. */
+.reveal { opacity: 1; transform: none; }
+/* :where() keeps this at .reveal specificity so components that own their transition
+   (e.g. the bento tiles) still win — we only add the hidden start state, not their motion. */
+:where(html.js) .reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity var(--dur-3) var(--ease-out-quart),
+    transform var(--dur-3) var(--ease-out-quart);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+:where(html.js) .reveal.is-in { opacity: 1; transform: none; }
 
 
 /* ============ Reduced motion ============ */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .reveal { opacity: 1; transform: none; transition: none; }
+  .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
   *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
 }
 
