@@ -87,7 +87,10 @@ const whatsappUrl = waLink(
             <div><dt>Website</dt><dd><a href="https://thearktech.in">thearktech.in</a></dd></div>
             <div><dt>Email</dt><dd><a href={`mailto:${EMAIL}`}>{EMAIL}</a></dd></div>
             <div><dt>Phone</dt><dd><a href={`tel:${PHONE_E164}`}>{PHONE_LABEL}</a></dd></div>
-            <div><dt>Location</dt><dd>{LOCATION}</dd></div>
+            <div>
+              <dt>Registered address</dt>
+              <dd>{ADDRESS_LINES.join(", ")}</dd>
+            </div>
             <div><dt>Business hours</dt><dd>{HOURS_LABEL}</dd></div>
             <div><dt>Services</dt><dd>Web development, mobile apps, custom software, AI automation, branding, SEO</dd></div>
           </dl>

@@ -13,10 +13,10 @@ export const EMAIL = "contact@thearktech.in";
 // STREET_ADDRESS and POSTAL_CODE are optional: every consumer below renders
 // correctly while they are empty, and filling them in here updates the
 // /contact page, the footer, and the structured data at once.
-export const STREET_ADDRESS = "";
+export const STREET_ADDRESS = "No. 5, Manikandan Nagar, Thelungupalayam";
 export const CITY = "Coimbatore";
 export const REGION = "Tamil Nadu";
-export const POSTAL_CODE = "";
+export const POSTAL_CODE = "641039";
 export const COUNTRY = "India";
 export const COUNTRY_CODE = "IN";
 
