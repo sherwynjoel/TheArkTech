@@ -2,7 +2,25 @@
 // quiz, contact form, booking card, footer, the /contact page, the floating
 // call button, and the LocalBusiness structured data.
 
+// Trading / brand name, used everywhere the site speaks to customers.
 export const COMPANY_NAME = "TheArkTech";
+
+// Registered entity. LEGAL_NAME is the exact name on the certificate of
+// incorporation (it usually ends in "Private Limited" and may differ from the
+// trading name). CIN and GSTIN are optional here: every consumer below omits
+// the row and the schema field entirely while they are empty, so nothing shows
+// a blank or placeholder value.
+// Note: Companies Act 2013 s.12(3) requires a company to publish its name,
+// registered office address, CIN, phone, email and website on its official
+// publications — filling CIN in here satisfies the website side of that.
+export const LEGAL_NAME = "";
+export const COMPANY_TYPE = "Private Limited Company";
+export const CIN = "";
+export const GSTIN = "";
+
+/** Legal name when known, otherwise the trading name — never blank. */
+export const LEGAL_DISPLAY_NAME = LEGAL_NAME || COMPANY_NAME;
+
 export const WHATSAPP_NUMBER = "919489722142";
 export const PHONE_E164 = "+919489722142";
 export const PHONE_LABEL = "+91 94897 22142";

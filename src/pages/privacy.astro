@@ -3,7 +3,7 @@ import "../styles/global.css";
 import Nav from "../components/Nav.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import SEO from "../components/SEO.astro";
-import { EMAIL, WHATSAPP_NUMBER } from "../data/site";
+import { EMAIL, WHATSAPP_NUMBER, LEGAL_DISPLAY_NAME, COMPANY_TYPE, CIN, ADDRESS_LINES } from "../data/site";
 
 const updated = "19 August 2026";
 ---
@@ -31,11 +31,17 @@ const updated = "19 August 2026";
         <p class="legal-updated">Last updated: {updated}</p>
 
         <section>
-          <h2>1. The short version</h2>
+          <h2>1. Who we are and the short version</h2>
           <p>
-            thearktech.in is a static website. It has no user accounts, does not set
-            tracking cookies of its own, and does not store your data on our servers when
-            you browse it. The only personal information we receive is what you choose to
+            thearktech.in is operated by {LEGAL_DISPLAY_NAME}, a {COMPANY_TYPE.toLowerCase()}
+            registered in India, with its registered office at {ADDRESS_LINES.join(", ")}
+            {CIN ? `, CIN ${CIN}` : ""}. We are the data fiduciary for the information
+            described below.
+          </p>
+          <p>
+            The site itself is static. It has no user accounts, does not set tracking
+            cookies of its own, and does not store your data on our servers when you
+            browse it. The only personal information we receive is what you choose to
             send us when you contact us.
           </p>
         </section>

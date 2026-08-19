@@ -1,6 +1,6 @@
 ---
 import {
-	COMPANY_NAME, EMAIL, PHONE_E164, HOURS_SCHEMA,
+	COMPANY_NAME, LEGAL_NAME, CIN, EMAIL, PHONE_E164, HOURS_SCHEMA,
 	STREET_ADDRESS, POSTAL_CODE, CITY, REGION, COUNTRY, COUNTRY_CODE,
 } from '../data/site';
 
@@ -39,6 +39,9 @@ const structuredData = {
 			'@type': 'ProfessionalService',
 			'@id': 'https://thearktech.in/#organization',
 			name: COMPANY_NAME,
+			// Omitted rather than emitted blank until the registered name is set.
+			...(LEGAL_NAME ? { legalName: LEGAL_NAME } : {}),
+			...(CIN ? { identifier: { '@type': 'PropertyValue', name: 'CIN', value: CIN } } : {}),
 			url: 'https://thearktech.in/',
 			logo: { '@type': 'ImageObject', url: 'https://thearktech.in/logo.png' },
 			image: 'https://thearktech.in/banner.png',

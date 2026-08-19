@@ -1,5 +1,5 @@
 ---
-import { EMAIL as email, PHONE_E164 as phone, PHONE_LABEL as phoneLabel, ADDRESS_LINES, HOURS_LABEL } from "../data/site";
+import { EMAIL as email, PHONE_E164 as phone, PHONE_LABEL as phoneLabel, ADDRESS_LINES, HOURS_LABEL, LEGAL_DISPLAY_NAME, CIN } from "../data/site";
 
 const year = new Date().getFullYear();
 ---
@@ -71,7 +71,10 @@ const year = new Date().getFullYear();
     </div>
   </div>
   <div class="relative container-x border-t py-6 text-sm text-ink-faint flex flex-col sm:flex-row justify-between items-center gap-4" style="border-color: var(--hairline);">
-    <span>&copy; {year} TheArkTech. All rights reserved.</span>
+    <span>
+      &copy; {year} {LEGAL_DISPLAY_NAME}. All rights reserved.
+      {CIN && <span class="block sm:inline sm:ml-2">CIN: {CIN}</span>}
+    </span>
     <div class="flex flex-wrap justify-center gap-4">
       <a href="/contact" class="hover:text-ink transition-colors">Contact</a>
       <a href="/terms" class="hover:text-ink transition-colors">Terms & Conditions</a>

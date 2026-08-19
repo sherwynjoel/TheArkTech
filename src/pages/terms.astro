@@ -3,7 +3,7 @@ import "../styles/global.css";
 import Nav from "../components/Nav.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import SEO from "../components/SEO.astro";
-import { EMAIL, WHATSAPP_NUMBER } from "../data/site";
+import { EMAIL, WHATSAPP_NUMBER, LEGAL_DISPLAY_NAME, COMPANY_TYPE, CIN, ADDRESS_LINES } from "../data/site";
 
 const updated = "19 August 2026";
 ---
@@ -33,9 +33,10 @@ const updated = "19 August 2026";
         <section>
           <h2>1. Who we are</h2>
           <p>
-            TheArkTech ("we", "us") is a software development agency based in Coimbatore,
-            Tamil Nadu, India. We build websites, web and mobile applications, and
-            AI-powered automation for businesses. These terms apply to your use of
+            {LEGAL_DISPLAY_NAME} ("we", "us") is a {COMPANY_TYPE.toLowerCase()} registered
+            in India, with its registered office at {ADDRESS_LINES.join(", ")}
+            {CIN ? `, CIN ${CIN}` : ""}. We build websites, web and mobile applications,
+            and AI-powered automation for businesses. These terms apply to your use of
             thearktech.in and to any services you engage us for.
           </p>
         </section>
