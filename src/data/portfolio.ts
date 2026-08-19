@@ -58,6 +58,14 @@ export const portfolioProjects: PortfolioProject[] = [
       { value: "100%", label: "authenticity" },
     ],
     tags: ["E-Commerce", "Jewelry", "Luxury", "Online Store"],
+    approach: [
+      "Collection-based product catalogue with filtering",
+      "Customer accounts with sign-in and registration",
+      "Cart and checkout with online payment",
+      "High-resolution product galleries",
+      "WhatsApp enquiry channel alongside checkout",
+      "Responsive layout across phone, tablet and desktop",
+    ],
   },
   {
     title: "Zetra Electronics",
@@ -72,6 +80,14 @@ export const portfolioProjects: PortfolioProject[] = [
       { value: "24/7", label: "sales automation" },
     ],
     tags: ["E-Commerce", "Electronics", "IoT", "Robotics"],
+    approach: [
+      "Component catalogue with category filtering",
+      "Cart and checkout with online payment",
+      "Customer accounts and order tracking",
+      "Help centre and support section",
+      "Product listings for sensors, IoT modules and robotics kits",
+      "Mobile-first storefront",
+    ],
   },
 
   {
@@ -87,6 +103,13 @@ export const portfolioProjects: PortfolioProject[] = [
       { value: "24h", label: "response promise" },
     ],
     tags: ["Corporate Site", "Media", "CMS", "Enquiry Flow"],
+    approach: [
+      "Multi-service corporate structure across production disciplines",
+      "Work gallery presenting past productions",
+      "Client testimonials section",
+      "Direct enquiry flow with WhatsApp handoff",
+      "Responsive media-heavy layout",
+    ],
   },
   {
     title: "Dr. Alam's Skin Clinic",
@@ -129,6 +152,13 @@ export const portfolioProjects: PortfolioProject[] = [
       { value: "24/7", label: "online presence" },
     ],
     tags: ["Business Site", "Responsive", "Enquiry Flow", "Performance"],
+    approach: [
+      "Structured service and capability sections",
+      "Process walkthrough explaining the engagement",
+      "Consultation booking flow",
+      "Single-page navigation with in-page anchors",
+      "Responsive layout tuned for mobile enquiries",
+    ],
   },
   {
     title: "Deva Sea Food",

@@ -14,8 +14,20 @@ export const FOUNDED_YEAR = "";
 /** e.g. "6" or "5-10". Shown as "N people". */
 export const TEAM_SIZE = "";
 
-/** Two or three paragraphs on why the company exists. Each string is a <p>. */
-export const STORY: string[] = [];
+/**
+ * Two or three paragraphs on why the company exists. Each string is a <p>.
+ *
+ * These describe how the company works and what it believes — deliberately no
+ * origin claims (founding date, headcount, "since X we have served Y"), because
+ * those are checkable facts and nothing here should assert one that isn't set
+ * above. Rewrite freely in your own voice; add the origin story once you want
+ * it public.
+ */
+export const STORY: string[] = [
+  "TheArkTech exists because most businesses don't need a showpiece — they need software that works on a Tuesday morning when an order comes in. Our clients are jewellers, clinics, exporters, manufacturers, and training companies. What they have in common is that the thing we build for them has to hold up in daily use.",
+  "So we build in the open. Every project starts with a written scope, so you know the cost and the timeline before anyone writes a line of code. You see something reviewable at the end of each cycle rather than waiting for a reveal. And when the work is done, the source code, the repositories, and the infrastructure accounts are yours — we don't hold credentials or lock anyone into a platform they can't leave.",
+  "The clearest way to judge us is to look at what we've already shipped. Every project in our portfolio is a live site you can open right now and use as a real customer would. We'd rather be checked than believed.",
+];
 
 export interface TeamMember {
   name: string;
