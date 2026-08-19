@@ -10,13 +10,12 @@ async function deploySingle() {
     }
 
     const client = new ftp.Client();
-    client.ftp.verbose = true;
     try {
         await client.access({
             host: FTP_HOST,
             user: FTP_USER,
             password: FTP_PASS,
-            secure: false
+            secure: true
         });
         console.log("Connected to FTP server.");
 

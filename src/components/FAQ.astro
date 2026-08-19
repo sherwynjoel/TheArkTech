@@ -6,7 +6,7 @@ const faqs = [
   },
   {
     q: "What is your pricing?",
-    a: "Projects start at ₹25,000 for a basic website and go up based on scope. We provide fixed-price quotes — you'll never get a surprise invoice. See our Pricing section for starting estimates, or contact us for an exact quote.",
+    a: "Projects start at ₹25,000 for a basic website and go up based on scope. We provide fixed-price quotes — you'll never get a surprise invoice. Contact us and we'll give you an exact quote for your scope.",
   },
   {
     q: "Do you provide post-launch support?",
@@ -33,8 +33,19 @@ const faqs = [
     a: "Yes. SEO & Digital Marketing is one of our six core services. We cover on-page SEO, technical SEO, Google Business Profile, local SEO (key for Coimbatore businesses), and content strategy.",
   },
 ];
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a },
+  })),
+};
 ---
 <section id="faq" class="section-y">
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
   <div class="container-x">
     <div class="max-w-2xl mb-14 mx-auto text-center">
       <p class="eyebrow mb-3">FAQ</p>
@@ -109,9 +120,18 @@ const faqs = [
   .faq-a {
     overflow: hidden;
     max-height: 0;
+    /* visibility flips after the collapse animation so closed answers
+       leave the accessibility tree despite display:block below */
+    visibility: hidden;
+    transition:
+      max-height 0.35s cubic-bezier(0.2, 0.7, 0.2, 1),
+      visibility 0s linear 0.35s;
+  }
+  .faq-a:not([hidden]) {
+    max-height: 20rem;
+    visibility: visible;
     transition: max-height 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
   }
-  .faq-a:not([hidden]) { max-height: 20rem; }
   .faq-a[hidden] { display: block !important; }
 
   .faq-a p {

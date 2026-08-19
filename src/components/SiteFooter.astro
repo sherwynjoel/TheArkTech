@@ -16,25 +16,6 @@ const year = new Date().getFullYear();
         <span class="font-display text-xl font-bold">TheArkTech</span>
       </div>
       <p class="mt-4 max-w-sm text-ink-muted">Your trusted software partner — websites, apps, and AI-powered automation for businesses that want to grow.</p>
-
-      <!-- Newsletter -->
-      <form id="newsletter-form" class="newsletter-form mt-6" novalidate>
-        <p class="eyebrow mb-3">Stay in the loop</p>
-        <div class="newsletter-row">
-          <label for="nl-email" class="sr-only">Your email address</label>
-          <input
-            id="nl-email"
-            name="email"
-            type="email"
-            placeholder="your@email.com"
-            required
-            autocomplete="email"
-            class="newsletter-input"
-          />
-          <button type="submit" class="newsletter-btn">Subscribe</button>
-        </div>
-        <p id="nl-feedback" class="nl-feedback" aria-live="polite"></p>
-      </form>
     </div>
     <div>
       <p class="eyebrow mb-4">Explore</p>
@@ -63,74 +44,3 @@ const year = new Date().getFullYear();
   </div>
 </footer>
 
-<style>
-  .newsletter-form { max-width: 22rem; }
-  .newsletter-row {
-    display: flex;
-    gap: 0.5rem;
-  }
-  .newsletter-input {
-    flex: 1;
-    min-width: 0;
-    padding: 0.65rem 1rem;
-    border-radius: 9999px;
-    background: rgba(255,255,255,0.07);
-    border: 1px solid rgba(255,255,255,0.15);
-    color: var(--ink);
-    font-size: 0.875rem;
-    outline: none;
-    transition: border-color 0.2s;
-  }
-  .newsletter-input::placeholder { color: var(--ink-faint); }
-  .newsletter-input:focus { border-color: var(--brand); }
-  .newsletter-btn {
-    flex: none;
-    padding: 0.65rem 1.25rem;
-    border-radius: 9999px;
-    background: linear-gradient(120deg, var(--brand-deep), var(--brand));
-    color: #fff;
-    font-size: 0.875rem;
-    font-weight: 600;
-    border: none;
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
-    white-space: nowrap;
-  }
-  .newsletter-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(59,130,246,0.4); }
-  .nl-feedback {
-    margin: 0.5rem 0 0;
-    font-size: 0.8rem;
-    min-height: 1rem;
-    color: var(--accent-cyan);
-  }
-</style>
-
-<script>
-  const WA_NUMBER = "919489722142";
-  const form = document.getElementById("newsletter-form") as HTMLFormElement | null;
-  const feedback = document.getElementById("nl-feedback")!;
-
-  form?.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const input = form.querySelector<HTMLInputElement>("#nl-email");
-    if (!input?.value || !input.validity.valid) {
-      feedback.textContent = "Please enter a valid email.";
-      feedback.style.color = "#f87171";
-      return;
-    }
-
-    const msg = [
-      "Hi TheArkTech! 👋 I'd like to stay in the loop with your updates and news.",
-      "",
-      `*My email:* ${input.value}`,
-      "",
-      "Please add me to your newsletter list.",
-    ].join("\n");
-
-    window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`, "_blank", "noopener,noreferrer");
-
-    feedback.textContent = "✓ Opening WhatsApp — we'll add you to the list!";
-    feedback.style.color = "var(--accent-cyan)";
-    input.value = "";
-  });
-</script>

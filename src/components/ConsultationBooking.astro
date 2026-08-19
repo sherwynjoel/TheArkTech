@@ -1,6 +1,7 @@
 ---
-// Replace this URL with your actual Calendly / Cal.com link
-const BOOKING_URL = "https://calendly.com/thearktech/free-consultation";
+const BOOKING_MSG =
+  "Hi TheArkTech! 👋 I'd like to book a free 30-minute consultation call. When are you available?";
+const BOOKING_URL = `https://wa.me/919489722142?text=${encodeURIComponent(BOOKING_MSG)}`;
 
 const perks = [
   { icon: "clock",   text: "30 minutes, no obligation" },
@@ -41,7 +42,7 @@ const perks = [
 
       <div class="book-right">
         <div class="book-cta-card">
-          <p class="book-cta-title">Pick a time that suits you</p>
+          <p class="book-cta-title">Message us to pick a time</p>
           <p class="book-cta-sub">Available Monday – Saturday, 10 AM – 7 PM IST</p>
 
           <a
@@ -50,12 +51,7 @@ const perks = [
             rel="noopener noreferrer"
             class="book-btn"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-              <line x1="16" y1="2" x2="16" y2="6"></line>
-              <line x1="8" y1="2" x2="8" y2="6"></line>
-              <line x1="3" y1="10" x2="21" y2="10"></line>
-            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M16 2C8.268 2 2 8.268 2 16c0 2.49.65 4.826 1.787 6.854L2 30l7.336-1.756A13.94 13.94 0 0 0 16 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm6.328 19.928c-.346-.173-2.047-1.01-2.364-1.125-.317-.116-.548-.173-.779.173-.23.347-.894 1.126-1.096 1.357-.202.23-.404.26-.75.086-.346-.174-1.46-.538-2.782-1.716-1.028-.916-1.722-2.047-1.924-2.393-.202-.347-.021-.534.152-.707.156-.155.346-.404.52-.606.173-.202.23-.347.346-.578.115-.23.058-.433-.029-.606-.086-.173-.779-1.878-1.068-2.572-.28-.674-.566-.583-.78-.594l-.664-.01c-.23 0-.606.086-.924.433-.317.347-1.212 1.184-1.212 2.887 0 1.703 1.241 3.349 1.414 3.58.173.23 2.44 3.724 5.913 5.224.827.356 1.47.568 1.974.728.829.263 1.583.226 2.179.137.664-.099 2.047-.837 2.335-1.645.288-.808.288-1.501.202-1.645-.086-.144-.317-.23-.663-.404z"/></svg>
             Book free call
           </a>
 

@@ -1,0 +1,140 @@
+---
+import "../styles/global.css";
+import Nav from "../components/Nav.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import SEO from "../components/SEO.astro";
+
+const updated = "19 August 2026";
+---
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="/logo.png" />
+    <SEO
+      title="Privacy Policy | TheArkTech"
+      description="How TheArkTech handles your information when you visit thearktech.in or contact us about a project."
+      url="https://thearktech.in/privacy"
+      image="https://thearktech.in/banner.png"
+      siteName="TheArkTech"
+      keywords={[]}
+    />
+  </head>
+  <body class="bg-bg text-ink">
+    <Nav />
+    <main class="legal-page">
+      <div class="container-x legal-content">
+        <p class="eyebrow mb-3">Legal</p>
+        <h1 class="font-display legal-title">Privacy Policy</h1>
+        <p class="legal-updated">Last updated: {updated}</p>
+
+        <section>
+          <h2>1. The short version</h2>
+          <p>
+            thearktech.in is a static website. It has no user accounts, does not set
+            tracking cookies of its own, and does not store your data on our servers when
+            you browse it. The only personal information we receive is what you choose to
+            send us when you contact us.
+          </p>
+        </section>
+
+        <section>
+          <h2>2. What we collect and why</h2>
+          <p>
+            When you reach out through the contact options on this site — WhatsApp, email,
+            or phone — we receive the details you include, typically your name, contact
+            information, and a description of your project. We use this only to respond to
+            your enquiry, prepare quotes, and deliver services you engage us for. We do
+            not sell your information or share it with third parties for marketing.
+          </p>
+        </section>
+
+        <section>
+          <h2>3. WhatsApp and email</h2>
+          <p>
+            Our contact and booking buttons open WhatsApp (or your email app) with a
+            pre-filled message. Nothing is sent until you press send in that app.
+            Conversations held on WhatsApp are also subject to
+            <a href="https://www.whatsapp.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer">WhatsApp's privacy policy</a>;
+            email is handled by your and our email providers.
+          </p>
+        </section>
+
+        <section>
+          <h2>4. How long we keep information</h2>
+          <p>
+            We keep enquiry and project correspondence for as long as needed to serve you
+            and to meet legal and accounting obligations, then delete it. You can ask us
+            to delete your correspondence at any time (see Contact below), unless we are
+            required to retain it.
+          </p>
+        </section>
+
+        <section>
+          <h2>5. Third-party links</h2>
+          <p>
+            Our portfolio links to client websites and our pages may link to external
+            services. Those sites have their own privacy practices, which we do not
+            control.
+          </p>
+        </section>
+
+        <section>
+          <h2>6. Your rights</h2>
+          <p>
+            You may request a copy of the personal information we hold about you, ask us
+            to correct it, or ask us to delete it. We comply with applicable Indian data
+            protection law, including the Digital Personal Data Protection Act, 2023.
+          </p>
+        </section>
+
+        <section>
+          <h2>7. Contact</h2>
+          <p>
+            For any privacy question or request, email
+            <a href="mailto:contact@thearktech.in">contact@thearktech.in</a> or message us
+            on <a href="https://wa.me/919489722142" target="_blank" rel="noopener noreferrer">WhatsApp</a>.
+          </p>
+        </section>
+      </div>
+    </main>
+    <SiteFooter />
+  </body>
+</html>
+
+<style>
+  .legal-page {
+    padding: 8rem 0 5rem;
+    min-height: 60svh;
+  }
+  .legal-content {
+    max-width: 46rem;
+  }
+  .legal-title {
+    font-size: clamp(2rem, 5vw, 3rem);
+    line-height: 1.05;
+  }
+  .legal-updated {
+    margin-top: 0.75rem;
+    font-size: 0.85rem;
+    color: var(--ink-faint);
+  }
+  .legal-content section {
+    margin-top: 2.5rem;
+  }
+  .legal-content h2 {
+    font-family: "Clash Display", sans-serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+  }
+  .legal-content p {
+    color: var(--ink-muted);
+    line-height: 1.7;
+  }
+  .legal-content a {
+    color: var(--brand-bright);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+</style>

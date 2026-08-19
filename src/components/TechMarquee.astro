@@ -3,8 +3,8 @@ const row1 = ["React","Angular","Vue.js","Next.js","Node.js","Python","Java",".N
 const row2 = ["React Native","Swift","AWS","Azure","GCP","Docker","Kubernetes","PostgreSQL","MongoDB","MySQL"];
 // 4 copies ensures one set always exceeds any viewport width, eliminating
 // the blank-gap that appears when items are narrower than the screen.
-const r1 = [...row1, ...row1, ...row1, ...row1];
-const r2 = [...row2, ...row2, ...row2, ...row2];
+// Copies after the first are aria-hidden so screen readers hear each name once.
+const copies = [0, 1, 2, 3];
 ---
 <section id="tech" class="section-y-tight overflow-hidden">
   <div class="container-x text-center mb-10">
@@ -13,10 +13,18 @@ const r2 = [...row2, ...row2, ...row2, ...row2];
   </div>
   <div class="marquee-mask space-y-6">
     <div class="marq-track marq-left">
-      {r1.map((t) => <span class="marq-item">{t}</span>)}
+      {copies.map((c) => (
+        <div class="marq-set" aria-hidden={c > 0 ? "true" : undefined}>
+          {row1.map((t) => <span class="marq-item">{t}</span>)}
+        </div>
+      ))}
     </div>
     <div class="marq-track marq-right">
-      {r2.map((t) => <span class="marq-item">{t}</span>)}
+      {copies.map((c) => (
+        <div class="marq-set" aria-hidden={c > 0 ? "true" : undefined}>
+          {row2.map((t) => <span class="marq-item">{t}</span>)}
+        </div>
+      ))}
     </div>
   </div>
 </section>
@@ -32,6 +40,7 @@ const r2 = [...row2, ...row2, ...row2, ...row2];
     width: max-content;
     will-change: transform;
   }
+  .marq-set { display: flex; flex: none; }
   .marq-left  { animation: marq-left  32s linear infinite; }
   .marq-right { animation: marq-right 36s linear infinite; }
 

@@ -23,6 +23,11 @@
     visibility: hidden;
     pointer-events: none;
   }
+  /* Failsafe: if the script never runs, CSS alone clears the overlay */
+  #loading-screen { animation: ls-timeout 0.5s ease 2.5s forwards; }
+  @keyframes ls-timeout {
+    to { opacity: 0; visibility: hidden; }
+  }
 
   .ls-inner {
     display: flex;

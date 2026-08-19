@@ -10,28 +10,27 @@ async function deploy() {
     }
 
     const client = new ftp.Client();
-    client.ftp.verbose = true;
     try {
         await client.access({
             host: FTP_HOST,
             user: FTP_USER,
             password: FTP_PASS,
-            secure: false
+            secure: true
         });
         console.log("Connected to FTP server.");
-
-        console.log("Deploying _astro...");
-        await client.ensureDir("_astro");
-        await client.uploadFromDir("dist/_astro");
-
         await client.cd("/public_html");
-        console.log("Deploying index.html...");
-        await client.uploadFrom("dist/index.html", "index.html");
 
-        await client.cd("/public_html");
-        console.log("Deploying portfolio...");
-        await client.ensureDir("portfolio");
-        await client.uploadFromDir("dist/portfolio");
+        for (const dir of ["_astro", "portfolio", "terms", "privacy"]) {
+            console.log(`Deploying ${dir}/...`);
+            await client.ensureDir(dir);
+            await client.uploadFromDir(`dist/${dir}`);
+            await client.cd("/public_html");
+        }
+
+        for (const file of ["index.html", "404.html", "sitemap-index.xml", "sitemap-0.xml"]) {
+            console.log(`Deploying ${file}...`);
+            await client.uploadFrom(`dist/${file}`, file);
+        }
 
         console.log("Deployment complete.");
     } catch(err) {
