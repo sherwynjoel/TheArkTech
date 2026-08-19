@@ -1,4 +1,9 @@
 ---
+import {
+	COMPANY_NAME, EMAIL, PHONE_E164, HOURS_SCHEMA,
+	STREET_ADDRESS, POSTAL_CODE, CITY, REGION, COUNTRY, COUNTRY_CODE,
+} from '../data/site';
+
 export interface Props {
 	title: string;
 	description: string;
@@ -33,27 +38,39 @@ const structuredData = {
 		{
 			'@type': 'ProfessionalService',
 			'@id': 'https://thearktech.in/#organization',
-			name: 'TheArkTech',
+			name: COMPANY_NAME,
 			url: 'https://thearktech.in/',
 			logo: { '@type': 'ImageObject', url: 'https://thearktech.in/logo.png' },
 			image: 'https://thearktech.in/banner.png',
 			description:
 				'Software development agency in Coimbatore building websites, web and mobile apps, and AI-powered automation for businesses.',
-			telephone: '+91-94897-22142',
-			email: 'contact@thearktech.in',
+			telephone: PHONE_E164,
+			email: EMAIL,
 			address: {
 				'@type': 'PostalAddress',
-				addressLocality: 'Coimbatore',
-				addressRegion: 'Tamil Nadu',
-				addressCountry: 'IN',
+				// Street and postal code are omitted until filled in src/data/site.ts —
+				// an empty string in structured data is worse than an absent field.
+				...(STREET_ADDRESS ? { streetAddress: STREET_ADDRESS } : {}),
+				...(POSTAL_CODE ? { postalCode: POSTAL_CODE } : {}),
+				addressLocality: CITY,
+				addressRegion: REGION,
+				addressCountry: COUNTRY_CODE,
 			},
-			areaServed: ['Coimbatore', 'Tamil Nadu', 'India'],
-			openingHours: 'Mo-Sa 10:00-19:00',
+			contactPoint: {
+				'@type': 'ContactPoint',
+				contactType: 'customer service',
+				telephone: PHONE_E164,
+				email: EMAIL,
+				areaServed: COUNTRY_CODE,
+				availableLanguage: ['en', 'ta'],
+			},
+			areaServed: [CITY, REGION, COUNTRY],
+			openingHours: HOURS_SCHEMA,
 			priceRange: '₹₹',
 		},
 		{
 			'@type': 'WebSite',
-			name: 'TheArkTech',
+			name: COMPANY_NAME,
 			url: 'https://thearktech.in/',
 			publisher: { '@id': 'https://thearktech.in/#organization' },
 		},

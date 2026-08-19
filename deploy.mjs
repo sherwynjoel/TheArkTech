@@ -20,7 +20,7 @@ async function deploy() {
         console.log("Connected to FTP server.");
         await client.cd("/public_html");
 
-        for (const dir of ["_astro", "portfolio", "terms", "privacy"]) {
+        for (const dir of ["_astro", "portfolio", "contact", "terms", "privacy"]) {
             console.log(`Deploying ${dir}/...`);
             await client.ensureDir(dir);
             await client.uploadFromDir(`dist/${dir}`);

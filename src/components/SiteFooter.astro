@@ -1,5 +1,5 @@
 ---
-import { EMAIL as email, PHONE_E164 as phone, PHONE_LABEL as phoneLabel, LOCATION } from "../data/site";
+import { EMAIL as email, PHONE_E164 as phone, PHONE_LABEL as phoneLabel, LOCATION, HOURS_LABEL } from "../data/site";
 
 const year = new Date().getFullYear();
 ---
@@ -53,24 +53,27 @@ const year = new Date().getFullYear();
     <div>
       <p class="eyebrow mb-4">Explore</p>
       <ul class="space-y-2 text-ink-muted">
-        <li><a href="#services" class="hover:text-ink">Services</a></li>
-        <li><a href="#industries" class="hover:text-ink">Industries</a></li>
-        <li><a href="#faq" class="hover:text-ink">FAQ</a></li>
-        <li><a href="#contact" class="hover:text-ink">Contact</a></li>
+        <li><a href="/#services" class="hover:text-ink">Services</a></li>
+        <li><a href="/#industries" class="hover:text-ink">Industries</a></li>
+        <li><a href="/#portfolio" class="hover:text-ink">Portfolio</a></li>
+        <li><a href="/#faq" class="hover:text-ink">FAQ</a></li>
+        <li><a href="/contact" class="hover:text-ink">Contact</a></li>
       </ul>
     </div>
     <div>
       <p class="eyebrow mb-4">Get in touch</p>
-      <ul class="space-y-2 text-ink-muted">
-        <li><a href={`mailto:${email}`} class="hover:text-ink">{email}</a></li>
-        <li><a href={`tel:${phone}`} class="hover:text-ink">{phoneLabel}</a></li>
-        <li>{LOCATION}</li>
-      </ul>
+      <address class="not-italic space-y-2 text-ink-muted">
+        <div><a href={`mailto:${email}`} class="hover:text-ink">{email}</a></div>
+        <div><a href={`tel:${phone}`} class="hover:text-ink">{phoneLabel}</a></div>
+        <div>{LOCATION}</div>
+        <div class="text-ink-faint text-sm pt-1">{HOURS_LABEL}</div>
+      </address>
     </div>
   </div>
   <div class="relative container-x border-t py-6 text-sm text-ink-faint flex flex-col sm:flex-row justify-between items-center gap-4" style="border-color: var(--hairline);">
     <span>&copy; {year} TheArkTech. All rights reserved.</span>
-    <div class="flex gap-4">
+    <div class="flex flex-wrap justify-center gap-4">
+      <a href="/contact" class="hover:text-ink transition-colors">Contact</a>
       <a href="/terms" class="hover:text-ink transition-colors">Terms & Conditions</a>
       <a href="/privacy" class="hover:text-ink transition-colors">Privacy Policy</a>
     </div>

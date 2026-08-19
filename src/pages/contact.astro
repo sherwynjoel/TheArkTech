@@ -1,0 +1,171 @@
+---
+import "../styles/global.css";
+import Nav from "../components/Nav.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import SEO from "../components/SEO.astro";
+import {
+  COMPANY_NAME, EMAIL, PHONE_E164, PHONE_LABEL, WHATSAPP_NUMBER,
+  ADDRESS_LINES, LOCATION, HOURS_LABEL, RESPONSE_TIME, waLink,
+} from "../data/site";
+
+const whatsappUrl = waLink(
+  "Hi TheArkTech! 👋 I'd like to talk about a project."
+);
+---
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="/logo.png" />
+    <SEO
+      title={`Contact ${COMPANY_NAME} — Email, Phone & Address | ${COMPANY_NAME}`}
+      description={`Get in touch with ${COMPANY_NAME}, a software development company in ${LOCATION}. Email ${EMAIL}, call ${PHONE_LABEL}, or message us on WhatsApp.`}
+      url="https://thearktech.in/contact"
+      image="https://thearktech.in/banner.png"
+      siteName={COMPANY_NAME}
+      keywords={[]}
+    />
+  </head>
+  <body class="bg-bg text-ink">
+    <a href="#main" class="skip-link">Skip to content</a>
+    <Nav />
+    <main id="main" tabindex="-1" class="contact-page glow-anchor">
+      <div class="container-x contact-wrap">
+        <header class="contact-head">
+          <p class="eyebrow mb-3">Contact us</p>
+          <h1 class="font-display contact-title">Talk to {COMPANY_NAME}</h1>
+          <p class="contact-lede">
+            We're a software development company based in {LOCATION}, building
+            websites, web and mobile applications, and AI-powered automation.
+            Reach us on any channel below — {RESPONSE_TIME.toLowerCase()}
+          </p>
+        </header>
+
+        <!-- Primary contact channels, in plain selectable text -->
+        <div class="contact-grid">
+          <div class="contact-card">
+            <p class="contact-label">Email</p>
+            <a class="contact-value" href={`mailto:${EMAIL}`}>{EMAIL}</a>
+            <p class="contact-note">Best for detailed enquiries, quotes, and documents.</p>
+          </div>
+
+          <div class="contact-card">
+            <p class="contact-label">Phone</p>
+            <a class="contact-value" href={`tel:${PHONE_E164}`}>{PHONE_LABEL}</a>
+            <p class="contact-note">{HOURS_LABEL}</p>
+          </div>
+
+          <div class="contact-card">
+            <p class="contact-label">WhatsApp</p>
+            <a class="contact-value" href={whatsappUrl} target="_blank" rel="noopener noreferrer">
+              {PHONE_LABEL}
+            </a>
+            <p class="contact-note">Fastest reply. Opens a chat with a pre-typed message.</p>
+          </div>
+
+          <div class="contact-card">
+            <p class="contact-label">Office</p>
+            <address class="contact-value contact-address">
+              {ADDRESS_LINES.map((line) => <span>{line}</span>)}
+            </address>
+            <p class="contact-note">Visits by appointment — please call or message first.</p>
+          </div>
+        </div>
+
+        <div class="contact-actions">
+          <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" class="btn-primary">
+            Message us on WhatsApp
+          </a>
+          <a href={`mailto:${EMAIL}`} class="btn-glass">Send an email</a>
+          <a href="/#contact" class="btn-glass">Use the enquiry form</a>
+        </div>
+
+        <section class="contact-details">
+          <h2>Business details</h2>
+          <dl>
+            <div><dt>Legal / trading name</dt><dd>{COMPANY_NAME}</dd></div>
+            <div><dt>Website</dt><dd><a href="https://thearktech.in">thearktech.in</a></dd></div>
+            <div><dt>Email</dt><dd><a href={`mailto:${EMAIL}`}>{EMAIL}</a></dd></div>
+            <div><dt>Phone</dt><dd><a href={`tel:${PHONE_E164}`}>{PHONE_LABEL}</a></dd></div>
+            <div><dt>Location</dt><dd>{LOCATION}</dd></div>
+            <div><dt>Business hours</dt><dd>{HOURS_LABEL}</dd></div>
+            <div><dt>Services</dt><dd>Web development, mobile apps, custom software, AI automation, branding, SEO</dd></div>
+          </dl>
+        </section>
+      </div>
+    </main>
+    <SiteFooter />
+  </body>
+</html>
+
+<style>
+  .contact-page { padding: 8rem 0 5rem; min-height: 70svh; }
+  .contact-wrap { max-width: 58rem; }
+
+  .contact-head { max-width: 42rem; }
+  .contact-title { font-size: clamp(2rem, 5vw, 3.25rem); line-height: 1.05; margin: 0; }
+  .contact-lede { margin-top: 1rem; color: var(--ink-muted); line-height: 1.7; }
+
+  .contact-grid {
+    margin-top: 3rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: 1rem;
+  }
+  .contact-card {
+    padding: 1.5rem;
+    border-radius: 1.25rem;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-brd);
+  }
+  .contact-label {
+    margin: 0 0 0.5rem;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--ink-faint);
+  }
+  .contact-value {
+    display: block;
+    font-family: "Clash Display", sans-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--ink);
+    overflow-wrap: anywhere;
+  }
+  a.contact-value:hover { color: var(--brand-bright); }
+  .contact-address { font-style: normal; }
+  .contact-address span { display: block; }
+  .contact-note { margin: 0.6rem 0 0; font-size: 0.82rem; color: var(--ink-faint); line-height: 1.5; }
+
+  .contact-actions {
+    margin-top: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .contact-details { margin-top: 3.5rem; }
+  .contact-details h2 {
+    font-family: "Clash Display", sans-serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0 0 1.25rem;
+  }
+  .contact-details dl { margin: 0; display: grid; gap: 0; }
+  .contact-details dl > div {
+    display: grid;
+    grid-template-columns: minmax(9rem, 14rem) 1fr;
+    gap: 1rem;
+    padding: 0.85rem 0;
+    border-top: 1px solid var(--hairline);
+  }
+  .contact-details dl > div:last-child { border-bottom: 1px solid var(--hairline); }
+  .contact-details dt { color: var(--ink-faint); font-size: 0.88rem; }
+  .contact-details dd { margin: 0; color: var(--ink-muted); font-size: 0.92rem; }
+  .contact-details a { color: var(--brand-bright); text-decoration: underline; text-underline-offset: 3px; }
+
+  @media (max-width: 560px) {
+    .contact-details dl > div { grid-template-columns: 1fr; gap: 0.25rem; }
+  }
+</style>
