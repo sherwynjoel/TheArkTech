@@ -3,7 +3,7 @@ export interface Industry { slug: string; title: string; desc: string; tag: stri
 export const industries: Industry[] = [
   { slug: "ecommerce", title: "E-Commerce & Retail", desc: "Fast, secure online stores with product management, payments, and order systems.", tag: "Retail" },
   { slug: "healthcare", title: "Healthcare & Wellness", desc: "Appointment systems, clinic management software, and websites for doctors and clinics.", tag: "Health" },
-  { slug: "corporate", title: "Corporate & Business", desc: "Clean, modern business websites with branding and lead-generation features.", tag: "Business" },
+  { slug: "corporate", title: "Corporate & Business", desc: "Clean, modern business websites and internal tools with secure enquiry workflows.", tag: "Business" },
   { slug: "education", title: "Education & E-Learning", desc: "Portals for academies, educators, courses, and online learning platforms.", tag: "Education" },
   { slug: "realestate", title: "Real Estate & Construction", desc: "Property listings, builder portfolios, and enquiry-driven landing pages.", tag: "Property" },
   { slug: "travel", title: "Travel & Tourism", desc: "Travel agency websites, booking systems, itineraries, and lead-capture forms.", tag: "Travel" },

@@ -20,7 +20,7 @@ export const portfolioProjects: PortfolioProject[] = [
     image: "/portfolio/harsjewellery.webp",
     url: "https://harsjewellery.in",
     metrics: [
-      { value: "Premium", label: "brand design" },
+      { value: "Premium", label: "storefront UI" },
       { value: "100%", label: "authenticity" },
     ],
     tags: ["E-Commerce", "Jewelry", "Luxury", "Online Store"],
@@ -43,16 +43,16 @@ export const portfolioProjects: PortfolioProject[] = [
   {
     title: "Opal Media Productions",
     sector: "Media Production",
-    type: "Brand Website",
+    type: "Corporate Website",
     summary:
-      "A full-service agency website presenting media production, photography, digital marketing, branding, and website development services.",
+      "A multi-service corporate website for a media production studio, with structured service sections and a direct enquiry flow.",
     image: "/portfolio/opalmediaproductions.webp",
     url: "https://www.opalmediaproductions.com/",
     metrics: [
       { value: "5+", label: "service verticals" },
       { value: "24h", label: "response promise" },
     ],
-    tags: ["Brand Site", "Media", "Marketing", "Lead Gen"],
+    tags: ["Corporate Site", "Media", "CMS", "Enquiry Flow"],
   },
   {
     title: "Dr. Alam's Skin Clinic",
@@ -66,7 +66,7 @@ export const portfolioProjects: PortfolioProject[] = [
       { value: "500+", label: "Google reviews" },
       { value: "4.9", label: "review rating" },
     ],
-    tags: ["Healthcare", "SEO", "Booking", "Gallery"],
+    tags: ["Healthcare", "Booking System", "Gallery", "Responsive"],
   },
   {
     title: "LearnMore Projects",
@@ -94,7 +94,7 @@ export const portfolioProjects: PortfolioProject[] = [
       { value: "Live", label: "website project" },
       { value: "24/7", label: "online presence" },
     ],
-    tags: ["Business Site", "Responsive", "Lead Gen", "SEO"],
+    tags: ["Business Site", "Responsive", "Enquiry Flow", "Performance"],
   },
   {
     title: "Deva Sea Food",
