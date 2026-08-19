@@ -1,0 +1,242 @@
+---
+import "../../styles/global.css";
+import Nav from "../../components/Nav.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import SEO from "../../components/SEO.astro";
+import CallFab from "../../components/CallFab.astro";
+import Icon from "../../components/Icon.astro";
+import { services, serviceSlug, type Service } from "../../data/services.ts";
+import { portfolioProjects, projectSlug } from "../../data/portfolio.ts";
+import { COMPANY_NAME, CITY, waLink } from "../../data/site";
+
+export function getStaticPaths() {
+  return services.map((service) => ({
+    params: { slug: serviceSlug(service) },
+    props: { service },
+  }));
+}
+
+const { service } = Astro.props as { service: Service };
+const url = `https://thearktech.in/services/${serviceSlug(service)}`;
+
+const work = portfolioProjects.filter((p) => service.workTypes?.includes(p.type));
+const others = services.filter((s) => serviceSlug(s) !== serviceSlug(service));
+
+const enquiry = waLink(
+  `Hi ${COMPANY_NAME}! 👋 I'd like to talk about ${service.title.toLowerCase()}.`
+);
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Service",
+      name: service.title,
+      description: service.intro ?? service.desc,
+      url,
+      serviceType: service.title,
+      provider: { "@id": "https://thearktech.in/#organization" },
+      areaServed: CITY,
+      hasOfferCatalog: {
+        "@type": "OfferCatalog",
+        name: `${service.title} — what's included`,
+        itemListElement: service.included.map((item) => ({
+          "@type": "Offer",
+          itemOffered: { "@type": "Service", name: item },
+        })),
+      },
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://thearktech.in/" },
+        { "@type": "ListItem", position: 2, name: "Services", item: "https://thearktech.in/#services" },
+        { "@type": "ListItem", position: 3, name: service.title, item: url },
+      ],
+    },
+  ],
+};
+---
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="/logo.png" />
+    <SEO
+      title={`${service.title} in ${CITY} | ${COMPANY_NAME}`}
+      description={service.intro ?? service.desc}
+      url={url}
+      image="https://thearktech.in/banner.png"
+      siteName={COMPANY_NAME}
+      keywords={[`${service.title.toLowerCase()} ${CITY}`, ...service.tech.slice(0, 4)]}
+    />
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  </head>
+  <body class="bg-bg text-ink">
+    <a href="#main" class="skip-link">Skip to content</a>
+    <Nav />
+
+    <main id="main" tabindex="-1" class="sv glow-anchor">
+      <div class="container-x sv-wrap">
+        <nav class="sv-crumbs" aria-label="Breadcrumb">
+          <a href="/">Home</a>
+          <span aria-hidden="true">/</span>
+          <a href="/#services">Services</a>
+          <span aria-hidden="true">/</span>
+          <span aria-current="page">{service.title}</span>
+        </nav>
+
+        <header class="sv-head">
+          <span class="sv-icon"><Icon name={service.icon} class="h-8 w-8" /></span>
+          <p class="eyebrow mb-3">Service {service.num}</p>
+          <h1 class="font-display sv-title">{service.title}</h1>
+          <p class="sv-lede">{service.intro ?? service.desc}</p>
+          <div class="sv-actions">
+            <a href={enquiry} target="_blank" rel="noopener noreferrer" class="btn-primary">
+              Discuss your project
+            </a>
+            <a href="/contact" class="btn-glass">Get a quote</a>
+          </div>
+        </header>
+
+        <section class="sv-block">
+          <h2>What's included</h2>
+          <ul class="sv-list">
+            {service.included.map((item) => (
+              <li><span class="sv-tick" aria-hidden="true">✓</span>{item}</li>
+            ))}
+          </ul>
+        </section>
+
+        <section class="sv-block">
+          <h2>Technologies we use</h2>
+          <div class="sv-tags">
+            {service.tech.map((t) => <span>{t}</span>)}
+          </div>
+        </section>
+
+        {work.length > 0 && (
+          <section class="sv-block">
+            <h2>{work.length} project{work.length === 1 ? "" : "s"} delivered under this service</h2>
+            <div class="sv-work">
+              {work.map((p) => (
+                <a href={`/work/${projectSlug(p)}`} class="sv-work-card">
+                  <img src={p.image} alt={`${p.title} — ${p.type}`} width="1280" height="800" loading="lazy" decoding="async" />
+                  <div class="sv-work-body">
+                    <span class="sv-work-sector">{p.sector}</span>
+                    <span class="sv-work-title">{p.title}</span>
+                    <span class="sv-work-more">Case study →</span>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </section>
+        )}
+
+        <section class="sv-cta">
+          <h2 class="font-display">Need {service.title.toLowerCase()}?</h2>
+          <p>Tell us the requirement and we'll come back with scope, cost, and a timeline.</p>
+          <div class="sv-actions">
+            <a href={enquiry} target="_blank" rel="noopener noreferrer" class="btn-primary">Start a project</a>
+            <a href="/work" class="btn-glass">See our work</a>
+          </div>
+        </section>
+
+        <section class="sv-block">
+          <h2>Other services</h2>
+          <div class="sv-others">
+            {others.map((s) => (
+              <a href={`/services/${serviceSlug(s)}`} class="sv-other">
+                <span class="sv-other-num">{s.num}</span>
+                <span>{s.title}</span>
+              </a>
+            ))}
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <SiteFooter />
+    <CallFab />
+  </body>
+</html>
+
+<style>
+  .sv { padding: 7.5rem 0 5rem; }
+  .sv-wrap { max-width: 62rem; }
+
+  .sv-crumbs {
+    display: flex; flex-wrap: wrap; gap: 0.5rem;
+    font-size: 0.82rem; color: var(--ink-faint); margin-bottom: 2.5rem;
+  }
+  .sv-crumbs a:hover { color: var(--brand-bright); }
+
+  .sv-head { max-width: 46rem; }
+  .sv-icon {
+    display: grid; place-items: center;
+    height: 3.5rem; width: 3.5rem; border-radius: 1rem;
+    color: var(--brand-bright);
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.22);
+    margin-bottom: 1.5rem;
+  }
+  .sv-title { font-size: clamp(2.1rem, 5vw, 3.4rem); line-height: 1.05; margin: 0; }
+  .sv-lede { margin-top: 1.1rem; color: var(--ink-muted); line-height: 1.75; font-size: 1.05rem; }
+  .sv-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.75rem; }
+
+  .sv-block { margin-top: 3.5rem; }
+  .sv-block h2 {
+    font-family: "Clash Display", sans-serif;
+    font-size: 1.35rem; font-weight: 600; margin: 0 0 1.25rem;
+  }
+
+  .sv-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.65rem; }
+  @media (min-width: 640px) { .sv-list { grid-template-columns: 1fr 1fr; gap: 0.65rem 2rem; } }
+  .sv-list li { display: flex; gap: 0.6rem; color: var(--ink-muted); font-size: 0.95rem; }
+  .sv-tick { color: var(--accent-cyan); flex: none; }
+
+  .sv-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .sv-tags span {
+    font-size: 0.8rem; padding: 5px 13px; border-radius: 9999px;
+    background: rgba(59, 130, 246, 0.08);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    color: var(--brand-bright);
+  }
+
+  .sv-work { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); }
+  .sv-work-card {
+    border-radius: 1rem; overflow: hidden;
+    background: var(--bg-elev); border: 1px solid var(--line);
+    transition: transform var(--dur-2) var(--ease-out-quart), border-color var(--dur-2) var(--ease-out-quart);
+  }
+  .sv-work-card:hover { transform: translateY(-3px); border-color: var(--line-brand); }
+  .sv-work-card img { width: 100%; height: 9rem; object-fit: cover; object-position: top; }
+  .sv-work-body { padding: 0.9rem 1rem 1.1rem; display: flex; flex-direction: column; gap: 0.2rem; }
+  .sv-work-sector { font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-faint); }
+  .sv-work-title { font-family: "Clash Display", sans-serif; font-weight: 600; }
+  .sv-work-more { font-size: 0.8rem; color: var(--brand-bright); margin-top: 0.3rem; }
+
+  .sv-others { display: grid; gap: 0.5rem; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); }
+  .sv-other {
+    display: flex; align-items: center; gap: 0.85rem;
+    padding: 0.85rem 1.1rem; border-radius: 0.85rem;
+    background: var(--glass-bg); border: 1px solid var(--glass-brd);
+    color: var(--ink-muted); font-size: 0.92rem;
+    transition: color var(--dur-2), border-color var(--dur-2);
+  }
+  .sv-other:hover { color: var(--ink); border-color: var(--line-brand); }
+  .sv-other-num {
+    font-family: "Clash Display", sans-serif; font-size: 0.78rem;
+    color: var(--brand-bright); flex: none;
+  }
+
+  .sv-cta {
+    margin-top: 4rem; padding: clamp(1.75rem, 4vw, 2.75rem);
+    border-radius: 1.5rem; text-align: center;
+    background: linear-gradient(135deg, rgba(30, 58, 138, 0.35), rgba(8, 12, 22, 0.8));
+    border: 1px solid var(--line-brand);
+  }
+  .sv-cta h2 { font-size: clamp(1.5rem, 3vw, 2rem); margin: 0; }
+  .sv-cta p { margin: 0.75rem 0 0; color: var(--ink-muted); }
+  .sv-cta .sv-actions { justify-content: center; }
+</style>

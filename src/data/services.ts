@@ -5,6 +5,28 @@ export interface Service {
   icon: string;
   included: string[];
   tech: string[];
+  /** Stable URL segment. Derived from the title when omitted. */
+  slug?: string;
+  /**
+   * Portfolio `type` values delivered under this service, so /services/<slug>
+   * can show real client work. Services with no matching project omit that
+   * section rather than showing a placeholder.
+   */
+  workTypes?: string[];
+  /** Longer opening paragraph for the service page. Falls back to `desc`. */
+  intro?: string;
+}
+
+/** URL-safe slug for a service, derived from the title unless one is set. */
+export function serviceSlug(service: Service): string {
+  return (
+    service.slug ??
+    service.title
+      .toLowerCase()
+      .replace(/['’]/g, "")
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "")
+  );
 }
 
 export const services: Service[] = [
@@ -22,6 +44,7 @@ export const services: Service[] = [
       "1 month post-launch support",
     ],
     tech: ["Astro", "Next.js", "React", "Tailwind CSS", "WordPress"],
+    workTypes: ["Business Website", "Corporate Website", "Clinic Website", "Training Website"],
   },
   {
     num: "02",
@@ -37,6 +60,7 @@ export const services: Service[] = [
       "3 months post-launch support",
     ],
     tech: ["Next.js", "WooCommerce", "Shopify", "Stripe", "PostgreSQL"],
+    workTypes: ["Premium E-Commerce", "Online Store"],
   },
   {
     num: "03",
