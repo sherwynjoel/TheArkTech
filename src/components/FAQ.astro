@@ -1,4 +1,6 @@
 ---
+import { services } from "../data/services.ts";
+
 const faqs = [
   {
     q: "How long does a project take?",
@@ -26,11 +28,11 @@ const faqs = [
   },
   {
     q: "Can I see examples of your work?",
-    a: "Yes — scroll to our Industries section to see the verticals we've shipped for. For detailed case studies and live URLs, reach out and we'll share a tailored portfolio relevant to your industry.",
+    a: "Yes — our Portfolio section above has live client sites you can visit right now, and Industries shows the verticals we've shipped for. For detailed case studies, reach out and we'll share work relevant to your industry.",
   },
   {
     q: "Do you offer SEO?",
-    a: "Yes. SEO & Digital Marketing is one of our six core services. We cover on-page SEO, technical SEO, Google Business Profile, local SEO (key for Coimbatore businesses), and content strategy.",
+    a: `Yes. SEO & Digital Marketing is one of our ${services.length} core services. We cover on-page SEO, technical SEO, Google Business Profile, local SEO (key for Coimbatore businesses), and content strategy.`,
   },
 ];
 
@@ -60,12 +62,15 @@ const faqSchema = {
     <div class="faq-list mx-auto" id="faq-list">
       {faqs.map((f, i) => (
         <div class="faq-item reveal" data-index={i}>
-          <button class="faq-q" aria-expanded="false" aria-controls={`faq-ans-${i}`}>
-            <span>{f.q}</span>
-            <span class="faq-icon" aria-hidden="true">+</span>
-          </button>
-          <div class="faq-a" id={`faq-ans-${i}`} role="region" hidden>
-            <p>{f.a}</p>
+          {/* A real heading so screen-reader users can navigate the FAQ by heading. */}
+          <h3 class="faq-h">
+            <button class="faq-q" id={`faq-q-${i}`} aria-expanded="false" aria-controls={`faq-ans-${i}`}>
+              <span>{f.q}</span>
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+          </h3>
+          <div class="faq-a" id={`faq-ans-${i}`} role="region" aria-labelledby={`faq-q-${i}`} hidden>
+            <div class="faq-a-inner"><p>{f.a}</p></div>
           </div>
         </div>
       ))}
@@ -77,9 +82,12 @@ const faqSchema = {
   .faq-list { max-width: 52rem; }
 
   .faq-item {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid var(--hairline);
   }
-  .faq-item:first-child { border-top: 1px solid rgba(255, 255, 255, 0.08); }
+  .faq-item:first-child { border-top: 1px solid var(--hairline); }
+
+  /* The heading is structural only — the button carries all the visual weight. */
+  .faq-h { margin: 0; font-size: inherit; font-weight: inherit; letter-spacing: normal; }
 
   .faq-q {
     width: 100%;
@@ -107,7 +115,7 @@ const faqSchema = {
     display: grid;
     place-items: center;
     border-radius: 50%;
-    border: 1px solid rgba(255,255,255,0.15);
+    border: 1px solid var(--line-strong);
     font-size: 1.1rem;
     line-height: 1;
     transition: transform 0.3s ease, border-color 0.2s;
@@ -117,22 +125,25 @@ const faqSchema = {
     border-color: var(--brand-bright);
   }
 
+  /* grid-template-rows 0fr -> 1fr animates to the answer's natural height, so
+     long answers can never be silently clipped the way a fixed max-height did. */
   .faq-a {
-    overflow: hidden;
-    max-height: 0;
-    /* visibility flips after the collapse animation so closed answers
-       leave the accessibility tree despite display:block below */
+    display: grid;
+    grid-template-rows: 0fr;
+    /* visibility flips after the collapse finishes, so closed answers leave the
+       accessibility tree despite the display:block below */
     visibility: hidden;
     transition:
-      max-height 0.35s cubic-bezier(0.2, 0.7, 0.2, 1),
-      visibility 0s linear 0.35s;
+      grid-template-rows var(--dur-3) var(--ease-out-quart),
+      visibility 0s linear var(--dur-3);
   }
   .faq-a:not([hidden]) {
-    max-height: 20rem;
+    grid-template-rows: 1fr;
     visibility: visible;
-    transition: max-height 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+    transition: grid-template-rows var(--dur-3) var(--ease-out-quart);
   }
-  .faq-a[hidden] { display: block !important; }
+  .faq-a[hidden] { display: grid !important; }
+  .faq-a-inner { overflow: hidden; min-height: 0; }
 
   .faq-a p {
     padding-bottom: 1.25rem;

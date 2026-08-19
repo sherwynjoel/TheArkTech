@@ -22,8 +22,8 @@ async function deploySingle() {
         await client.cd("/");
         await client.cd("portfolio");
 
-        console.log("Deploying devaseafood.png...");
-        await client.uploadFrom("dist/portfolio/devaseafood.png", "devaseafood.png");
+        console.log("Deploying devaseafood.webp...");
+        await client.uploadFrom("dist/portfolio/devaseafood.webp", "devaseafood.webp");
 
         console.log("Deployment complete.");
     } catch(err) {

@@ -1,9 +1,11 @@
 ---
 import { Image } from "astro:assets";
-import FlipWords from "./react/FlipWords.tsx";
-import ShinyButton from "./react/ShinyButton.tsx";
 import heroArt from "../assets/hero.png";
+
+// Rotated by CSS animation alone — this used to be a React island (plus the
+// whole React runtime) loaded client:load for a setInterval word swap.
 const words = ["websites", "apps", "custom software", "AI automation"];
+const WORD_SECONDS = 2.2;
 
 const particles = [
   { top: 8,  size: 2, dur: 30, delay: -2,  kind: "soft", op: 0.35 },
@@ -50,7 +52,14 @@ const particles = [
       <p class="eyebrow mb-4">Software studio · Coimbatore, India</p>
       <h1 class="font-display font-bold leading-[1.1] text-[clamp(2.4rem,5vw,4.5rem)]">
         We build<br />
-        <FlipWords client:load words={words} /><br />
+        <span class="flip" style={`--count:${words.length};--word-s:${WORD_SECONDS}s`}>
+          {/* All words share one grid cell, so the line reserves the tallest
+              word's height and nothing can overflow or shift. */}
+          {words.map((w, i) => (
+            <span class="flip-word" style={`--i:${i}`}>{w}</span>
+          ))}
+          <span class="sr-only">{words.join(", ")}</span>
+        </span><br />
         that ship.
       </h1>
       <p class="mt-6 max-w-lg text-lg text-ink-muted leading-relaxed">
@@ -60,7 +69,9 @@ const particles = [
       </p>
 
       <div class="mt-7 md:mt-9 flex flex-col sm:flex-row flex-wrap sm:items-center gap-4">
-        <ShinyButton client:load href="#contact">Start a project</ShinyButton>
+        <a href="#contact" class="shiny-btn">
+          <span>Start a project</span>
+        </a>
         <a href="#services" class="btn-glass w-full sm:w-auto text-center">Explore services</a>
       </div>
 
@@ -148,15 +159,66 @@ const particles = [
     50%     { opacity: 0.5; transform: scale(1.4); }
   }
 
+  /* ── rotating word ── */
+  .flip {
+    display: inline-grid;
+    vertical-align: top;
+    text-align: left;
+  }
+  .flip-word {
+    grid-area: 1 / 1;
+    color: var(--brand-bright);
+    opacity: 0;
+    will-change: opacity, transform;
+    animation: flip-word calc(var(--count) * var(--word-s)) var(--ease-out-quart) infinite;
+    animation-delay: calc(var(--i) * var(--word-s));
+  }
+  /* Visible for one slot of the cycle, then handed to the next word.
+     25% = one slot of four; the fades sit inside it so they never overlap. */
+  @keyframes flip-word {
+    0%   { opacity: 0; transform: translateY(0.4em); }
+    3%   { opacity: 1; transform: translateY(0); }
+    22%  { opacity: 1; transform: translateY(0); }
+    25%  { opacity: 0; transform: translateY(-0.4em); }
+    100% { opacity: 0; transform: translateY(-0.4em); }
+  }
+
+  /* ── primary hero CTA (was a React island for a hover sheen) ── */
+  .shiny-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.95rem 2rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    color: #fff;
+    overflow: hidden;
+    border: 1px solid rgba(96, 165, 250, 0.5);
+    background: linear-gradient(120deg, var(--brand-deep), var(--brand) 50%, var(--brand-bright));
+    box-shadow: 0 6px 24px rgba(59, 130, 246, 0.3);
+    transition: transform var(--dur-2) var(--ease-out-quart), box-shadow var(--dur-2) var(--ease-out-quart);
+  }
+  .shiny-btn > span { position: relative; z-index: 2; }
+  .shiny-btn::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,0.55) 50%, transparent 70%);
+    transform: translateX(-120%);
+    transition: transform 0.9s var(--ease-out-quart);
+  }
+  .shiny-btn:hover,
+  .shiny-btn:focus-visible {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 40px rgba(59, 130, 246, 0.45);
+  }
+  .shiny-btn:hover::after,
+  .shiny-btn:focus-visible::after { transform: translateX(120%); }
+
   /* ── social proof ── */
   .hero-proof { display: flex; align-items: center; gap: 1rem; }
-  .hero-avatars { display: flex; }
-  .hero-avatar {
-    width: 2rem; height: 2rem; border-radius: 50%;
-    border: 2px solid #000; margin-left: -0.5rem;
-    display: grid; place-items: center;
-  }
-  .hero-avatars .hero-avatar:first-child { margin-left: 0; }
   .hero-proof-text p { font-size: 0.85rem; color: var(--ink-muted); margin: 0; }
   .hero-proof-text strong { color: var(--ink); }
   .hero-stars { color: #facc15; font-size: 0.8rem; letter-spacing: 1px; margin-bottom: 2px; }
@@ -189,5 +251,10 @@ const particles = [
     .hero-particle { display: none; }
     .hero-live-dot { animation: none; }
     .hero-art { animation: none; }
+    /* Settle on the first word rather than cycling — without this the global
+       reduced-motion rule would collapse the cycle and leave every word at
+       its end state (invisible). */
+    .flip-word { animation: none; opacity: 0; }
+    .flip-word:first-child { opacity: 1; }
   }
 </style>

@@ -3,6 +3,7 @@ import "../styles/global.css";
 import Nav from "../components/Nav.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import SEO from "../components/SEO.astro";
+import { EMAIL, WHATSAPP_NUMBER } from "../data/site";
 
 const updated = "19 August 2026";
 ---
@@ -21,8 +22,9 @@ const updated = "19 August 2026";
     />
   </head>
   <body class="bg-bg text-ink">
+    <a href="#main" class="skip-link">Skip to content</a>
     <Nav />
-    <main class="legal-page">
+    <main id="main" tabindex="-1" class="legal-page">
       <div class="container-x legal-content">
         <p class="eyebrow mb-3">Legal</p>
         <h1 class="font-display legal-title">Privacy Policy</h1>
@@ -92,8 +94,8 @@ const updated = "19 August 2026";
           <h2>7. Contact</h2>
           <p>
             For any privacy question or request, email
-            <a href="mailto:contact@thearktech.in">contact@thearktech.in</a> or message us
-            on <a href="https://wa.me/919489722142" target="_blank" rel="noopener noreferrer">WhatsApp</a>.
+            <a href={`mailto:${EMAIL}`}>{EMAIL}</a> or message us
+            on <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer">WhatsApp</a>.
           </p>
         </section>
       </div>

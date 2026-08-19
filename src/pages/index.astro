@@ -44,11 +44,12 @@ import CallFab from "../components/CallFab.astro";
     />
   </head>
   <body class="bg-bg text-ink">
+    <a href="#main" class="skip-link">Skip to content</a>
     <LoadingScreen />
     <ScrollProgress />
     <Cursor />
     <Nav />
-    <main>
+    <main id="main" tabindex="-1">
       <Hero />
       <TrustStrip />
       <Services />

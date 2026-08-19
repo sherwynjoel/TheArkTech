@@ -1,7 +1,9 @@
 ---
-const BOOKING_MSG =
-  "Hi TheArkTech! 👋 I'd like to book a free 30-minute consultation call. When are you available?";
-const BOOKING_URL = `https://wa.me/919489722142?text=${encodeURIComponent(BOOKING_MSG)}`;
+import { waLink, EMAIL, WHATSAPP_NUMBER } from "../data/site";
+
+const BOOKING_URL = waLink(
+  "Hi TheArkTech! 👋 I'd like to book a free 30-minute consultation call. When are you available?"
+);
 
 const perks = [
   { icon: "clock",   text: "30 minutes, no obligation" },
@@ -49,7 +51,7 @@ const perks = [
             href={BOOKING_URL}
             target="_blank"
             rel="noopener noreferrer"
-            class="book-btn"
+            class="btn-primary book-btn"
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M16 2C8.268 2 2 8.268 2 16c0 2.49.65 4.826 1.787 6.854L2 30l7.336-1.756A13.94 13.94 0 0 0 16 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm6.328 19.928c-.346-.173-2.047-1.01-2.364-1.125-.317-.116-.548-.173-.779.173-.23.347-.894 1.126-1.096 1.357-.202.23-.404.26-.75.086-.346-.174-1.46-.538-2.782-1.716-1.028-.916-1.722-2.047-1.924-2.393-.202-.347-.021-.534.152-.707.156-.155.346-.404.52-.606.173-.202.23-.347.346-.578.115-.23.058-.433-.029-.606-.086-.173-.779-1.878-1.068-2.572-.28-.674-.566-.583-.78-.594l-.664-.01c-.23 0-.606.086-.924.433-.317.347-1.212 1.184-1.212 2.887 0 1.703 1.241 3.349 1.414 3.58.173.23 2.44 3.724 5.913 5.224.827.356 1.47.568 1.974.728.829.263 1.583.226 2.179.137.664-.099 2.047-.837 2.335-1.645.288-.808.288-1.501.202-1.645-.086-.144-.317-.23-.663-.404z"/></svg>
             Book free call
@@ -58,11 +60,11 @@ const perks = [
           <p class="book-or">or reach us directly</p>
 
           <div class="book-contacts">
-            <a href="mailto:contact@thearktech.in" class="book-contact-link">
+            <a href={`mailto:${EMAIL}`} class="book-contact-link">
               <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-              contact@thearktech.in
+              {EMAIL}
             </a>
-            <a href="https://wa.me/919489722142" target="_blank" rel="noopener noreferrer" class="book-contact-link">
+            <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer" class="book-contact-link">
               <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M16 2C8.268 2 2 8.268 2 16c0 2.49.65 4.826 1.787 6.854L2 30l7.336-1.756A13.94 13.94 0 0 0 16 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm6.328 19.928c-.346-.173-2.047-1.01-2.364-1.125-.317-.116-.548-.173-.779.173-.23.347-.894 1.126-1.096 1.357-.202.23-.404.26-.75.086-.346-.174-1.46-.538-2.782-1.716-1.028-.916-1.722-2.047-1.924-2.393-.202-.347-.021-.534.152-.707.156-.155.346-.404.52-.606.173-.202.23-.347.346-.578.115-.23.058-.433-.029-.606-.086-.173-.779-1.878-1.068-2.572-.28-.674-.566-.583-.78-.594l-.664-.01c-.23 0-.606.086-.924.433-.317.347-1.212 1.184-1.212 2.887 0 1.703 1.241 3.349 1.414 3.58.173.23 2.44 3.724 5.913 5.224.827.356 1.47.568 1.974.728.829.263 1.583.226 2.179.137.664-.099 2.047-.837 2.335-1.645.288-.808.288-1.501.202-1.645-.086-.144-.317-.23-.663-.404z"/></svg>
               WhatsApp us
             </a>
@@ -156,22 +158,7 @@ const perks = [
     margin: 0;
   }
 
-  .book-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.6rem;
-    padding: 0.95rem 1.75rem;
-    border-radius: 9999px;
-    background: linear-gradient(120deg, var(--brand-deep), var(--brand) 60%, var(--brand-bright));
-    color: #fff;
-    font-weight: 600;
-    font-size: 0.95rem;
-    box-shadow: 0 6px 24px rgba(59,130,246,0.35);
-    transition: transform 0.25s, box-shadow 0.25s;
-    margin-top: 0.25rem;
-  }
-  .book-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 36px rgba(59,130,246,0.5); }
+  .book-btn { font-size: 0.95rem; margin-top: 0.25rem; }
 
   .book-or {
     font-size: 0.78rem;

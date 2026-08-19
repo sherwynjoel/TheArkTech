@@ -17,7 +17,7 @@ export const portfolioProjects: PortfolioProject[] = [
     type: "Premium E-Commerce",
     summary:
       "A luxurious e-commerce platform for a premium jewelry brand, showcasing handcrafted gold and diamond collections with an elegant, immersive shopping experience.",
-    image: "/portfolio/harsjewellery.png",
+    image: "/portfolio/harsjewellery.webp",
     url: "https://harsjewellery.in",
     metrics: [
       { value: "Premium", label: "brand design" },
@@ -31,7 +31,7 @@ export const portfolioProjects: PortfolioProject[] = [
     type: "Online Store",
     summary:
       "India's premium destination for electronic components, sensors, IoT modules, and robotics kits. A complete e-commerce experience.",
-    image: "/portfolio/zetraelectronics.png",
+    image: "/portfolio/zetraelectronics.webp",
     url: "https://zetraelectronics.com",
     metrics: [
       { value: "5000+", label: "products listed" },
@@ -46,7 +46,7 @@ export const portfolioProjects: PortfolioProject[] = [
     type: "Brand Website",
     summary:
       "A full-service agency website presenting media production, photography, digital marketing, branding, and website development services.",
-    image: "/portfolio/opalmediaproductions.png",
+    image: "/portfolio/opalmediaproductions.webp",
     url: "https://www.opalmediaproductions.com/",
     metrics: [
       { value: "5+", label: "service verticals" },
@@ -60,7 +60,7 @@ export const portfolioProjects: PortfolioProject[] = [
     type: "Clinic Website",
     summary:
       "A dermatologist-led clinic website for advanced skin, hair, laser, and dermatosurgery treatments with consultation-focused patient journeys.",
-    image: "/portfolio/dralamdermcentre.png",
+    image: "/portfolio/dralamdermcentre.webp",
     url: "https://dralamdermcentre.com/",
     metrics: [
       { value: "500+", label: "Google reviews" },
@@ -74,7 +74,7 @@ export const portfolioProjects: PortfolioProject[] = [
     type: "Training Website",
     summary:
       "A project-center website for final year engineering projects, training, domain discovery, student outcomes, and WhatsApp-led enquiries.",
-    image: "/portfolio/learnmoreprojects.png",
+    image: "/portfolio/learnmoreprojects.webp",
     url: "https://learnmoreprojects.in/",
     metrics: [
       { value: "7,000+", label: "students supported" },
@@ -88,7 +88,7 @@ export const portfolioProjects: PortfolioProject[] = [
     type: "Business Website",
     summary:
       "A live business website for Axis Upgraders with clear service positioning, mobile-friendly presentation, and direct enquiry flow.",
-    image: "/portfolio/axisupgraders.png",
+    image: "/portfolio/axisupgraders.webp",
     url: "https://axisupgraders.com/",
     metrics: [
       { value: "Live", label: "website project" },
@@ -102,7 +102,7 @@ export const portfolioProjects: PortfolioProject[] = [
     type: "Business Website",
     summary:
       "A business website for a frozen seafood import and export brand, focused on product credibility, company presence, and direct enquiry flow.",
-    image: "/portfolio/devaseafood.png",
+    image: "/portfolio/devaseafood.webp",
     url: "https://devaseafood.com/",
     metrics: [
       { value: "B2B", label: "export presence" },
@@ -116,7 +116,7 @@ export const portfolioProjects: PortfolioProject[] = [
     type: "Corporate Website",
     summary:
       "A corporate website for a South India group spanning scrap trading, clean energy, logistics, commodity trading, and real estate divisions.",
-    image: "/portfolio/southerngoc.png",
+    image: "/portfolio/southerngoc.webp",
     url: "https://southerngoc.com/",
     metrics: [
       { value: "6", label: "group companies" },
@@ -130,7 +130,7 @@ export const portfolioProjects: PortfolioProject[] = [
     type: "Business Website",
     summary:
       "A sports infrastructure website for turf construction, courts, cricket nets, project galleries, process education, and consultation-led enquiries.",
-    image: "/portfolio/fdsports.png",
+    image: "/portfolio/fdsports.webp",
     url: "https://fdsports.in/",
     metrics: [
       { value: "10+", label: "years experience" },
@@ -144,7 +144,7 @@ export const portfolioProjects: PortfolioProject[] = [
     type: "Clinic Website",
     summary:
       "A dental clinic website for patient education, treatment discovery, doctor profiles, international patient support, and direct appointment enquiries.",
-    image: "/portfolio/gracedentalcarekovai.png",
+    image: "/portfolio/gracedentalcarekovai.webp",
     url: "https://www.gracedentalcarekovai.com/",
     metrics: [
       { value: "10+", label: "years experience" },

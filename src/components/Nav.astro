@@ -9,7 +9,7 @@ const links = [
 <header id="site-nav" class="fixed top-0 inset-x-0 z-50 transition-all duration-300">
   <div class="container-x flex items-center justify-between py-3">
     <a href="#home" class="flex items-center gap-3">
-      <img src="/logo.png" alt="TheArkTech logo" class="h-10 w-12 object-contain" />
+      <img src="/logo.png" alt="TheArkTech logo" width="48" height="40" class="h-10 w-12 object-contain" />
       <span class="font-display text-xl font-bold tracking-tight">TheArkTech</span>
     </a>
     <nav class="hidden md:flex items-center gap-1 glass glass-blur rounded-full px-2 py-1">
@@ -18,7 +18,7 @@ const links = [
       ))}
     </nav>
     <a href="#contact" class="hidden md:inline-flex btn-glass text-sm py-2 px-5">Get Quote</a>
-    <button id="nav-toggle" aria-label="Open menu" aria-expanded="false" class="md:hidden glass glass-blur rounded-xl p-3 min-w-[44px] min-h-[44px] flex items-center justify-center">
+    <button id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-mobile" class="md:hidden glass glass-blur rounded-xl p-3 min-w-[44px] min-h-[44px] flex items-center justify-center">
       <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
     </button>
   </div>
@@ -43,13 +43,45 @@ const links = [
   onScroll();
   const toggle = document.getElementById("nav-toggle");
   const menu = document.getElementById("nav-mobile");
-  toggle?.addEventListener("click", () => {
-    const open = menu?.classList.toggle("hidden") === false;
+
+  function setMenu(open: boolean, returnFocus = false) {
+    if (!menu || !toggle) return;
+    menu.classList.toggle("hidden", !open);
     toggle.setAttribute("aria-expanded", String(open));
-  });
+    toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+    if (open) {
+      menu.querySelector<HTMLAnchorElement>("a")?.focus();
+    } else if (returnFocus) {
+      toggle.focus();
+    }
+  }
+
+  toggle?.addEventListener("click", () => setMenu(menu?.classList.contains("hidden") ?? false));
+
   menu?.querySelectorAll("a").forEach((a) =>
-    a.addEventListener("click", () => menu.classList.add("hidden"))
+    a.addEventListener("click", () => setMenu(false))
   );
+
+  // Escape closes and hands focus back to the button that opened it.
+  document.addEventListener("keydown", (e) => {
+    if (e.key !== "Escape" || menu?.classList.contains("hidden")) return;
+    setMenu(false, true);
+  });
+
+  // Keep Tab inside the open menu — otherwise focus walks the page behind it.
+  menu?.addEventListener("keydown", (e) => {
+    if (e.key !== "Tab" || !toggle) return;
+    const focusables = [toggle, ...Array.from(menu.querySelectorAll<HTMLElement>("a"))];
+    const first = focusables[0];
+    const last = focusables[focusables.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  });
 
   // Scroll-spy: reflect the section in view on the nav links (desktop + mobile share hrefs).
   const navLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>(".nav-link"));
