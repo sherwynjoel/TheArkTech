@@ -1,0 +1,210 @@
+---
+import "../styles/global.css";
+import Nav from "../components/Nav.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import SEO from "../components/SEO.astro";
+import CallFab from "../components/CallFab.astro";
+import { services } from "../data/services.ts";
+import { portfolioProjects } from "../data/portfolio.ts";
+import { industries } from "../data/industries.ts";
+import { FOUNDED_YEAR, TEAM_SIZE, STORY, TEAM, PROCESS } from "../data/team.ts";
+import {
+  COMPANY_NAME, LEGAL_DISPLAY_NAME, COMPANY_TYPE, CIN,
+  ADDRESS_LINES, LOCATION, EMAIL, waLink,
+} from "../data/site";
+
+const liveCount = portfolioProjects.filter((p) => p.url).length;
+
+const facts = [
+  { k: "Company type", v: `${COMPANY_TYPE}, registered in India` },
+  ...(FOUNDED_YEAR ? [{ k: "Founded", v: FOUNDED_YEAR }] : []),
+  ...(TEAM_SIZE ? [{ k: "Team", v: `${TEAM_SIZE} people` }] : []),
+  { k: "Based in", v: LOCATION },
+  { k: "Services", v: `${services.length} engineering services` },
+  { k: "Client projects", v: `${portfolioProjects.length} delivered, ${liveCount} live today` },
+  { k: "Industries served", v: `${industries.length}` },
+  ...(CIN ? [{ k: "CIN", v: CIN }] : []),
+];
+
+const enquiry = waLink(`Hi ${COMPANY_NAME}! 👋 I'd like to know more about working with you.`);
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  name: `About ${COMPANY_NAME}`,
+  url: "https://thearktech.in/about",
+  mainEntity: { "@id": "https://thearktech.in/#organization" },
+};
+---
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="/logo.png" />
+    <SEO
+      title={`About ${COMPANY_NAME} — Software Development Company in ${LOCATION}`}
+      description={`${COMPANY_NAME} is a ${COMPANY_TYPE.toLowerCase()} in ${LOCATION} building web and mobile applications, custom software, cloud infrastructure, and AI automation. ${portfolioProjects.length} client projects delivered.`}
+      url="https://thearktech.in/about"
+      image="https://thearktech.in/banner.png"
+      siteName={COMPANY_NAME}
+      keywords={["about TheArkTech", "software company Coimbatore team"]}
+    />
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  </head>
+  <body class="bg-bg text-ink">
+    <a href="#main" class="skip-link">Skip to content</a>
+    <Nav />
+
+    <main id="main" tabindex="-1" class="ab glow-anchor">
+      <div class="container-x ab-wrap">
+        <header class="ab-head">
+          <p class="eyebrow mb-3">About us</p>
+          <h1 class="font-display ab-title">
+            A software company in<br />
+            <span class="text-brand-bright">{LOCATION.split(",")[0]}</span>
+          </h1>
+          <p class="ab-lede">
+            {COMPANY_NAME} is a {COMPANY_TYPE.toLowerCase()} building web and mobile
+            applications, custom software, cloud infrastructure, and AI automation.
+            We've delivered {portfolioProjects.length} client projects
+            — {liveCount} of them are live and you can visit every one.
+          </p>
+          <div class="ab-actions">
+            <a href="/work" class="btn-primary">See our work</a>
+            <a href={enquiry} target="_blank" rel="noopener noreferrer" class="btn-glass">Talk to us</a>
+          </div>
+        </header>
+
+        {STORY.length > 0 && (
+          <section class="ab-block">
+            <h2>Our story</h2>
+            {STORY.map((p) => <p class="ab-para">{p}</p>)}
+          </section>
+        )}
+
+        <section class="ab-block">
+          <h2>Company facts</h2>
+          <dl class="ab-facts">
+            {facts.map((f) => (
+              <div>
+                <dt>{f.k}</dt>
+                <dd>{f.v}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+
+        {TEAM.length > 0 && (
+          <section class="ab-block">
+            <h2>The team</h2>
+            <div class="ab-team">
+              {TEAM.map((m) => (
+                <div class="ab-member">
+                  {m.photo
+                    ? <img src={m.photo} alt={m.name} width="200" height="200" loading="lazy" />
+                    : <span class="ab-initials" aria-hidden="true">{m.name.split(" ").map((n) => n[0]).join("").slice(0, 2)}</span>}
+                  <span class="ab-name">{m.name}</span>
+                  <span class="ab-role">{m.role}</span>
+                  {m.bio && <p class="ab-bio">{m.bio}</p>}
+                  {m.linkedin && (
+                    <a href={m.linkedin} target="_blank" rel="noopener noreferrer" class="ab-link">LinkedIn</a>
+                  )}
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        <section class="ab-block">
+          <h2>How we work</h2>
+          <ol class="ab-process">
+            {PROCESS.map((p) => (
+              <li>
+                <span class="ab-step" aria-hidden="true">{p.step}</span>
+                <div>
+                  <h3>{p.title}</h3>
+                  <p>{p.detail}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        <section class="ab-block">
+          <h2>Where to find us</h2>
+          <address class="ab-address">
+            <strong>{LEGAL_DISPLAY_NAME}</strong>
+            {ADDRESS_LINES.map((line) => <span>{line}</span>)}
+            <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+          </address>
+          <a href="/contact" class="btn-glass ab-contact-btn">All contact details</a>
+        </section>
+      </div>
+    </main>
+
+    <SiteFooter />
+    <CallFab />
+  </body>
+</html>
+
+<style>
+  .ab { padding: 7.5rem 0 5rem; }
+  .ab-wrap { max-width: 58rem; }
+
+  .ab-head { max-width: 44rem; }
+  .ab-title { font-size: clamp(2.1rem, 5vw, 3.4rem); line-height: 1.05; margin: 0; }
+  .ab-lede { margin-top: 1.2rem; color: var(--ink-muted); line-height: 1.75; font-size: 1.05rem; }
+  .ab-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.75rem; }
+
+  .ab-block { margin-top: 3.5rem; }
+  .ab-block h2 {
+    font-family: "Clash Display", sans-serif;
+    font-size: 1.35rem; font-weight: 600; margin: 0 0 1.25rem;
+  }
+  .ab-para { color: var(--ink-muted); line-height: 1.75; margin: 0 0 1rem; }
+
+  .ab-facts { margin: 0; display: grid; gap: 0; }
+  .ab-facts > div {
+    display: grid; grid-template-columns: minmax(9rem, 14rem) 1fr; gap: 1rem;
+    padding: 0.85rem 0; border-top: 1px solid var(--hairline);
+  }
+  .ab-facts > div:last-child { border-bottom: 1px solid var(--hairline); }
+  .ab-facts dt { color: var(--ink-faint); font-size: 0.88rem; }
+  .ab-facts dd { margin: 0; color: var(--ink-muted); font-size: 0.92rem; }
+  @media (max-width: 560px) { .ab-facts > div { grid-template-columns: 1fr; gap: 0.2rem; } }
+
+  .ab-team { display: grid; gap: 1.25rem; grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); }
+  .ab-member {
+    padding: 1.5rem; border-radius: 1.25rem; text-align: center;
+    background: var(--glass-bg); border: 1px solid var(--glass-brd);
+    display: flex; flex-direction: column; align-items: center; gap: 0.3rem;
+  }
+  .ab-member img, .ab-initials {
+    width: 5rem; height: 5rem; border-radius: 9999px; object-fit: cover;
+    margin-bottom: 0.6rem;
+  }
+  .ab-initials {
+    display: grid; place-items: center;
+    background: linear-gradient(135deg, var(--brand-deep), var(--brand));
+    font-family: "Clash Display", sans-serif; font-weight: 700; font-size: 1.4rem;
+  }
+  .ab-name { font-family: "Clash Display", sans-serif; font-weight: 600; }
+  .ab-role { font-size: 0.82rem; color: var(--brand-bright); }
+  .ab-bio { margin: 0.5rem 0 0; font-size: 0.85rem; color: var(--ink-muted); line-height: 1.6; }
+  .ab-link { margin-top: 0.5rem; font-size: 0.8rem; color: var(--ink-faint); }
+  .ab-link:hover { color: var(--brand-bright); }
+
+  .ab-process { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.5rem; }
+  .ab-process li { display: grid; grid-template-columns: auto 1fr; gap: 1.25rem; align-items: start; }
+  .ab-step {
+    font-family: "Clash Display", sans-serif; font-weight: 700; font-size: 1.5rem;
+    color: transparent; -webkit-text-stroke: 1px rgba(96, 165, 250, 0.5); line-height: 1;
+  }
+  .ab-process h3 { font-family: "Clash Display", sans-serif; font-size: 1.05rem; font-weight: 600; margin: 0 0 0.35rem; }
+  .ab-process p { margin: 0; color: var(--ink-muted); font-size: 0.93rem; line-height: 1.7; }
+
+  .ab-address { font-style: normal; display: flex; flex-direction: column; gap: 0.25rem; color: var(--ink-muted); }
+  .ab-address strong { color: var(--ink); font-family: "Clash Display", sans-serif; }
+  .ab-address a { color: var(--brand-bright); }
+  .ab-contact-btn { margin-top: 1.25rem; }
+</style>
