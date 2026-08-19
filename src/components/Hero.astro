@@ -42,7 +42,7 @@ const particles = [
   <div class="container-x grid lg:grid-cols-12 gap-12 items-center">
 
     <!-- ── LEFT: copy ── -->
-    <div class="lg:col-span-6">
+    <div class="lg:col-span-7">
       <!-- live badge -->
       <div class="hero-live-badge mb-6">
         <span class="hero-live-dot" aria-hidden="true"></span>
@@ -85,7 +85,7 @@ const particles = [
     </div>
 
     <!-- ── RIGHT: product illustration ── -->
-    <div class="lg:col-span-6 relative hero-visual">
+    <div class="lg:col-span-5 relative hero-visual">
       <div class="hero-figure">
         <Image
           src={heroArt}
@@ -169,6 +169,11 @@ const particles = [
     grid-area: 1 / 1;
     color: var(--brand-bright);
     opacity: 0;
+    /* From md up the column is wide enough for the longest word, so keep it on
+       one line — otherwise the grid reserves two line-heights for every word and
+       leaves a visible gap above "that ship." Below md we allow wrapping, since
+       the stack absorbs it and clipping the headline would be worse. */
+    white-space: nowrap;
     will-change: opacity, transform;
     animation: flip-word calc(var(--count) * var(--word-s)) var(--ease-out-quart) infinite;
     animation-delay: calc(var(--i) * var(--word-s));
@@ -181,6 +186,10 @@ const particles = [
     22%  { opacity: 1; transform: translateY(0); }
     25%  { opacity: 0; transform: translateY(-0.4em); }
     100% { opacity: 0; transform: translateY(-0.4em); }
+  }
+
+  @media (max-width: 767px) {
+    .flip-word { white-space: normal; }
   }
 
   /* ── primary hero CTA (was a React island for a hover sheen) ── */
