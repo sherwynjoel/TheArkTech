@@ -1,19 +1,613 @@
 ---
 import { industries } from "../data/industries.ts";
-import IndustryCard from "./IndustryCard.astro";
+import Icon from "./Icon.astro";
+
+const n = industries.length;
+const pad = (i: number) => String(i + 1).padStart(2, "0");
+
+// Offset from the active card, wrapped to the shortest path around the loop and
+// clamped to the deepest layer the deck renders. Mirrors `offset()` in the script
+// so the section is already correct in the HTML, before JS runs.
+const initD = (i: number) => {
+  let d = i;
+  if (d > n / 2) d -= n;
+  return Math.max(-3, Math.min(3, d));
+};
 ---
-<section id="industries" class="py-28">
-  <div class="container-x">
-    <div class="flex flex-wrap items-end justify-between gap-6 mb-14">
+
+<section id="industries" class="ind-scroller" style={`--ind-count:${n}`} data-ind-scroller>
+ <div class="ind-pin">
+  <div class="container-x ind-pin-inner">
+    <div class="ind-head flex flex-wrap items-end justify-between gap-6">
       <div class="max-w-2xl">
         <p class="eyebrow mb-3">Industries</p>
-        <h2 class="font-display text-[clamp(2rem,4vw,3.25rem)]">Industries we serve</h2>
-        <p class="mt-3 text-ink-muted">Digital solutions for businesses across many industries — built to fit your goals.</p>
+        <h2 class="font-display text-[clamp(2rem,4vw,3.25rem)] leading-[1.05]">Industries we serve</h2>
+        <p class="mt-4 text-ink-muted">
+          Ten fields we build in. Pick one to see the kind of work it usually turns into.
+        </p>
       </div>
-      <a href="#contact" class="btn-glass hidden md:inline-flex">Get a consultation →</a>
+      <div class="hidden md:block">
+        <a href="#contact" class="btn-glass">Get a consultation →</a>
+      </div>
     </div>
-    <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
-      {industries.map((it) => <IndustryCard slug={it.slug} title={it.title} desc={it.desc} tag={it.tag} />)}
+
+    <div class="ind-stage reveal" data-ind-stage>
+      <!-- index -->
+      <div class="ind-rail">
+        <span class="ind-marker" aria-hidden="true"></span>
+        <div class="ind-tabs" role="tablist" aria-label="Industries we serve">
+          {industries.map((it, i) => (
+            <button
+              type="button"
+              role="tab"
+              id={`ind-tab-${i}`}
+              class="ind-pill"
+              aria-selected={i === 0 ? "true" : "false"}
+              aria-controls={`ind-panel-${i}`}
+              tabindex={i === 0 ? 0 : -1}
+              data-i={i}
+            >
+              <Icon name={it.icon} class="ind-pill-ic" />
+              <span class="ind-pill-label">{it.short}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <!-- deck -->
+      <div class="ind-deck">
+        <div class="ind-cards">
+          {industries.map((it, i) => (
+            <article
+              class="ind-card"
+              id={`ind-panel-${i}`}
+              role="tabpanel"
+              aria-labelledby={`ind-tab-${i}`}
+              aria-hidden={i === 0 ? "false" : "true"}
+              data-i={i}
+              data-d={initD(i)}
+            >
+              <img
+                class="ind-img"
+                src={Math.abs(initD(i)) <= 1 ? `/industries/${it.slug}.webp` : undefined}
+                data-src={Math.abs(initD(i)) <= 1 ? undefined : `/industries/${it.slug}.webp`}
+                alt={`Work we build for ${it.title.toLowerCase()} clients`}
+                width="1100"
+                height="1100"
+                loading="lazy"
+                decoding="async"
+              />
+              <span class="ind-scrim" aria-hidden="true"></span>
+              <span class="ind-count" aria-hidden="true">{pad(i)} <i>/</i> {n}</span>
+              <div class="ind-cap">
+                <span class="ind-tag">{it.tag}</span>
+                <h3 class="ind-title font-display">{it.title}</h3>
+                <p class="ind-desc">{it.desc}</p>
+                <a class="ind-cta" href="#contact">Get a quote →</a>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <button type="button" class="ind-arrow ind-arrow--prev" data-ind-prev aria-label="Previous industry" disabled>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 5 8 12l6.5 7" /></svg>
+        </button>
+        <button type="button" class="ind-arrow ind-arrow--next" data-ind-next aria-label="Next industry">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 5 16 12l-6.5 7" /></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="md:hidden">
+      <a href="#contact" class="btn-glass mt-6 w-full">Get a consultation →</a>
     </div>
   </div>
+ </div>
 </section>
+
+<style>
+  /* ============ pinned scroll track ============ */
+  /* The section is tall; the stage sticks inside it and each --ind-step of scroll
+     advances one industry. Height = one viewport to sit in, plus a step per move. */
+  .ind-scroller {
+    --ind-step: 38vh;
+    position: relative;
+    height: calc(100vh + (var(--ind-count) - 1) * var(--ind-step));
+    height: calc(100svh + (var(--ind-count) - 1) * var(--ind-step));
+  }
+  .ind-pin {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    height: 100svh;
+  }
+  .ind-pin-inner {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: clamp(0.9rem, 2.4vh, 2rem);
+    height: 100%;
+    /* the fixed site nav overlays the top of the pinned viewport */
+    padding-block: clamp(4.5rem, 9vh, 6rem) clamp(1rem, 4vh, 2.5rem);
+  }
+  .ind-head p:last-child { margin-top: 0.9rem; }
+
+  @media (min-width: 1024px) and (max-height: 820px) {
+    .ind-pin-inner { gap: 0.75rem; padding-block: 4.25rem 1rem; }
+    .ind-head h2 { font-size: 2rem; }
+    .ind-head p:last-child { display: none; }
+  }
+
+  /* ============ stage ============ */
+  .ind-stage {
+    height: 100%;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
+    border-radius: clamp(22px, 2.6vw, 38px);
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--bg-elev);
+  }
+
+  /* ============ index rail ============ */
+  .ind-rail {
+    position: relative;
+    display: flex;
+    min-width: 0;
+    overflow-y: auto;
+    scrollbar-width: none;
+    padding: clamp(1.4rem, 2.2vw, 2.1rem);
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--bg-elev);
+  }
+  /* deliberately unpositioned: the pills must report offsets against .ind-rail,
+     which is what .ind-marker is placed and scrolled with */
+  .ind-tabs {
+    margin-block: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.3rem;
+    width: 100%;
+  }
+
+  /* the white capsule that slides between entries */
+  .ind-marker {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-radius: 999px;
+    background: #fff;
+    box-shadow: 0 14px 34px -12px rgba(0, 0, 0, 0.6);
+    pointer-events: none;
+    z-index: 1;
+    transition:
+      transform 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+      width 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+      height 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .ind-pill {
+    position: relative;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    max-width: 100%;
+    padding: 0.7rem 1.15rem 0.7rem 0.9rem;
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    border-radius: 999px;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.74);
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: 0.01em;
+    text-align: left;
+    cursor: pointer;
+    transition:
+      color 0.35s ease,
+      border-color 0.35s ease,
+      transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .ind-pill-label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  :global(.ind-pill-ic) {
+    flex: none;
+    height: 18px;
+    width: 18px;
+    opacity: 0.72;
+    transition: opacity 0.35s ease, color 0.35s ease;
+  }
+  .ind-pill:hover { color: var(--ink); border-color: rgba(255, 255, 255, 0.32); transform: translateX(5px); }
+  .ind-pill:hover :global(.ind-pill-ic) { opacity: 1; }
+  .ind-pill[aria-selected="true"] {
+    color: #0a1020;
+    font-weight: 700;
+    border-color: transparent;
+    transform: none;
+  }
+  .ind-pill[aria-selected="true"] :global(.ind-pill-ic) { color: var(--brand); opacity: 1; }
+
+  /* ============ card deck ============ */
+  .ind-deck {
+    position: relative;
+    display: grid;
+    place-items: center;
+    min-height: 0;
+    height: 100%;
+    padding: clamp(1.35rem, 2.6vw, 2.5rem);
+    overflow: hidden;
+    background:
+      radial-gradient(88% 62% at 50% 0%, rgba(59, 130, 246, 0.13), transparent 66%),
+      var(--bg-elev-2);
+  }
+  .ind-cards {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    touch-action: pan-y;
+  }
+
+  .ind-card {
+    position: absolute;
+    height: min(88%, 30rem);
+    width: auto;
+    max-width: 64%;
+    aspect-ratio: 4 / 5;
+    border-radius: clamp(16px, 1.8vw, 26px);
+    overflow: hidden;
+    background: #05070f;
+    box-shadow: 0 40px 70px -34px rgba(0, 0, 0, 0.9);
+    container-type: size;
+    transform-origin: 50% 58%;
+    will-change: transform, opacity;
+    transition:
+      transform 0.68s cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 0.5s ease,
+      filter 0.68s ease;
+  }
+  .ind-card:not([data-d="0"]) { cursor: pointer; }
+
+  /* depth layers, nearest first */
+  .ind-card[data-d="0"]  { transform: translateX(0) scale(1);         opacity: 1;   filter: none; z-index: 4; }
+  .ind-card[data-d="1"]  { transform: translateX(46%) scale(0.875);   opacity: 0.72; filter: grayscale(1) brightness(0.62); z-index: 3; }
+  .ind-card[data-d="-1"] { transform: translateX(-46%) scale(0.875);  opacity: 0.72; filter: grayscale(1) brightness(0.62); z-index: 3; }
+  .ind-card[data-d="2"]  { transform: translateX(72%) scale(0.76);    opacity: 0;   z-index: 2; pointer-events: none; }
+  .ind-card[data-d="-2"] { transform: translateX(-72%) scale(0.76);   opacity: 0;   z-index: 2; pointer-events: none; }
+  .ind-card[data-d="3"]  { transform: translateX(96%) scale(0.66);    opacity: 0;   z-index: 1; pointer-events: none; }
+  .ind-card[data-d="-3"] { transform: translateX(-96%) scale(0.66);   opacity: 0;   z-index: 1; pointer-events: none; }
+
+  .ind-img { height: 100%; width: 100%; object-fit: cover; object-position: 50% 42%; }
+  .ind-scrim {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to bottom, rgba(0, 0, 0, 0.62) 0%, rgba(0, 0, 0, 0.14) 20%, transparent 32%),
+      linear-gradient(to top, rgba(0, 0, 0, 0.97) 0%, rgba(0, 0, 0, 0.93) 30%, rgba(0, 0, 0, 0.66) 52%, rgba(0, 0, 0, 0.24) 72%, transparent 88%);
+  }
+
+  .ind-count {
+    position: absolute;
+    top: clamp(0.9rem, 1.6vw, 1.35rem);
+    left: clamp(1rem, 1.8vw, 1.5rem);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: clamp(0.6rem, 2.6cqh, 0.7rem);
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    color: rgba(255, 255, 255, 0.9);
+  }
+  .ind-count::before {
+    content: "";
+    height: 6px;
+    width: 6px;
+    border-radius: 50%;
+    background: var(--accent-cyan);
+    box-shadow: 0 0 10px var(--accent-cyan);
+  }
+  .ind-count i { font-style: normal; opacity: 0.45; }
+
+  .ind-cap {
+    position: absolute;
+    inset: auto 0 0 0;
+    padding: clamp(0.7rem, 4.5cqh, 1.6rem);
+  }
+  /* each line rises in sequence once its card lands centre-stage */
+  .ind-cap > *,
+  .ind-count {
+    opacity: 0;
+    transform: translateY(11px);
+    transition:
+      opacity 0.45s ease,
+      transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .ind-card[data-d="0"] .ind-cap > *,
+  .ind-card[data-d="0"] .ind-count { opacity: 1; transform: none; }
+  .ind-card[data-d="0"] .ind-count { transition-delay: 0.1s; }
+  .ind-card[data-d="0"] .ind-cap > :nth-child(1) { transition-delay: 0.16s; }
+  .ind-card[data-d="0"] .ind-cap > :nth-child(2) { transition-delay: 0.22s; }
+  .ind-card[data-d="0"] .ind-cap > :nth-child(3) { transition-delay: 0.28s; }
+  .ind-card[data-d="0"] .ind-cap > :nth-child(4) { transition-delay: 0.34s; }
+
+  .ind-tag {
+    display: inline-flex;
+    border-radius: 999px;
+    background: #fff;
+    color: #0a1020;
+    padding: clamp(0.28rem, 1.4cqh, 0.4rem) clamp(0.58rem, 3cqh, 0.8rem);
+    font-size: clamp(0.58rem, 2.4cqh, 0.66rem);
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  .ind-title {
+    margin: clamp(0.42rem, 2.6cqh, 0.7rem) 0 0;
+    font-size: clamp(0.98rem, 6.4cqh, 1.8rem);
+    line-height: 1.1;
+    text-wrap: balance;
+  }
+  .ind-desc {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    margin: clamp(0.34rem, 2cqh, 0.55rem) 0 0;
+    max-width: 42ch;
+    font-size: clamp(0.78rem, 3.4cqh, 0.9rem);
+    line-height: 1.55;
+    color: rgba(255, 255, 255, 0.82);
+  }
+  .ind-cta {
+    display: inline-flex;
+    margin-top: clamp(0.55rem, 3.8cqh, 1.05rem);
+    padding: clamp(0.42rem, 2.2cqh, 0.6rem) clamp(0.8rem, 4cqh, 1.15rem);
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.1);
+    font-size: 0.84rem;
+    font-weight: 600;
+    transition: background 0.25s ease, border-color 0.25s ease;
+  }
+  .ind-cta:hover { background: #fff; color: #0a1020; border-color: #fff; }
+
+  /* ============ arrows ============ */
+  .ind-arrow {
+    position: absolute;
+    top: 50%;
+    z-index: 6;
+    display: grid;
+    place-items: center;
+    height: 2.6rem;
+    width: 2.6rem;
+    margin-top: -1.3rem;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(8, 12, 24, 0.72);
+    color: var(--ink);
+    cursor: pointer;
+    opacity: 0.55;
+    transition: opacity 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+  }
+  .ind-arrow svg { height: 1.15rem; width: 1.15rem; }
+  .ind-arrow--prev { left: clamp(0.5rem, 1.2vw, 1rem); }
+  .ind-arrow--next { right: clamp(0.5rem, 1.2vw, 1rem); }
+  .ind-deck:hover .ind-arrow { opacity: 1; }
+  .ind-arrow:hover { background: rgba(59, 130, 246, 0.85); border-color: transparent; }
+  .ind-arrow:focus-visible { opacity: 1; }
+  .ind-arrow:disabled { opacity: 0.16; pointer-events: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ind-cap > *,
+    .ind-count,
+    .ind-card[data-d="0"] .ind-cap > *,
+    .ind-card[data-d="0"] .ind-count { transition-delay: 0s; }
+  }
+
+  /* ============ stacked layout ============ */
+  /* No scroll capture on touch, and none for visitors who asked for less motion:
+     both get the plain section with tap/swipe control. */
+  @media (max-width: 1023px), (prefers-reduced-motion: reduce) {
+    .ind-scroller { height: auto; padding-block: 6rem; }
+    .ind-pin { position: static; height: auto; }
+    .ind-pin-inner { display: block; height: auto; padding-block: 0; }
+    .ind-head { margin-bottom: 2.5rem; }
+    .ind-stage { height: auto; }
+    .ind-rail { overflow-y: hidden; }
+    .ind-deck { height: auto; min-height: clamp(25rem, 118vw, 34rem); }
+    .ind-card { height: auto; width: min(84%, 20rem); max-width: none; aspect-ratio: 3 / 4; }
+  }
+
+  @media (max-width: 1023px) {
+    .ind-stage { grid-template-columns: minmax(0, 1fr); }
+    .ind-rail {
+      order: 2;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scrollbar-width: none;
+      padding: 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-right: 0;
+    }
+    .ind-rail::-webkit-scrollbar { display: none; }
+    .ind-tabs { flex-direction: row; align-items: center; gap: 0.5rem; width: max-content; }
+    .ind-pill { flex: none; padding: 0.62rem 1rem 0.62rem 0.8rem; }
+    .ind-pill:hover { transform: none; }
+    .ind-deck { order: 1; padding: 1.1rem; }
+    .ind-arrow { height: 2.2rem; width: 2.2rem; margin-top: -1.1rem; }
+    .ind-card[data-d="1"]  { transform: translateX(58%) scale(0.82); opacity: 0.42; }
+    .ind-card[data-d="-1"] { transform: translateX(-58%) scale(0.82); opacity: 0.42; }
+    .ind-arrow { opacity: 1; }
+  }
+</style>
+
+<script>
+  const stage = document.querySelector<HTMLElement>("[data-ind-stage]");
+  const scroller = document.querySelector<HTMLElement>("[data-ind-scroller]");
+
+  if (stage && scroller) {
+    const pin = scroller.querySelector<HTMLElement>(".ind-pin")!;
+    const prevBtn = stage.querySelector<HTMLButtonElement>("[data-ind-prev]")!;
+    const nextBtn = stage.querySelector<HTMLButtonElement>("[data-ind-next]")!;
+    const rail = stage.querySelector<HTMLElement>(".ind-rail")!;
+    const marker = stage.querySelector<HTMLElement>(".ind-marker")!;
+    const deck = stage.querySelector<HTMLElement>(".ind-deck")!;
+    const pills = Array.from(stage.querySelectorAll<HTMLButtonElement>(".ind-pill"));
+    const cards = Array.from(stage.querySelectorAll<HTMLElement>(".ind-card"));
+    const n = pills.length;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    let active = 0;
+
+    /** Shortest signed distance from the active card, clamped to the deepest rendered layer. */
+    const offset = (i: number) => {
+      let d = i - active;
+      if (d > n / 2) d -= n;
+      if (d < -n / 2) d += n;
+      return Math.max(-3, Math.min(3, d));
+    };
+
+    const placeMarker = () => {
+      const p = pills[active];
+      marker.style.width = `${p.offsetWidth}px`;
+      marker.style.height = `${p.offsetHeight}px`;
+      marker.style.transform = `translate(${p.offsetLeft}px, ${p.offsetTop}px)`;
+    };
+
+    const render = () => {
+      pills.forEach((p, i) => {
+        p.setAttribute("aria-selected", String(i === active));
+        p.tabIndex = i === active ? 0 : -1;
+      });
+
+      cards.forEach((c, i) => {
+        const d = offset(i);
+        c.dataset.d = String(d);
+        c.setAttribute("aria-hidden", String(d !== 0));
+        // Only the cards on stage are worth bytes; the rest load as they approach.
+        const img = c.querySelector<HTMLImageElement>(".ind-img")!;
+        if (Math.abs(d) <= 2 && img.dataset.src) {
+          img.loading = "eager";
+          img.src = img.dataset.src;
+          delete img.dataset.src;
+        }
+      });
+
+      prevBtn.disabled = active === 0;
+      nextBtn.disabled = active === n - 1;
+
+      placeMarker();
+
+      // horizontal rail: keep the selected chip in view
+      if (rail.scrollWidth > rail.clientWidth) {
+        const p = pills[active];
+        rail.scrollTo({
+          left: p.offsetLeft - (rail.clientWidth - p.offsetWidth) / 2,
+          behavior: reduce.matches ? "auto" : "smooth",
+        });
+      }
+    };
+
+    const clamp = (i: number) => Math.max(0, Math.min(n - 1, i));
+
+    /** Sticky is switched off on touch and for reduced motion; then nothing is scroll-driven. */
+    const isPinned = () => getComputedStyle(pin).position === "sticky";
+
+    /** How far the page scrolls while the stage is stuck. */
+    const travel = () => Math.max(1, scroller.offsetHeight - pin.offsetHeight);
+
+    const setActive = (i: number) => {
+      const next = clamp(i);
+      if (next === active) return;
+      active = next;
+      render();
+    };
+
+    // While pinned, scroll position is the single source of truth: every control
+    // scrolls the page and lets the scroll handler set the index. Otherwise the
+    // index moves directly.
+    const go = (i: number) => {
+      const target = clamp(i);
+      if (!isPinned()) { setActive(target); return; }
+      const top =
+        scroller.getBoundingClientRect().top +
+        window.scrollY +
+        (target / (n - 1)) * travel();
+      window.scrollTo({ top, behavior: reduce.matches ? "auto" : "smooth" });
+    };
+
+    // ---- controls ----
+    pills.forEach((p, i) => p.addEventListener("click", () => go(i)));
+
+    prevBtn.addEventListener("click", () => go(active - 1));
+    nextBtn.addEventListener("click", () => go(active + 1));
+
+    // clicking a card to either side brings it forward
+    let swiped = false;
+    cards.forEach((c, i) => {
+      c.addEventListener("click", () => {
+        // a swipe also fires a click; the flag is cleared on the next press, not
+        // here, so a swipe that ends off a card cannot swallow the click after it
+        if (swiped || i === active) return;
+        go(i);
+      });
+    });
+
+    rail.addEventListener("keydown", (e: KeyboardEvent) => {
+      const step = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
+      let next = -1;
+      if (step) next = clamp(active + step);
+      else if (e.key === "Home") next = 0;
+      else if (e.key === "End") next = n - 1;
+      if (next < 0) return;
+      e.preventDefault();
+      go(next);
+      // focus the destination, not `active`: while pinned the index lags the scroll
+      pills[next].focus({ preventScroll: true });
+    });
+
+    // ---- swipe ----
+    let startX: number | null = null;
+    deck.addEventListener("pointerdown", (e: PointerEvent) => { startX = e.clientX; swiped = false; });
+    deck.addEventListener("pointerup", (e: PointerEvent) => {
+      if (startX === null) return;
+      const dx = e.clientX - startX;
+      startX = null;
+      if (Math.abs(dx) < 44) return;
+      swiped = true;
+      go(active + (dx < 0 ? 1 : -1));
+    });
+    const dropSwipe = () => { startX = null; };
+    deck.addEventListener("pointercancel", dropSwipe);
+    deck.addEventListener("pointerleave", dropSwipe);
+
+    // ---- scroll drives the index while the stage is pinned ----
+    let raf = 0;
+    const onScroll = () => {
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        raf = 0;
+        if (!isPinned()) return;
+        const progress = -scroller.getBoundingClientRect().top / travel();
+        setActive(Math.round(Math.min(1, Math.max(0, progress)) * (n - 1)));
+      });
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", () => { placeMarker(); onScroll(); });
+
+    // ---- keep the marker glued to the selected pill ----
+    render();
+    onScroll();
+    document.fonts?.ready.then(placeMarker);
+    new ResizeObserver(placeMarker).observe(rail);
+  }
+</script>

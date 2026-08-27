@@ -51,7 +51,9 @@ body {
   color: var(--ink);
   font-family: "Satoshi", ui-sans-serif, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
+  /* `clip` and not `hidden`: hidden makes <body> a scroll container, which breaks
+     `position: sticky` for everything inside it. Both clip the same way. */
+  overflow-x: clip;
 }
 h1, h2, h3, .font-display {
   font-family: "Clash Display", "Satoshi", sans-serif;
