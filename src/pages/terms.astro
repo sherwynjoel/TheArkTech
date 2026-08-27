@@ -1,0 +1,161 @@
+---
+import "../styles/global.css";
+import Nav from "../components/Nav.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import SEO from "../components/SEO.astro";
+import { EMAIL, WHATSAPP_NUMBER, LEGAL_DISPLAY_NAME, COMPANY_TYPE, CIN, ADDRESS_LINES } from "../data/site";
+
+const updated = "19 August 2026";
+---
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="/logo.png" />
+    <SEO
+      title="Terms & Conditions | TheArkTech"
+      description="The terms and conditions that apply when you engage TheArkTech for software development, websites, apps, or AI automation services."
+      url="https://thearktech.in/terms"
+      image="https://thearktech.in/banner.png"
+      siteName="TheArkTech"
+      keywords={[]}
+    />
+  </head>
+  <body class="bg-bg text-ink">
+    <a href="#main" class="skip-link">Skip to content</a>
+    <Nav />
+    <main id="main" tabindex="-1" class="legal-page">
+      <div class="container-x legal-content">
+        <p class="eyebrow mb-3">Legal</p>
+        <h1 class="font-display legal-title">Terms &amp; Conditions</h1>
+        <p class="legal-updated">Last updated: {updated}</p>
+
+        <section>
+          <h2>1. Who we are</h2>
+          <p>
+            {LEGAL_DISPLAY_NAME} ("we", "us") is a {COMPANY_TYPE.toLowerCase()} registered
+            in India, with its registered office at {ADDRESS_LINES.join(", ")}
+            {CIN ? `, CIN ${CIN}` : ""}. We build websites, web and mobile applications,
+            and AI-powered automation for businesses. These terms apply to your use of
+            thearktech.in and to any services you engage us for.
+          </p>
+        </section>
+
+        <section>
+          <h2>2. Quotes and engagement</h2>
+          <p>
+            Project scope, timeline, and pricing are agreed in writing before work begins.
+            Quotes we provide are fixed for the agreed scope; changes to scope may change
+            the price and timeline, and will always be agreed with you first before we
+            proceed.
+          </p>
+        </section>
+
+        <section>
+          <h2>3. Payment</h2>
+          <p>
+            Unless agreed otherwise, projects are invoiced with an advance payment before
+            work starts and the balance on delivery. Ongoing services (maintenance,
+            hosting management, automation) are billed at the agreed recurring rate.
+            Deliverables remain our property until payment is received in full.
+          </p>
+        </section>
+
+        <section>
+          <h2>4. Intellectual property</h2>
+          <p>
+            On full payment, you own the final deliverables we build for you — the design,
+            code, and content created specifically for your project. We retain the right
+            to use general-purpose tools, libraries, and know-how we bring to the project,
+            and to showcase completed work in our portfolio unless you ask us not to.
+          </p>
+        </section>
+
+        <section>
+          <h2>5. Your responsibilities</h2>
+          <p>
+            You are responsible for the accuracy and legality of content, branding, and
+            data you provide to us, and for confirming you have the rights to use them.
+            Timely feedback and approvals help us keep to the agreed schedule.
+          </p>
+        </section>
+
+        <section>
+          <h2>6. Warranties and liability</h2>
+          <p>
+            We build and test our work with professional care, and we fix defects in the
+            agreed scope reported within the support window agreed for your project. The
+            website and our services are otherwise provided "as is". To the maximum extent
+            permitted by law, our total liability for any claim is limited to the amount
+            you paid us for the specific work giving rise to the claim, and we are not
+            liable for indirect or consequential losses such as lost profits or data.
+          </p>
+        </section>
+
+        <section>
+          <h2>7. Third-party services</h2>
+          <p>
+            Projects often depend on third-party services (hosting providers, domain
+            registrars, payment gateways, APIs, WhatsApp). Those services have their own
+            terms, and we are not responsible for their availability or changes to them.
+          </p>
+        </section>
+
+        <section>
+          <h2>8. Governing law</h2>
+          <p>
+            These terms are governed by the laws of India, and any disputes are subject to
+            the jurisdiction of the courts of Coimbatore, Tamil Nadu.
+          </p>
+        </section>
+
+        <section>
+          <h2>9. Contact</h2>
+          <p>
+            Questions about these terms? Email
+            <a href={`mailto:${EMAIL}`}>{EMAIL}</a> or message us
+            on <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer">WhatsApp</a>.
+          </p>
+        </section>
+      </div>
+    </main>
+    <SiteFooter />
+  </body>
+</html>
+
+<style>
+  .legal-page {
+    padding: 8rem 0 5rem;
+    min-height: 60svh;
+  }
+  .legal-content {
+    max-width: 46rem;
+  }
+  .legal-title {
+    font-size: clamp(2rem, 5vw, 3rem);
+    line-height: 1.05;
+  }
+  .legal-updated {
+    margin-top: 0.75rem;
+    font-size: 0.85rem;
+    color: var(--ink-faint);
+  }
+  .legal-content section {
+    margin-top: 2.5rem;
+  }
+  .legal-content h2 {
+    font-family: "Clash Display", sans-serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+  }
+  .legal-content p {
+    color: var(--ink-muted);
+    line-height: 1.7;
+  }
+  .legal-content a {
+    color: var(--brand-bright);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+</style>

@@ -10,6 +10,7 @@ import TrustStrip from "../components/TrustStrip.astro";
 import Services from "../components/Services.astro";
 import WhyChooseUs from "../components/WhyChooseUs.astro";
 import Industries from "../components/Industries.astro";
+import Portfolio from "../components/Portfolio.astro";
 import TechMarquee from "../components/TechMarquee.astro";
 import ServiceQuiz from "../components/ServiceQuiz.astro";
 import ConsultationBooking from "../components/ConsultationBooking.astro";
@@ -22,37 +23,46 @@ import CallFab from "../components/CallFab.astro";
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Confirm JS before opting into hide-then-reveal motion, so content is never gated
+         on a class that a failed/absent script would leave un-set (blank sections). -->
+    <script is:inline>document.documentElement.classList.add("js");</script>
     <link rel="icon" type="image/png" href="/logo.png" />
     <SEO
-      title="TheArkTech | Software Solutions"
-      description="We build modern websites, apps, AI automation, and cloud solutions for small businesses and startups."
+      title="TheArkTech | Software Development Company in Coimbatore"
+      description="TheArkTech is a software development company in Coimbatore building web and mobile applications, custom software, cloud infrastructure, and AI automation."
       url="https://thearktech.in/"
       image="https://thearktech.in/banner.png"
       siteName="TheArkTech"
       keywords={[
-        "web developer in Coimbatore",
         "software development company Coimbatore",
-        "best website developer near me",
-        "IT services in Coimbatore",
-        "ecommerce website development company in coimbatore",
-        "software company in tamilnadu"
+        "custom software development Coimbatore",
+        "mobile app development company Coimbatore",
+        "web application development Tamil Nadu",
+        "IT services company in Coimbatore",
+        "cloud and devops services India",
+        "AI automation company Coimbatore"
       ]}
     />
   </head>
   <body class="bg-bg text-ink">
+    <a href="#main" class="skip-link">Skip to content</a>
     <LoadingScreen />
     <ScrollProgress />
     <Cursor />
     <Nav />
-    <main>
+    <main id="main" tabindex="-1">
       <Hero />
       <TrustStrip />
       <Services />
+      <hr class="section-rule" aria-hidden="true" />
       <ServiceQuiz />
       <WhyChooseUs />
       <Industries />
+      <hr class="section-rule" aria-hidden="true" />
+      <Portfolio />
       <TechMarquee />
       <FAQ />
+      <hr class="section-rule" aria-hidden="true" />
       <ConsultationBooking />
       <Contact />
     </main>

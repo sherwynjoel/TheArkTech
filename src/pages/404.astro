@@ -19,8 +19,9 @@ import SEO from "../components/SEO.astro";
     />
   </head>
   <body class="bg-bg text-ink">
+    <a href="#main" class="skip-link">Skip to content</a>
     <Nav />
-    <main class="not-found">
+    <main id="main" tabindex="-1" class="not-found">
       <!-- ambient blobs -->
       <div class="nf-blob nf-blob--1" aria-hidden="true"></div>
       <div class="nf-blob nf-blob--2" aria-hidden="true"></div>
@@ -33,8 +34,8 @@ import SEO from "../components/SEO.astro";
           never existed in the first place.
         </p>
         <div class="nf-actions">
-          <a href="/" class="nf-btn-primary">← Back to home</a>
-          <a href="#contact" class="btn-glass">Contact us</a>
+          <a href="/" class="btn-primary">← Back to home</a>
+          <a href="/#contact" class="btn-glass">Contact us</a>
         </div>
 
         <!-- Quick nav links -->
@@ -43,7 +44,7 @@ import SEO from "../components/SEO.astro";
           <div class="nf-pills">
             <a href="/#services" class="nf-pill">Services</a>
             <a href="/#industries" class="nf-pill">Industries</a>
-            <a href="/#pricing" class="nf-pill">Pricing</a>
+            <a href="/#portfolio" class="nf-pill">Portfolio</a>
             <a href="/#faq" class="nf-pill">FAQ</a>
             <a href="/#contact" class="nf-pill">Contact</a>
           </div>
@@ -130,19 +131,6 @@ import SEO from "../components/SEO.astro";
     gap: 0.85rem;
     margin-top: 0.5rem;
   }
-
-  .nf-btn-primary {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.85rem 1.75rem;
-    border-radius: 9999px;
-    background: linear-gradient(120deg, var(--brand-deep), var(--brand) 60%, var(--brand-bright));
-    color: #fff;
-    font-weight: 600;
-    box-shadow: 0 6px 24px rgba(59,130,246,0.35);
-    transition: transform 0.25s, box-shadow 0.25s;
-  }
-  .nf-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 36px rgba(59,130,246,0.5); }
 
   .nf-links { margin-top: 1rem; }
   .nf-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; }

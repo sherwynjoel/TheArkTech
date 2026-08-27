@@ -1,7 +1,8 @@
 ---
 import WarpShaderBackground from "@/components/ui/wrap-shader.tsx";
+import { EMAIL } from "../data/site";
 ---
-<section id="contact" class="relative py-28 overflow-hidden">
+<section id="contact" class="relative section-y-lg overflow-hidden">
   <div class="absolute inset-0 -z-10" style="background: linear-gradient(135deg, var(--brand-deep), #04060d 70%);">
     <WarpShaderBackground client:visible />
     <div class="absolute inset-0 bg-black/50"></div>
@@ -14,84 +15,250 @@ import WarpShaderBackground from "@/components/ui/wrap-shader.tsx";
       <p class="mt-3 text-ink-muted">Fill in your details and we'll open WhatsApp with a pre-typed message — reply whenever you're ready.</p>
     </div>
 
-    <form id="contact-form" class="contact-card max-w-xl mx-auto rounded-3xl p-4 sm:p-8 space-y-5" novalidate>
-      <label for="cf-name" class="sr-only">Your name</label>
-      <input id="cf-name" name="name" type="text" placeholder="Your name" required autocomplete="name"
-        class="w-full rounded-xl bg-white/5 border border-white/15 px-4 py-3.5 text-ink placeholder-ink-faint focus:border-brand focus:ring-2 focus:ring-[var(--ring)] outline-none transition" />
-      <label for="cf-email" class="sr-only">Your email</label>
-      <input id="cf-email" name="email" type="email" placeholder="Your email" required autocomplete="email"
-        class="w-full rounded-xl bg-white/5 border border-white/15 px-4 py-3.5 text-ink placeholder-ink-faint focus:border-brand focus:ring-2 focus:ring-[var(--ring)] outline-none transition" />
-      <label for="cf-phone" class="sr-only">Your phone</label>
-      <input id="cf-phone" name="phone" type="tel" placeholder="Your phone" required autocomplete="tel"
-        class="w-full rounded-xl bg-white/5 border border-white/15 px-4 py-3.5 text-ink placeholder-ink-faint focus:border-brand focus:ring-2 focus:ring-[var(--ring)] outline-none transition" />
-      <label for="cf-requirement" class="sr-only">Your query</label>
-      <textarea id="cf-requirement" name="requirement" rows="5" minlength="5" placeholder="Your requirement (min 5 characters)" required
-        class="w-full rounded-xl bg-white/5 border border-white/15 px-4 py-3.5 text-ink placeholder-ink-faint focus:border-brand focus:ring-2 focus:ring-[var(--ring)] outline-none transition"></textarea>
+    <form id="contact-form" class="contact-card max-w-xl mx-auto rounded-3xl p-4 sm:p-8" novalidate>
+      <div class="cf-field">
+        <label for="cf-name" class="sr-only">Your name</label>
+        <input id="cf-name" name="name" type="text" placeholder="Your name" required minlength="2" autocomplete="name"
+          aria-describedby="cf-name-err"
+          class="cf-input w-full rounded-xl bg-white/5 border border-white/15 px-4 py-3.5 text-ink placeholder-ink-faint focus:border-brand focus:ring-2 focus:ring-[var(--ring)] outline-none transition" />
+        <p id="cf-name-err" class="cf-field-err" aria-live="polite"></p>
+      </div>
+
+      <div class="cf-field">
+        <label for="cf-email" class="sr-only">Your email</label>
+        <input id="cf-email" name="email" type="email" placeholder="Your email" required autocomplete="email"
+          aria-describedby="cf-email-err"
+          class="cf-input w-full rounded-xl bg-white/5 border border-white/15 px-4 py-3.5 text-ink placeholder-ink-faint focus:border-brand focus:ring-2 focus:ring-[var(--ring)] outline-none transition" />
+        <p id="cf-email-err" class="cf-field-err" aria-live="polite"></p>
+      </div>
+
+      <div class="cf-field">
+        <label for="cf-phone" class="sr-only">Your phone</label>
+        <input id="cf-phone" name="phone" type="tel" placeholder="Your phone" required autocomplete="tel"
+          pattern="[0-9+()\s-]{7,}" aria-describedby="cf-phone-err"
+          class="cf-input w-full rounded-xl bg-white/5 border border-white/15 px-4 py-3.5 text-ink placeholder-ink-faint focus:border-brand focus:ring-2 focus:ring-[var(--ring)] outline-none transition" />
+        <p id="cf-phone-err" class="cf-field-err" aria-live="polite"></p>
+      </div>
+
+      <div class="cf-field">
+        <label for="cf-requirement" class="sr-only">Your query</label>
+        <textarea id="cf-requirement" name="requirement" rows="5" minlength="5" placeholder="Your requirement (min 5 characters)" required
+          aria-describedby="cf-requirement-err"
+          class="cf-input w-full rounded-xl bg-white/5 border border-white/15 px-4 py-3.5 text-ink placeholder-ink-faint focus:border-brand focus:ring-2 focus:ring-[var(--ring)] outline-none transition"></textarea>
+        <p id="cf-requirement-err" class="cf-field-err" aria-live="polite"></p>
+      </div>
 
       <button type="submit" class="cf-submit w-full rounded-xl py-4 font-semibold text-white flex items-center justify-center gap-2 transition hover:-translate-y-0.5">
-        <!-- WhatsApp icon -->
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
           <path d="M16 2C8.268 2 2 8.268 2 16c0 2.49.65 4.826 1.787 6.854L2 30l7.336-1.756A13.94 13.94 0 0 0 16 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm6.328 19.928c-.346-.173-2.047-1.01-2.364-1.125-.317-.116-.548-.173-.779.173-.23.347-.894 1.126-1.096 1.357-.202.23-.404.26-.75.086-.346-.174-1.46-.538-2.782-1.716-1.028-.916-1.722-2.047-1.924-2.393-.202-.347-.021-.534.152-.707.156-.155.346-.404.52-.606.173-.202.23-.347.346-.578.115-.23.058-.433-.029-.606-.086-.173-.779-1.878-1.068-2.572-.28-.674-.566-.583-.78-.594l-.664-.01c-.23 0-.606.086-.924.433-.317.347-1.212 1.184-1.212 2.887 0 1.703 1.241 3.349 1.414 3.58.173.23 2.44 3.724 5.913 5.224.827.356 1.47.568 1.974.728.829.263 1.583.226 2.179.137.664-.099 2.047-.837 2.335-1.645.288-.808.288-1.501.202-1.645-.086-.144-.317-.23-.663-.404z"/>
         </svg>
         Send via WhatsApp
       </button>
-
-      <p id="cf-error" class="cf-error" aria-live="polite"></p>
     </form>
+
+    <!-- Shown after submit: the page must never look like nothing happened. -->
+    <div id="cf-success" class="contact-card max-w-xl mx-auto rounded-3xl p-6 sm:p-8 text-center" hidden>
+      <div class="cf-tick" aria-hidden="true">✓</div>
+      <h3 class="font-display text-2xl mt-3">We've opened WhatsApp</h3>
+      <p class="mt-2 text-ink-muted">
+        Press send in WhatsApp to reach us — your details are already typed in.
+        We usually reply within a few hours on working days.
+      </p>
+      <p class="mt-5 text-sm text-ink-faint">Didn't open, or don't use WhatsApp?</p>
+      <div class="cf-fallbacks">
+        <button type="button" id="cf-copy" class="btn-glass">Copy my message</button>
+        <a id="cf-mail" class="btn-glass" href={`mailto:${EMAIL}`}>Email it instead</a>
+      </div>
+      <p id="cf-copy-status" class="cf-copy-status" aria-live="polite"></p>
+      <button type="button" id="cf-reset" class="cf-reset">Send another message</button>
+    </div>
   </div>
 </section>
 
 <style>
   .contact-card {
     background: rgba(9, 13, 24, 0.82);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    border: 1px solid var(--line);
     box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
   }
+  .cf-field { margin-bottom: 0.35rem; }
+  .cf-field + .cf-field { margin-top: 0.75rem; }
+
+  .cf-input[aria-invalid="true"] {
+    border-color: #f87171;
+  }
+  .cf-field-err {
+    font-size: 0.78rem;
+    color: #fca5a5;
+    margin: 0.35rem 0 0;
+    min-height: 0;
+  }
+  .cf-field-err:empty { margin: 0; }
+
   .cf-submit {
-    background: linear-gradient(120deg, #075e54, #128c7e 50%, #25d366);
-    box-shadow: 0 8px 30px rgba(37, 211, 102, 0.35);
+    margin-top: 1.25rem;
+    background: var(--whatsapp);
+    box-shadow: 0 8px 30px rgba(11, 122, 104, 0.35);
   }
-  .cf-submit:hover { box-shadow: 0 12px 36px rgba(37, 211, 102, 0.5); }
-  .cf-error {
-    font-size: 0.82rem;
-    color: #f87171;
+  .cf-submit:hover { box-shadow: 0 12px 36px rgba(11, 122, 104, 0.5); }
+
+  .cf-tick {
+    width: 3rem; height: 3rem;
+    margin: 0 auto;
+    display: grid; place-items: center;
+    border-radius: 9999px;
+    background: rgba(11, 122, 104, 0.2);
+    border: 1px solid var(--whatsapp);
+    color: #4ade80;
+    font-size: 1.5rem;
+  }
+  .cf-fallbacks {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 0.75rem;
+  }
+  .cf-copy-status {
+    font-size: 0.8rem;
+    color: var(--accent-cyan);
     min-height: 1rem;
-    margin: 0;
+    margin: 0.75rem 0 0;
   }
+  .cf-reset {
+    margin-top: 0.5rem;
+    background: none;
+    border: none;
+    color: var(--ink-faint);
+    font-size: 0.82rem;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+  }
+  .cf-reset:hover { color: var(--ink); }
 </style>
 
 <script>
-  const WA_NUMBER = "919489722142";
+  import { waLink, EMAIL } from "../data/site";
+
   const form = document.getElementById("contact-form") as HTMLFormElement | null;
-  const errEl = document.getElementById("cf-error")!;
+  const successPanel = document.getElementById("cf-success");
+  const copyBtn = document.getElementById("cf-copy");
+  const copyStatus = document.getElementById("cf-copy-status");
+  const resetBtn = document.getElementById("cf-reset");
+  const mailLink = document.getElementById("cf-mail") as HTMLAnchorElement | null;
+
+  const FIELDS = ["name", "email", "phone", "requirement"] as const;
+
+  const MESSAGES: Record<string, { missing: string; invalid: string }> = {
+    name: { missing: "Please tell us your name.", invalid: "Please enter at least 2 characters." },
+    email: { missing: "Please enter your email.", invalid: "That doesn't look like a valid email address." },
+    phone: { missing: "Please enter your phone number.", invalid: "Please enter a valid phone number." },
+    requirement: { missing: "Please describe what you need.", invalid: "Please give us at least 5 characters." },
+  };
+
+  function fieldEl(name: string) {
+    return document.getElementById(`cf-${name}`) as HTMLInputElement | HTMLTextAreaElement | null;
+  }
+  function errEl(name: string) {
+    return document.getElementById(`cf-${name}-err`);
+  }
+
+  /** Validate one field with the browser's own constraint API. */
+  function validateField(name: string): boolean {
+    const el = fieldEl(name);
+    const err = errEl(name);
+    if (!el || !err) return true;
+
+    const valid = el.checkValidity();
+    if (valid) {
+      el.removeAttribute("aria-invalid");
+      err.textContent = "";
+    } else {
+      el.setAttribute("aria-invalid", "true");
+      err.textContent = el.validity.valueMissing
+        ? MESSAGES[name].missing
+        : MESSAGES[name].invalid;
+    }
+    return valid;
+  }
+
+  // Clear an error as soon as the user fixes it, but don't nag while first typing.
+  FIELDS.forEach((name) => {
+    const el = fieldEl(name);
+    el?.addEventListener("blur", () => validateField(name));
+    el?.addEventListener("input", () => {
+      if (el.getAttribute("aria-invalid") === "true") validateField(name);
+    });
+  });
+
+  function buildMessage(): string {
+    const value = (n: string) => fieldEl(n)?.value.trim() ?? "";
+    return [
+      "Hi TheArkTech! 👋 I found you on your website and would like to discuss a project.",
+      "",
+      `*Name:* ${value("name")}`,
+      `*Email:* ${value("email")}`,
+      `*Phone:* ${value("phone")}`,
+      "",
+      "*Requirement:*",
+      value("requirement"),
+    ].join("\n");
+  }
+
+  let lastMessage = "";
 
   form?.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    const name  = (form.querySelector("#cf-name")        as HTMLInputElement).value.trim();
-    const email = (form.querySelector("#cf-email")       as HTMLInputElement).value.trim();
-    const phone = (form.querySelector("#cf-phone")       as HTMLInputElement).value.trim();
-    const req   = (form.querySelector("#cf-requirement") as HTMLTextAreaElement).value.trim();
-
-    // basic validation
-    if (!name || !email || !phone || req.length < 5) {
-      errEl.textContent = "Please fill in all fields (requirement must be at least 5 characters).";
+    // Validate every field, then focus the first problem for keyboard users.
+    const results = FIELDS.map((n) => ({ name: n, ok: validateField(n) }));
+    const firstBad = results.find((r) => !r.ok);
+    if (firstBad) {
+      fieldEl(firstBad.name)?.focus();
       return;
     }
-    errEl.textContent = "";
 
-    const msg = [
-      "Hi TheArkTech! 👋 I found you on your website and would like to discuss a project.",
-      "",
-      `*Name:* ${name}`,
-      `*Email:* ${email}`,
-      `*Phone:* ${phone}`,
-      "",
-      `*Requirement:*`,
-      req,
-    ].join("\n");
+    lastMessage = buildMessage();
+    window.open(waLink(lastMessage), "_blank", "noopener,noreferrer");
 
-    const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
-    window.open(url, "_blank", "noopener,noreferrer");
+    if (mailLink) {
+      mailLink.href =
+        `mailto:${EMAIL}?subject=${encodeURIComponent("Project enquiry from thearktech.in")}` +
+        `&body=${encodeURIComponent(lastMessage)}`;
+    }
+
+    // Swap the form for a confirmation so the page never looks inert —
+    // this also covers the case where the popup was blocked.
+    form.hidden = true;
+    if (successPanel) {
+      successPanel.hidden = false;
+      successPanel.setAttribute("tabindex", "-1");
+      successPanel.focus();
+    }
+  });
+
+  copyBtn?.addEventListener("click", async () => {
+    if (!copyStatus) return;
+    try {
+      await navigator.clipboard.writeText(lastMessage);
+      copyStatus.textContent = "✓ Message copied — paste it to us on WhatsApp or email.";
+    } catch {
+      copyStatus.textContent = "Couldn't copy automatically — please use the email button.";
+    }
+  });
+
+  resetBtn?.addEventListener("click", () => {
+    if (!form) return;
+    form.reset();
+    FIELDS.forEach((n) => {
+      fieldEl(n)?.removeAttribute("aria-invalid");
+      const err = errEl(n);
+      if (err) err.textContent = "";
+    });
+    if (successPanel) successPanel.hidden = true;
+    if (copyStatus) copyStatus.textContent = "";
+    form.hidden = false;
+    fieldEl("name")?.focus();
   });
 </script>

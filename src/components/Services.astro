@@ -1,8 +1,8 @@
 ---
-import { services } from "../data/services.ts";
+import { services, serviceSlug } from "../data/services.ts";
 import Icon from "./Icon.astro";
 ---
-<section id="services" class="relative py-28">
+<section id="services" class="relative section-y-lg">
   <div class="container-x lg:grid lg:grid-cols-12 lg:gap-16">
     <!-- sticky index (desktop) -->
     <aside class="hidden lg:block lg:col-span-4">
@@ -12,7 +12,7 @@ import Icon from "./Icon.astro";
           Services, built<br />end to end
         </h2>
         <p class="mt-4 max-w-sm text-ink-muted">
-          Six ways we take an idea from a first sketch to something live, fast, and yours.
+          {services.length} ways we take an idea from a first sketch to something live, fast, and yours.
         </p>
         <nav class="svc-index mt-9" aria-label="Jump to a service">
           <ul>
@@ -64,6 +64,10 @@ import Icon from "./Icon.astro";
                   <span class="svc-badge">{t}</span>
                 ))}
               </div>
+
+              <a href={`/services/${serviceSlug(s)}`} class="svc-more">
+                More on {s.title} →
+              </a>
             </div>
           </article>
         ))}
@@ -88,10 +92,10 @@ import Icon from "./Icon.astro";
     gap: 0.9rem;
     padding: 0.75rem 0;
     color: var(--ink-muted);
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-top: 1px solid var(--hairline);
     transition: color 0.25s ease;
   }
-  .svc-index li:last-child .svc-index-link { border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+  .svc-index li:last-child .svc-index-link { border-bottom: 1px solid var(--hairline); }
   .svc-index-num {
     font-family: "Clash Display", sans-serif;
     font-size: 0.8rem;
@@ -113,7 +117,7 @@ import Icon from "./Icon.astro";
     gap: 0 clamp(1.25rem, 3vw, 2.25rem);
     align-items: start;
     padding: clamp(2rem, 4vw, 2.75rem) 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid var(--hairline);
     scroll-margin-top: 7rem;
   }
   .svc-list .svc-block:first-child { border-top: 0; padding-top: 0; }
@@ -144,10 +148,18 @@ import Icon from "./Icon.astro";
   }
   .svc-block:hover .svc-icon { background: rgba(59, 130, 246, 0.16); border-color: rgba(96, 165, 250, 0.45); }
 
+  .svc-more {
+    display: inline-block;
+    margin-top: 1.1rem;
+    font-size: 0.88rem;
+    color: var(--brand-bright);
+  }
+  .svc-more:hover { text-decoration: underline; text-underline-offset: 3px; }
+
   .svc-closer {
     margin-top: clamp(2rem, 4vw, 2.75rem);
     padding-top: clamp(2rem, 4vw, 2.75rem);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid var(--hairline);
   }
 
   @media (max-width: 1023px) {

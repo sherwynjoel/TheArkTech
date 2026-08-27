@@ -1,0 +1,209 @@
+---
+import "../../styles/global.css";
+import Nav from "../../components/Nav.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import SEO from "../../components/SEO.astro";
+import CallFab from "../../components/CallFab.astro";
+import { industries, type Industry } from "../../data/industries.ts";
+import { portfolioProjects, projectSlug } from "../../data/portfolio.ts";
+import { COMPANY_NAME, CITY, waLink } from "../../data/site";
+
+export function getStaticPaths() {
+  return industries.map((industry) => ({
+    params: { slug: industry.slug },
+    props: { industry },
+  }));
+}
+
+const { industry } = Astro.props as { industry: Industry };
+const url = `https://thearktech.in/industries/${industry.slug}`;
+
+// Real client work in this sector, if any.
+const work = portfolioProjects.filter((p) => industry.sectors?.includes(p.sector));
+const others = industries.filter((i) => i.slug !== industry.slug).slice(0, 6);
+
+const enquiry = waLink(
+  `Hi ${COMPANY_NAME}! 👋 I'm looking for software for my ${industry.title.toLowerCase()} business.`
+);
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Service",
+      name: `${industry.title} software development`,
+      description: industry.intro ?? industry.desc,
+      url,
+      provider: { "@id": "https://thearktech.in/#organization" },
+      areaServed: CITY,
+      serviceType: industry.title,
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://thearktech.in/" },
+        { "@type": "ListItem", position: 2, name: "Industries", item: "https://thearktech.in/#industries" },
+        { "@type": "ListItem", position: 3, name: industry.title, item: url },
+      ],
+    },
+  ],
+};
+---
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="/logo.png" />
+    <SEO
+      title={`${industry.title} Software Development | ${COMPANY_NAME}`}
+      description={industry.intro ?? industry.desc}
+      url={url}
+      image="https://thearktech.in/banner.png"
+      siteName={COMPANY_NAME}
+      keywords={[
+        `${industry.title.toLowerCase()} software development`,
+        `${industry.tag.toLowerCase()} website development ${CITY}`,
+      ]}
+    />
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  </head>
+  <body class="bg-bg text-ink">
+    <a href="#main" class="skip-link">Skip to content</a>
+    <Nav />
+
+    <main id="main" tabindex="-1" class="ind glow-anchor">
+      <div class="container-x ind-wrap">
+        <nav class="ind-crumbs" aria-label="Breadcrumb">
+          <a href="/">Home</a>
+          <span aria-hidden="true">/</span>
+          <a href="/#industries">Industries</a>
+          <span aria-hidden="true">/</span>
+          <span aria-current="page">{industry.title}</span>
+        </nav>
+
+        <header class="ind-head">
+          <p class="eyebrow mb-3">{industry.tag}</p>
+          <h1 class="font-display ind-title">{industry.title}</h1>
+          <p class="ind-lede">{industry.intro ?? industry.desc}</p>
+          <div class="ind-actions">
+            <a href={enquiry} target="_blank" rel="noopener noreferrer" class="btn-primary">
+              Discuss your project
+            </a>
+            <a href="/work" class="btn-glass">See our work</a>
+          </div>
+        </header>
+
+        {industry.builds && (
+          <section class="ind-block">
+            <h2>What we build for {industry.tag.toLowerCase()} businesses</h2>
+            <ul class="ind-list">
+              {industry.builds.map((b) => (
+                <li><span class="ind-tick" aria-hidden="true">✓</span>{b}</li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {work.length > 0 && (
+          <section class="ind-block">
+            <h2>{work.length === 1 ? "Client work in this sector" : `${work.length} client projects in this sector`}</h2>
+            <div class="ind-work">
+              {work.map((p) => (
+                <a href={`/work/${projectSlug(p)}`} class="ind-work-card">
+                  <img src={p.image} alt={`${p.title} — ${p.type}`} width="1280" height="800" loading="lazy" decoding="async" />
+                  <div class="ind-work-body">
+                    <span class="ind-work-sector">{p.type}</span>
+                    <span class="ind-work-title">{p.title}</span>
+                    <p>{p.summary}</p>
+                    <span class="ind-work-more">Read the case study →</span>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </section>
+        )}
+
+        <section class="ind-cta">
+          <h2 class="font-display">Building for {industry.tag.toLowerCase()}?</h2>
+          <p>Tell us what you need. We'll scope it, price it, and give you a timeline — no obligation.</p>
+          <div class="ind-actions">
+            <a href={enquiry} target="_blank" rel="noopener noreferrer" class="btn-primary">Start a project</a>
+            <a href="/contact" class="btn-glass">Contact us</a>
+          </div>
+        </section>
+
+        <section class="ind-block">
+          <h2>Other industries we work with</h2>
+          <div class="ind-others">
+            {others.map((i) => (
+              <a href={`/industries/${i.slug}`} class="ind-other">{i.title}</a>
+            ))}
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <SiteFooter />
+    <CallFab />
+  </body>
+</html>
+
+<style>
+  .ind { padding: 7.5rem 0 5rem; }
+  .ind-wrap { max-width: 62rem; }
+
+  .ind-crumbs {
+    display: flex; flex-wrap: wrap; gap: 0.5rem;
+    font-size: 0.82rem; color: var(--ink-faint); margin-bottom: 2.5rem;
+  }
+  .ind-crumbs a:hover { color: var(--brand-bright); }
+
+  .ind-head { max-width: 46rem; }
+  .ind-title { font-size: clamp(2.1rem, 5vw, 3.4rem); line-height: 1.05; margin: 0; }
+  .ind-lede { margin-top: 1.1rem; color: var(--ink-muted); line-height: 1.75; font-size: 1.05rem; }
+  .ind-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.75rem; }
+
+  .ind-block { margin-top: 3.5rem; }
+  .ind-block h2 {
+    font-family: "Clash Display", sans-serif;
+    font-size: 1.35rem; font-weight: 600; margin: 0 0 1.25rem;
+  }
+
+  .ind-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.65rem; }
+  @media (min-width: 640px) { .ind-list { grid-template-columns: 1fr 1fr; gap: 0.65rem 2rem; } }
+  .ind-list li { display: flex; gap: 0.6rem; color: var(--ink-muted); font-size: 0.95rem; }
+  .ind-tick { color: var(--accent-cyan); flex: none; }
+
+  .ind-work { display: grid; gap: 1.25rem; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); }
+  .ind-work-card {
+    display: flex; flex-direction: column;
+    border-radius: 1.25rem; overflow: hidden;
+    background: var(--bg-elev); border: 1px solid var(--line);
+    transition: transform var(--dur-2) var(--ease-out-quart), border-color var(--dur-2) var(--ease-out-quart);
+  }
+  .ind-work-card:hover { transform: translateY(-4px); border-color: var(--line-brand); }
+  .ind-work-card img { width: 100%; height: 11rem; object-fit: cover; object-position: top; }
+  .ind-work-body { padding: 1.15rem; display: flex; flex-direction: column; gap: 0.4rem; }
+  .ind-work-sector { font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-faint); }
+  .ind-work-title { font-family: "Clash Display", sans-serif; font-weight: 600; font-size: 1.1rem; }
+  .ind-work-body p { margin: 0; font-size: 0.86rem; line-height: 1.6; color: var(--ink-muted); }
+  .ind-work-more { font-size: 0.83rem; color: var(--brand-bright); margin-top: 0.35rem; }
+
+  .ind-others { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .ind-other {
+    padding: 0.5rem 1rem; border-radius: 9999px; font-size: 0.85rem;
+    background: var(--glass-bg); border: 1px solid var(--glass-brd); color: var(--ink-muted);
+    transition: color var(--dur-2), border-color var(--dur-2);
+  }
+  .ind-other:hover { color: var(--brand-bright); border-color: var(--line-brand); }
+
+  .ind-cta {
+    margin-top: 4rem; padding: clamp(1.75rem, 4vw, 2.75rem);
+    border-radius: 1.5rem; text-align: center;
+    background: linear-gradient(135deg, rgba(30, 58, 138, 0.35), rgba(8, 12, 22, 0.8));
+    border: 1px solid var(--line-brand);
+  }
+  .ind-cta h2 { font-size: clamp(1.5rem, 3vw, 2rem); margin: 0; }
+  .ind-cta p { margin: 0.75rem 0 0; color: var(--ink-muted); }
+  .ind-cta .ind-actions { justify-content: center; }
+</style>

@@ -1,32 +1,32 @@
 ---
 import Icon from "./Icon.astro";
 
-interface Reason { t: string; d: string; icon: string; cls: string; tone: string; img?: string; }
+interface Reason { t: string; d: string; icon: string; cls: string; tone: string; img?: string; w?: number; h?: number; }
 
 // Order drives the bento layout below. `cls` = lg span, `tone` = surface treatment.
 // `photo` tiles carry a dark blue abstract background image (self-hosted in /why).
 const reasons: Reason[] = [
   { t: "End-to-End Support", icon: "lifebuoy", tone: "feature", cls: "sm:col-span-2 lg:col-span-2 lg:row-span-2",
     d: "Design, build, test, deploy, and maintain. One team stays accountable from kickoff to launch and well beyond." },
-  { t: "Innovation-Driven", icon: "bulb", tone: "photo", cls: "lg:col-span-2", img: "/why/innovation.jpg",
+  { t: "Innovation-Driven", icon: "bulb", tone: "photo", cls: "lg:col-span-2", img: "/why/innovation.jpg", w: 1000, h: 563,
     d: "Creativity plus current technologies, smart architecture, and future-ready design." },
-  { t: "High Performance", icon: "zap", tone: "photo", cls: "lg:col-span-1", img: "/why/performance.jpg",
+  { t: "High Performance", icon: "zap", tone: "photo", cls: "lg:col-span-1", img: "/why/performance.jpg", w: 1000, h: 667,
     d: "Lightweight, optimized code for fast load times and smooth experiences." },
-  { t: "Security You Can Trust", icon: "lock", tone: "photo", cls: "lg:col-span-1", img: "/why/security.jpg",
+  { t: "Security You Can Trust", icon: "lock", tone: "photo", cls: "lg:col-span-1", img: "/why/security.jpg", w: 1000, h: 1448,
     d: "Industry-grade encryption and secure authentication across every build." },
-  { t: "Modern UI/UX", icon: "layout", tone: "photo", cls: "lg:col-span-1", img: "/why/uiux.jpg",
-    d: "Clean layouts and intuitive navigation that build trust and clarity." },
-  { t: "Transparent Communication", icon: "message", tone: "photo", cls: "lg:col-span-1", img: "/why/communication.jpg",
+  { t: "Maintainable Code", icon: "layout", tone: "photo", cls: "lg:col-span-1", img: "/why/uiux.jpg", w: 1000, h: 667,
+    d: "Documented, tested, version-controlled code your next developer can pick up without a rewrite." },
+  { t: "Transparent Communication", icon: "message", tone: "photo", cls: "lg:col-span-1", img: "/why/communication.jpg", w: 1000, h: 667,
     d: "Regular updates, clear timelines, and honest communication throughout." },
   { t: "Custom Solutions", icon: "sliders", tone: "pattern", cls: "lg:col-span-2",
-    d: "Tailored to your brand and goals, never generic templates." },
+    d: "Architected around your workflow and data, never a generic template." },
   { t: "Proven Results", icon: "trophy", tone: "banner", cls: "sm:col-span-2 lg:col-span-4",
     d: "Successful projects shipped across these industries and more." },
 ];
 
 const proof = ["E-commerce", "Corporate", "Mobile", "Dashboards"];
 ---
-<section id="why" class="py-28">
+<section id="why" class="section-y-lg glow-anchor">
   <div class="container-x">
     <div class="max-w-2xl mb-12">
       <p class="eyebrow mb-3">Why choose us</p>
@@ -39,7 +39,7 @@ const proof = ["E-commerce", "Corporate", "Mobile", "Dashboards"];
         <article class={`tile tile--${r.tone} reveal ${r.cls}`} style={`transition-delay:${i * 55}ms`}>
           {r.img && (
             <Fragment>
-              <img class="tile-img" src={r.img} alt="" loading="lazy" decoding="async" />
+              <img class="tile-img" src={r.img} alt="" width={r.w} height={r.h} loading="lazy" decoding="async" />
               <span class="tile-scrim"></span>
             </Fragment>
           )}
@@ -79,7 +79,7 @@ const proof = ["E-commerce", "Corporate", "Mobile", "Dashboards"];
     transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1), opacity 0.5s ease,
       border-color 0.35s ease, background 0.35s ease;
   }
-  .tile:hover { transform: translateY(-4px); border-color: rgba(96, 165, 250, 0.45); background: rgba(255, 255, 255, 0.08); }
+  .tile:hover { transform: translateY(-4px); border-color: rgba(96, 165, 250, 0.45); background: var(--hairline); }
 
   /* pointer spotlight */
   .tile::after {
@@ -152,7 +152,7 @@ const proof = ["E-commerce", "Corporate", "Mobile", "Dashboards"];
   /* pattern: subtle dot field */
   .tile--pattern {
     background-color: var(--bg-elev);
-    background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1.6px);
+    background-image: radial-gradient(var(--hairline) 1px, transparent 1.6px);
     background-size: 16px 16px;
   }
 
@@ -168,7 +168,7 @@ const proof = ["E-commerce", "Corporate", "Mobile", "Dashboards"];
     padding: 0.35rem 0.75rem;
     border-radius: 9999px;
     background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    border: 1px solid var(--line);
   }
   @media (min-width: 1024px) {
     .tile--banner { flex-direction: row; align-items: center; gap: 1.5rem; }

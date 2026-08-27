@@ -1,4 +1,9 @@
 ---
+import {
+	COMPANY_NAME, LEGAL_NAME, CIN, EMAIL, PHONE_E164, HOURS_SCHEMA,
+	STREET_ADDRESS, POSTAL_CODE, CITY, REGION, COUNTRY, COUNTRY_CODE,
+} from '../data/site';
+
 export interface Props {
 	title: string;
 	description: string;
@@ -26,6 +31,54 @@ const {
 const canonicalUrl = url;
 const absoluteImage = image.startsWith('http') ? image : new URL(image, url).toString();
 const keywordsContent = Array.isArray(keywords) ? keywords.join(', ') : (keywords || '').trim();
+
+const structuredData = {
+	'@context': 'https://schema.org',
+	'@graph': [
+		{
+			'@type': 'ProfessionalService',
+			'@id': 'https://thearktech.in/#organization',
+			name: COMPANY_NAME,
+			// Omitted rather than emitted blank until the registered name is set.
+			...(LEGAL_NAME ? { legalName: LEGAL_NAME } : {}),
+			...(CIN ? { identifier: { '@type': 'PropertyValue', name: 'CIN', value: CIN } } : {}),
+			url: 'https://thearktech.in/',
+			logo: { '@type': 'ImageObject', url: 'https://thearktech.in/logo.png' },
+			image: 'https://thearktech.in/banner.png',
+			description:
+				'Software development company in Coimbatore building web and mobile applications, custom software, cloud infrastructure, and AI automation.',
+			telephone: PHONE_E164,
+			email: EMAIL,
+			address: {
+				'@type': 'PostalAddress',
+				// Street and postal code are omitted until filled in src/data/site.ts —
+				// an empty string in structured data is worse than an absent field.
+				...(STREET_ADDRESS ? { streetAddress: STREET_ADDRESS } : {}),
+				...(POSTAL_CODE ? { postalCode: POSTAL_CODE } : {}),
+				addressLocality: CITY,
+				addressRegion: REGION,
+				addressCountry: COUNTRY_CODE,
+			},
+			contactPoint: {
+				'@type': 'ContactPoint',
+				contactType: 'customer service',
+				telephone: PHONE_E164,
+				email: EMAIL,
+				areaServed: COUNTRY_CODE,
+				availableLanguage: ['en', 'ta'],
+			},
+			areaServed: [CITY, REGION, COUNTRY],
+			openingHours: HOURS_SCHEMA,
+			priceRange: '₹₹',
+		},
+		{
+			'@type': 'WebSite',
+			name: COMPANY_NAME,
+			url: 'https://thearktech.in/',
+			publisher: { '@id': 'https://thearktech.in/#organization' },
+		},
+	],
+};
 ---
 <title>{title}</title>
 <meta name="description" content={description} />
@@ -36,6 +89,7 @@ const keywordsContent = Array.isArray(keywords) ? keywords.join(', ') : (keyword
 
 <meta property="og:site_name" content={siteName} />
 <meta property="og:type" content={type} />
+<meta property="og:locale" content={locale} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:url" content={canonicalUrl} />
@@ -48,28 +102,5 @@ const keywordsContent = Array.isArray(keywords) ? keywords.join(', ') : (keyword
 
 <meta name="theme-color" content="#000000" />
 
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "Organization",
-      "name": "TheArkTech",
-      "url": "https://thearktech.in/",
-      "logo": { "@type": "ImageObject", "url": "https://thearktech.in/logo.png" },
-      "sameAs": []
-    },
-    {
-      "@type": "WebSite",
-      "name": "TheArkTech",
-      "url": "https://thearktech.in/",
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://thearktech.in/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
-      }
-    }
-  ]
-}
-</script>
+<script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
 

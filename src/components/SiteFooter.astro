@@ -1,132 +1,86 @@
 ---
-const email = "contact@thearktech.in";
-const phone = "+919489722142";
-const phoneLabel = "+91 94897 22142";
+import { EMAIL as email, PHONE_E164 as phone, PHONE_LABEL as phoneLabel, ADDRESS_LINES, HOURS_LABEL, LEGAL_DISPLAY_NAME, CIN } from "../data/site";
+
 const year = new Date().getFullYear();
 ---
-<footer class="relative overflow-hidden border-t border-white/10">
-  <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover opacity-30">
-    <source src="/footer bg.mp4" type="video/mp4" />
-  </video>
+<footer class="relative overflow-hidden border-t" style="border-color: var(--hairline);">
+  {/* 6.7MB at ~6% effective visibility behind a scrim: never preloaded, and only
+      attached on wide screens with motion allowed. The gradient below stands in
+      everywhere else, which is visually near-identical through the scrim. */}
+  <div class="footer-fallback absolute inset-0" aria-hidden="true"></div>
+  <video id="footer-bg" muted loop playsinline preload="none"
+         class="absolute inset-0 w-full h-full object-cover opacity-30"></video>
   <div class="absolute inset-0 bg-black/80"></div>
+
+  <style>
+    .footer-fallback {
+      background:
+        radial-gradient(60% 80% at 20% 0%, rgba(30, 58, 138, 0.55), transparent 70%),
+        radial-gradient(50% 70% at 85% 100%, rgba(34, 211, 238, 0.14), transparent 70%),
+        #04060d;
+    }
+  </style>
+
+  <script>
+    // Only pay 6.7MB where it can actually be seen and motion is welcome.
+    const video = document.getElementById("footer-bg") as HTMLVideoElement | null;
+    const allowed =
+      window.matchMedia("(min-width: 1024px)").matches &&
+      !window.matchMedia("(prefers-reduced-motion: reduce)").matches &&
+      !(navigator as any).connection?.saveData;
+
+    if (video && allowed && "IntersectionObserver" in window) {
+      const io = new IntersectionObserver(
+        (entries) => {
+          if (!entries[0].isIntersecting) return;
+          io.disconnect();
+          video.src = "/footer bg.mp4";
+          video.play().catch(() => {});
+        },
+        { rootMargin: "200px" }
+      );
+      io.observe(video);
+    }
+  </script>
   <div class="relative container-x py-16 grid gap-10 sm:grid-cols-2 md:grid-cols-4">
     <div class="md:col-span-2">
       <div class="flex items-center gap-3">
-        <img src="/logo.png" alt="TheArkTech logo" class="h-10 w-12 object-contain" />
+        <img src="/logo.png" alt="TheArkTech logo" width="48" height="40" class="h-10 w-12 object-contain" />
         <span class="font-display text-xl font-bold">TheArkTech</span>
       </div>
-      <p class="mt-4 max-w-sm text-ink-muted">Your trusted software partner — websites, apps, and AI-powered automation for businesses that want to grow.</p>
-
-      <!-- Newsletter -->
-      <form id="newsletter-form" class="newsletter-form mt-6" novalidate>
-        <p class="eyebrow mb-3">Stay in the loop</p>
-        <div class="newsletter-row">
-          <label for="nl-email" class="sr-only">Your email address</label>
-          <input
-            id="nl-email"
-            name="email"
-            type="email"
-            placeholder="your@email.com"
-            required
-            autocomplete="email"
-            class="newsletter-input"
-          />
-          <button type="submit" class="newsletter-btn">Subscribe</button>
-        </div>
-        <p id="nl-feedback" class="nl-feedback" aria-live="polite"></p>
-      </form>
+      <p class="mt-4 max-w-sm text-ink-muted">A software development company building web and mobile applications, custom software, cloud infrastructure, and AI automation.</p>
     </div>
     <div>
       <p class="eyebrow mb-4">Explore</p>
       <ul class="space-y-2 text-ink-muted">
-        <li><a href="#services" class="hover:text-ink">Services</a></li>
-        <li><a href="#industries" class="hover:text-ink">Industries</a></li>
-        <li><a href="#faq" class="hover:text-ink">FAQ</a></li>
-        <li><a href="#contact" class="hover:text-ink">Contact</a></li>
+        <li><a href="/#services" class="hover:text-ink">Services</a></li>
+        <li><a href="/work" class="hover:text-ink">Work</a></li>
+        <li><a href="/about" class="hover:text-ink">About</a></li>
+        <li><a href="/#industries" class="hover:text-ink">Industries</a></li>
+        <li><a href="/#faq" class="hover:text-ink">FAQ</a></li>
+        <li><a href="/contact" class="hover:text-ink">Contact</a></li>
       </ul>
     </div>
     <div>
       <p class="eyebrow mb-4">Get in touch</p>
-      <ul class="space-y-2 text-ink-muted">
-        <li><a href={`mailto:${email}`} class="hover:text-ink">{email}</a></li>
-        <li><a href={`tel:${phone}`} class="hover:text-ink">{phoneLabel}</a></li>
-        <li>Coimbatore, Tamil Nadu, India</li>
-      </ul>
+      <address class="not-italic space-y-2 text-ink-muted">
+        <div><a href={`mailto:${email}`} class="hover:text-ink">{email}</a></div>
+        <div><a href={`tel:${phone}`} class="hover:text-ink">{phoneLabel}</a></div>
+        {ADDRESS_LINES.map((line) => <div>{line}</div>)}
+        <div class="text-ink-faint text-sm pt-1">{HOURS_LABEL}</div>
+      </address>
     </div>
   </div>
-  <div class="relative container-x border-t border-white/10 py-6 text-sm text-ink-faint">
-    <span>&copy; {year} TheArkTech. All rights reserved.</span>
+  <div class="relative container-x border-t py-6 text-sm text-ink-faint flex flex-col sm:flex-row justify-between items-center gap-4" style="border-color: var(--hairline);">
+    <span>
+      &copy; {year} {LEGAL_DISPLAY_NAME}. All rights reserved.
+      {CIN && <span class="block sm:inline sm:ml-2">CIN: {CIN}</span>}
+    </span>
+    <div class="flex flex-wrap justify-center gap-4">
+      <a href="/contact" class="hover:text-ink transition-colors">Contact</a>
+      <a href="/terms" class="hover:text-ink transition-colors">Terms & Conditions</a>
+      <a href="/privacy" class="hover:text-ink transition-colors">Privacy Policy</a>
+    </div>
   </div>
 </footer>
 
-<style>
-  .newsletter-form { max-width: 22rem; }
-  .newsletter-row {
-    display: flex;
-    gap: 0.5rem;
-  }
-  .newsletter-input {
-    flex: 1;
-    min-width: 0;
-    padding: 0.65rem 1rem;
-    border-radius: 9999px;
-    background: rgba(255,255,255,0.07);
-    border: 1px solid rgba(255,255,255,0.15);
-    color: var(--ink);
-    font-size: 0.875rem;
-    outline: none;
-    transition: border-color 0.2s;
-  }
-  .newsletter-input::placeholder { color: var(--ink-faint); }
-  .newsletter-input:focus { border-color: var(--brand); }
-  .newsletter-btn {
-    flex: none;
-    padding: 0.65rem 1.25rem;
-    border-radius: 9999px;
-    background: linear-gradient(120deg, var(--brand-deep), var(--brand));
-    color: #fff;
-    font-size: 0.875rem;
-    font-weight: 600;
-    border: none;
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
-    white-space: nowrap;
-  }
-  .newsletter-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(59,130,246,0.4); }
-  .nl-feedback {
-    margin: 0.5rem 0 0;
-    font-size: 0.8rem;
-    min-height: 1rem;
-    color: var(--accent-cyan);
-  }
-</style>
-
-<script>
-  const WA_NUMBER = "919489722142";
-  const form = document.getElementById("newsletter-form") as HTMLFormElement | null;
-  const feedback = document.getElementById("nl-feedback")!;
-
-  form?.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const input = form.querySelector<HTMLInputElement>("#nl-email");
-    if (!input?.value || !input.validity.valid) {
-      feedback.textContent = "Please enter a valid email.";
-      feedback.style.color = "#f87171";
-      return;
-    }
-
-    const msg = [
-      "Hi TheArkTech! 👋 I'd like to stay in the loop with your updates and news.",
-      "",
-      `*My email:* ${input.value}`,
-      "",
-      "Please add me to your newsletter list.",
-    ].join("\n");
-
-    window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`, "_blank", "noopener,noreferrer");
-
-    feedback.textContent = "✓ Opening WhatsApp — we'll add you to the list!";
-    feedback.style.color = "var(--accent-cyan)";
-    input.value = "";
-  });
-</script>

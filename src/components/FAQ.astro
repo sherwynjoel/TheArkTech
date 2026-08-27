@@ -1,4 +1,6 @@
 ---
+import { services } from "../data/services.ts";
+
 const faqs = [
   {
     q: "How long does a project take?",
@@ -6,7 +8,7 @@ const faqs = [
   },
   {
     q: "What is your pricing?",
-    a: "Projects start at ₹25,000 for a basic website and go up based on scope. We provide fixed-price quotes — you'll never get a surprise invoice. See our Pricing section for starting estimates, or contact us for an exact quote.",
+    a: "Projects start at ₹25,000 for a basic website and go up based on scope. We provide fixed-price quotes — you'll never get a surprise invoice. Contact us and we'll give you an exact quote for your scope.",
   },
   {
     q: "Do you provide post-launch support?",
@@ -14,11 +16,11 @@ const faqs = [
   },
   {
     q: "Can you redesign my existing website?",
-    a: "Absolutely. We handle full redesigns — new design, improved performance, and cleaner code. We also migrate content, preserve your SEO rankings, and can integrate your existing tools.",
+    a: "Absolutely. We handle full rebuilds — modern architecture, improved performance, and cleaner, maintainable code. We migrate your existing content and data, preserve your URL structure so nothing breaks, and integrate the tools you already use.",
   },
   {
     q: "What technologies do you use?",
-    a: "Our stack spans React, Next.js, Node.js, Python, Flutter, AWS, PostgreSQL, MongoDB, and more. We choose the right technology for your project's needs — not just what we're comfortable with.",
+    a: "Our stack spans React, Next.js, Node.js, Python, Flutter, AWS, Docker, PostgreSQL, and MongoDB. We choose the right technology for your project's needs — not just what we're comfortable with — and we document why.",
   },
   {
     q: "Do you work with clients outside Coimbatore?",
@@ -26,15 +28,26 @@ const faqs = [
   },
   {
     q: "Can I see examples of your work?",
-    a: "Yes — scroll to our Industries section to see the verticals we've shipped for. For detailed case studies and live URLs, reach out and we'll share a tailored portfolio relevant to your industry.",
+    a: "Yes — our Portfolio section above has live client sites you can visit right now, and Industries shows the verticals we've shipped for. For detailed case studies, reach out and we'll share work relevant to your industry.",
   },
   {
-    q: "Do you offer SEO?",
-    a: "Yes. SEO & Digital Marketing is one of our six core services. We cover on-page SEO, technical SEO, Google Business Profile, local SEO (key for Coimbatore businesses), and content strategy.",
+    q: "Who owns the code you write?",
+    a: "You do. On final payment the full source code, repository access, and infrastructure accounts are transferred to you, along with technical documentation. We don't lock clients into proprietary platforms or hold credentials hostage.",
   },
 ];
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a },
+  })),
+};
 ---
-<section id="faq" class="py-28">
+<section id="faq" class="section-y">
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
   <div class="container-x">
     <div class="max-w-2xl mb-14 mx-auto text-center">
       <p class="eyebrow mb-3">FAQ</p>
@@ -49,12 +62,15 @@ const faqs = [
     <div class="faq-list mx-auto" id="faq-list">
       {faqs.map((f, i) => (
         <div class="faq-item reveal" data-index={i}>
-          <button class="faq-q" aria-expanded="false" aria-controls={`faq-ans-${i}`}>
-            <span>{f.q}</span>
-            <span class="faq-icon" aria-hidden="true">+</span>
-          </button>
-          <div class="faq-a" id={`faq-ans-${i}`} role="region" hidden>
-            <p>{f.a}</p>
+          {/* A real heading so screen-reader users can navigate the FAQ by heading. */}
+          <h3 class="faq-h">
+            <button class="faq-q" id={`faq-q-${i}`} aria-expanded="false" aria-controls={`faq-ans-${i}`}>
+              <span>{f.q}</span>
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+          </h3>
+          <div class="faq-a" id={`faq-ans-${i}`} role="region" aria-labelledby={`faq-q-${i}`} hidden>
+            <div class="faq-a-inner"><p>{f.a}</p></div>
           </div>
         </div>
       ))}
@@ -66,9 +82,12 @@ const faqs = [
   .faq-list { max-width: 52rem; }
 
   .faq-item {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid var(--hairline);
   }
-  .faq-item:first-child { border-top: 1px solid rgba(255, 255, 255, 0.08); }
+  .faq-item:first-child { border-top: 1px solid var(--hairline); }
+
+  /* The heading is structural only — the button carries all the visual weight. */
+  .faq-h { margin: 0; font-size: inherit; font-weight: inherit; letter-spacing: normal; }
 
   .faq-q {
     width: 100%;
@@ -96,7 +115,7 @@ const faqs = [
     display: grid;
     place-items: center;
     border-radius: 50%;
-    border: 1px solid rgba(255,255,255,0.15);
+    border: 1px solid var(--line-strong);
     font-size: 1.1rem;
     line-height: 1;
     transition: transform 0.3s ease, border-color 0.2s;
@@ -106,13 +125,25 @@ const faqs = [
     border-color: var(--brand-bright);
   }
 
+  /* grid-template-rows 0fr -> 1fr animates to the answer's natural height, so
+     long answers can never be silently clipped the way a fixed max-height did. */
   .faq-a {
-    overflow: hidden;
-    max-height: 0;
-    transition: max-height 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+    display: grid;
+    grid-template-rows: 0fr;
+    /* visibility flips after the collapse finishes, so closed answers leave the
+       accessibility tree despite the display:block below */
+    visibility: hidden;
+    transition:
+      grid-template-rows var(--dur-3) var(--ease-out-quart),
+      visibility 0s linear var(--dur-3);
   }
-  .faq-a:not([hidden]) { max-height: 20rem; }
-  .faq-a[hidden] { display: block !important; }
+  .faq-a:not([hidden]) {
+    grid-template-rows: 1fr;
+    visibility: visible;
+    transition: grid-template-rows var(--dur-3) var(--ease-out-quart);
+  }
+  .faq-a[hidden] { display: grid !important; }
+  .faq-a-inner { overflow: hidden; min-height: 0; }
 
   .faq-a p {
     padding-bottom: 1.25rem;

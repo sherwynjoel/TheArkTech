@@ -5,6 +5,28 @@ export interface Service {
   icon: string;
   included: string[];
   tech: string[];
+  /** Stable URL segment. Derived from the title when omitted. */
+  slug?: string;
+  /**
+   * Portfolio `type` values delivered under this service, so /services/<slug>
+   * can show real client work. Services with no matching project omit that
+   * section rather than showing a placeholder.
+   */
+  workTypes?: string[];
+  /** Longer opening paragraph for the service page. Falls back to `desc`. */
+  intro?: string;
+}
+
+/** URL-safe slug for a service, derived from the title unless one is set. */
+export function serviceSlug(service: Service): string {
+  return (
+    service.slug ??
+    service.title
+      .toLowerCase()
+      .replace(/['’]/g, "")
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "")
+  );
 }
 
 export const services: Service[] = [
@@ -12,16 +34,17 @@ export const services: Service[] = [
     num: "01",
     title: "Website Development",
     icon: "window",
-    desc: "Fast, secure, responsive websites that elevate your brand and generate real results, for startups, businesses, and professionals.",
+    desc: "Fast, secure, responsive websites engineered for performance and built to scale with your business.",
     included: [
-      "Custom responsive design",
+      "Responsive UI/UX design",
       "CMS integration (editable content)",
-      "On-page SEO setup",
-      "Contact & lead-gen forms",
+      "Semantic HTML & metadata setup",
+      "Accessibility & Core Web Vitals tuning",
       "Performance optimisation",
       "1 month post-launch support",
     ],
     tech: ["Astro", "Next.js", "React", "Tailwind CSS", "WordPress"],
+    workTypes: ["Business Website", "Corporate Website", "Clinic Website", "Training Website"],
   },
   {
     num: "02",
@@ -37,6 +60,7 @@ export const services: Service[] = [
       "3 months post-launch support",
     ],
     tech: ["Next.js", "WooCommerce", "Shopify", "Stripe", "PostgreSQL"],
+    workTypes: ["Premium E-Commerce", "Online Store"],
   },
   {
     num: "03",
@@ -70,32 +94,47 @@ export const services: Service[] = [
   },
   {
     num: "05",
-    title: "Branding & UI/UX",
-    icon: "design",
-    desc: "Clean, modern, intuitive design that sets your digital identity apart.",
+    title: "Cloud & DevOps",
+    icon: "commit",
+    desc: "Reliable cloud infrastructure with automated delivery pipelines, monitoring, and backups — so releases are routine, not risky.",
     included: [
-      "Logo design (3 concepts)",
-      "Brand guidelines document",
-      "UI style guide & design system",
-      "High-fidelity Figma prototypes",
-      "Unlimited revision rounds",
-      "Source files handover",
+      "Cloud architecture & provisioning",
+      "CI/CD pipeline automation",
+      "Containerisation & orchestration",
+      "Monitoring, logging & alerting",
+      "Automated backups & recovery",
+      "Security hardening & access control",
     ],
-    tech: ["Figma", "Adobe Illustrator", "Photoshop", "Framer"],
+    tech: ["AWS", "Docker", "Kubernetes", "GitHub Actions", "Terraform", "Nginx"],
   },
   {
     num: "06",
-    title: "SEO & Digital Marketing",
-    icon: "growth",
-    desc: "Boost your online visibility and grow your business with strategic SEO and marketing support.",
+    title: "API & Systems Integration",
+    icon: "grid",
+    desc: "Connect the systems your business already runs on — ERPs, CRMs, payment gateways, and third-party services — into one dependable whole.",
     included: [
-      "Keyword research & strategy",
-      "On-page & technical SEO",
-      "Google Business Profile setup",
-      "Monthly performance reports",
-      "Content strategy & copywriting",
-      "Search & social ad management",
+      "REST & GraphQL API development",
+      "Payment gateway integration",
+      "ERP / CRM data synchronisation",
+      "Legacy system modernisation",
+      "Webhook & event-driven pipelines",
+      "API documentation & versioning",
     ],
-    tech: ["Google Search Console", "SEMrush", "Google Analytics", "Google Ads", "Meta Ads"],
+    tech: ["Node.js", "Python", "GraphQL", "PostgreSQL", "Redis", "REST"],
+  },
+  {
+    num: "07",
+    title: "AI Agents & Automation",
+    icon: "cpu",
+    desc: "Production AI systems — calling agents, custom bots, and automated workflows — engineered and monitored to run reliably at scale.",
+    included: [
+      "Custom AI agent development",
+      "AI calling & voice agents",
+      "LLM integration (OpenAI, Anthropic)",
+      "Automated workflows & pipelines",
+      "Chatbot & support solutions",
+      "AI performance monitoring",
+    ],
+    tech: ["OpenAI", "Python", "Node.js", "LangChain", "Vapi / ElevenLabs"],
   },
 ];
